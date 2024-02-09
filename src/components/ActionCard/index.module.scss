@@ -1,0 +1,65 @@
+.cardStyles {
+  width: 100%;
+  padding: 12px 0;
+  row-gap: 12px;
+  background: #FFF;
+
+  & div[class*='ant-card-head-title'] {
+    text-align: center;
+    padding: 0 24px
+  }
+}
+
+.cardTitleStyles {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20.8px;
+  color: #262626;
+}
+
+.divider {
+  margin: 10px 0;
+  background-color: #F0F0F0;
+  height: 1px;
+}
+
+.buttonStyles {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+  border: none;
+  &:hover,
+  &:focus{
+    outline: none;
+    border: none;
+  }
+}
+
+.iconStyles {
+  color: #2F54EB
+}
+
+.buttonTextStyles {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #2F54EB
+}
+
+@media screen and (max-width: 835px) {
+  .cardStyles {
+    & div[class*='ant-card-head-title'] {
+      text-align: left;
+    }
+  }
+}
+
+@media screen and (max-width: 705px) {
+  .cardStyles {
+    & div[class*='ant-card-head-title'] {
+      text-align: center;
+    }
+  }
+}
