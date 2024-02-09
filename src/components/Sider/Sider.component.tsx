@@ -46,9 +46,9 @@ const SiderComponent = () => {
       return (
         <Button
           icon={isSidebarOpen ? (
-            <Image src="../../../public/mobile-menu-fixed-switcher--opened.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
+            <Image src="../../../mobile-menu-fixed-switcher--opened.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
           ) : (
-            <Image src="../../../public/mobile-menu-fixed-switcher--closed.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
+            <Image src="../../../mobile-menu-fixed-switcher--closed.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
           )}
           className={styles.switcherStyles}
           onClick={() => toggleSidebar()}
@@ -59,9 +59,9 @@ const SiderComponent = () => {
       return (
         <Button
           icon={isSidebarOpen ? (
-            <Image src="../../../public/sidemenu-fixed-switcher--opened.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
+            <Image src="../../../sidemenu-fixed-switcher--opened.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
           ) : (
-            <Image src="../../../public/sidemenu-fixed-switcher--closed.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
+            <Image src="../../../sidemenu-fixed-switcher--closed.svg" alt="switcher icon" preview={false} className={styles.switcherIconStyles} />
           )}
           className={styles.switcherStyles}
           onClick={() => toggleSidebar()}
@@ -85,9 +85,9 @@ const SiderComponent = () => {
       <Space.Compact className={styles.layoutWrapperStyles}>
         <Space direction="vertical">
           {isSidebarOpen ? (
-            <Image src="../../../public/logo--opened.svg" alt="logo" preview={false} className={cn(styles.logoStyles, styles.logoOpenedStyles)} />
+            <Image src="../../../logo--opened.svg" alt="logo" preview={false} className={cn(styles.logoStyles, styles.logoOpenedStyles)} />
           ) : (
-            <Image src="../../../public/logo--closed.svg" alt="logo" preview={false} className={cn(styles.logoStyles, styles.logoClosedStyles)} />
+            <Image src="../../../logo--closed.svg" alt="logo" preview={false} className={cn(styles.logoStyles, styles.logoClosedStyles)} />
           )
           }
           <Menu
@@ -102,7 +102,7 @@ const SiderComponent = () => {
           <Divider className={styles.divider} />
           <Button
             className={isSidebarOpen ? cn(styles.exitButtonStyles, styles.exitButtonOpenedStyles) : cn(styles.exitButtonStyles, styles.exitButtonClosedStyles)}
-            icon={<Image src="../../../public/exit.svg" alt="exit icon" preview={false} className={styles.exitIconStyles} />}
+            icon={<Image src="../../../Exit.svg" alt="exit icon" preview={false} className={styles.exitIconStyles} />}
           >
             {isSidebarOpen ? (
               <Text className={styles.exitTextStyles}>
