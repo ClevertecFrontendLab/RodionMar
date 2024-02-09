@@ -1,0 +1,84 @@
+.mainLayout {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  position: relative;
+  background-image: url("../../../public/main-screen.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentStyles {
+  flex: 1;
+  display: flex;
+}
+
+.containerStyles {
+  max-width: 752px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.possibilitiesTextStyles {
+  padding: 24px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  color: #061178;
+  box-sizing: border-box;
+  max-width: 752px;
+  background: #FFF;
+}
+
+.helperWrapperStyles {
+  display: grid;
+  row-gap: 16px;
+}
+
+.helperTitleStyles {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  color: #262626;
+  padding: 24px;
+  margin: 0;
+  background: #FFF;
+}
+
+.cardWrapperStyles {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 16px;
+}
+
+@media screen and (max-width: 835px) {
+  .cardWrapperStyles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 16px;
+  }
+}
+
+@media screen and (max-width: 705px) {
+  .containerStyles {
+    padding: 24px 16px;
+  }
+
+  .cardWrapperStyles {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+    justify-content: center;
+  }
+
+}
