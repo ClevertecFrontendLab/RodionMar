@@ -1,34 +1,65 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import reactLogo from '/react.svg';
-import viteLogo from '/vite.svg';
-import tsLogo from '/ts.svg';
-import './main-page.css';
+import { Layout, Row, Col, Typography, Space } from 'antd';
 
-export const MainPage: React.FC = () => {
-    const [count, setCount] = useState(0);
+import HeaderComponent from '@components/Header';
+import ActionCard from '@components/ActionCard';
+import FooterComponent from '@components/Footer';
+import SiderComponent from '@components/Sider';
+
+import styles from "./index.module.scss";
+
+import { cards } from './const';
+
+
+const { Content } = Layout;
+const { Title } = Typography;
+
+
+export const MainPage = () => {
+    const [isSiderOpened, setIsSidebarOpened] = useState(true);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
-        <>
-            <div>
-                <a href='https://vitejs.dev' target='_blank'>
-                    <img src={viteLogo} className='logo' alt='Vite logo' />
-                </a>
-                <a href='https://react.dev' target='_blank'>
-                    <img src={reactLogo} className='logo react' alt='React logo' />
-                </a>
-                <a href='https://www.typescriptlang.org/' target='_blank'>
-                    <img src={tsLogo} className='logo' alt='TS logo' />
-                </a>
-            </div>
-            <h1>Vite + React + TS</h1>
-            <div className='card'>
-                <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-                <p>
-                    Edit <code>src/pages/main-page.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-        </>
+        <Layout className={styles.mainLayout}>
+            <SiderComponent isSiderOpened={isSiderOpened} setIsSidebarOpened={setIsSidebarOpened} windowWidth={windowWidth} />
+            <Layout className={styles.contentWrapper}>
+                <HeaderComponent isSiderOpened={isSiderOpened} windowWidth={windowWidth} />
+                <Content className={styles.contentStyles}>
+                    <Space.Compact className={styles.containerStyles} direction="vertical">
+                        <Row>
+                            <Col className={styles.possibilitiesTextStyles}>
+                                {"С CleverFit ты сможешь: — планировать свои тренировки на календаре, выбирая тип и уровень нагрузки; — отслеживать свои достижения в разделе статистики, сравнивая свои результаты с нормами и рекордами; — создавать свой профиль, где ты можешь загружать свои фото, видео и отзывы о тренировках; — выполнять расписанные тренировки для разных частей тела, следуя подробным инструкциям и советам профессиональных тренеров.".split('—').map((str, idx) => <span key={idx}> {idx != 0 ? '—' : ''} {str} <br /> </span>)}
+                            </Col>
+                        </Row>
+                        <Row className={styles.helperWrapperStyles}>
+                            <Col>
+                                <Title level={4} className={styles.helperTitleStyles}>
+                                    CleverFit — это не просто приложение, а твой личный помощник в мире фитнеса. Не откладывай на завтра — начни тренироваться уже сегодня!
+                                </Title>
+                            </Col>
+                            <Space.Compact className={styles.cardWrapperStyles}>
+                                {cards.map((card, index) => (
+                                    <ActionCard key={index} title={card.title} buttonText={card.buttonText} buttonIcon={card.buttonIcon} />
+                                ))}
+                            </Space.Compact>
+                        </Row>
+                    </Space.Compact>
+                </Content>
+                <FooterComponent />
+            </Layout>
+        </Layout>
     );
 };

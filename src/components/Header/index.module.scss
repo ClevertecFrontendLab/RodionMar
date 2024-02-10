@@ -1,0 +1,92 @@
+.headerStyles {
+  width: 100%;
+  background-color: #F0F5FF;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.pageIndentifierStyles {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #262626;
+}
+
+.titleStyles {
+  font-size: 38px;
+  font-weight: 700;
+  max-width: 1055px;
+  line-height: 49.4px;
+  color: #262626;
+  margin: 0;
+  min-width: 100%;
+}
+
+.mainInfoStyles {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-top: 14px;
+}
+
+.settingButtonStyles {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  border: none;
+  background: none;
+  transition: all 0.2s;
+  padding: 7px 15px;
+  &:hover,
+  &:focus,
+  &:active{
+    outline: none;
+    border: none;
+    background-color: #FAFAFA;
+  }
+}
+
+.settingTextStyles{
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #262626;
+}
+
+@media screen and (max-width: 835px) {
+  .titleStyles {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 31px;
+  }
+
+  .isSidebarOpenedStyles{
+    display: block;
+  }
+  
+  .settingIconStyles{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 361px) {
+  .titleStyles {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 26px;
+  }
+
+  .settingButtonStyles {
+    padding: 9px;
+    border-radius: 50%;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0 2px 0 0 #0000000B;
+  }
+
+  .settingTextStyles{
+    display: none;;
+  }
+
+  .settingIconStyles{
+    display: block;
+  }
+}

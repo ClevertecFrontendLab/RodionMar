@@ -1,0 +1,130 @@
+.footerStyles {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 156px 24px 42px;
+}
+
+.wrapperStyles {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.commentButtonStyles {
+  background: transparent;
+  color: #2F54EB;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  border: none;
+  &:hover,
+  &:focus{
+    outline: none;
+    border: none;
+  }
+}
+
+.cardStyles {
+  background-color: #FFF;
+  padding: 12px 0;
+  box-sizing: border-box;
+}
+
+.cardTitleStyles {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  color: #2F54EB;
+  padding-left: 24px;
+}
+
+.subtitleStyles {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #8C8C8C;
+  padding: 0 24px;
+}
+
+.divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background-color: #F0F0F0;
+  height: 1px;
+}
+
+.buttonContainerStyles {
+  display: flex;
+}
+
+.cardButtonStyles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #262626;
+  column-gap: 8px;
+  width: 100%;
+  border: none;
+  background: none;
+  transition: all 0.2s;
+  &:hover,
+  &:focus,
+  &:active{
+    outline: none;
+    border: none;
+    background-color: #FAFAFA;
+  }
+}
+
+@media screen and (max-width: 835px) {
+  .footerStyles {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 237px 24px 42px;
+  }
+}
+
+@media screen and (max-width: 705px) {
+  .footerStyles {
+    padding: 0 16px 42px;
+  }
+
+  .wrapperStyles {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 24px;
+  }
+
+  div[class*='ant-card-head-title'] {
+    text-align: center;
+  }
+
+  .cardTitleStyles {
+    padding-left: 0;
+  }
+
+  .subtitleStyles {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .buttonContainerStyles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardButtonStyles {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .commentButtonStyles {
+    width: 100%;
+  }
+}
