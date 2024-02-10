@@ -1,16 +1,14 @@
-// ==================== Ant Design ====================
+import { useEffect, useState } from 'react';
+
 import { Layout, Row, Col, Typography, Space } from 'antd';
 
-// ==================== Components ====================
 import HeaderComponent from '@components/Header';
 import ActionCard from '@components/ActionCard';
 import FooterComponent from '@components/Footer';
 import SiderComponent from '@components/Sider';
 
-// ==================== Styles ====================
 import styles from "./index.module.scss";
 
-// ==================== Static data ====================
 import { cards } from './const';
 
 
@@ -19,11 +17,26 @@ const { Title } = Typography;
 
 
 export const MainPage = () => {
+    const [isSiderOpened, setIsSidebarOpened] = useState(true);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <Layout className={styles.mainLayout}>
-            <SiderComponent />
+            <SiderComponent isSiderOpened={isSiderOpened} setIsSidebarOpened={setIsSidebarOpened} windowWidth={windowWidth} />
             <Layout className={styles.contentWrapper}>
-                <HeaderComponent />
+                <HeaderComponent isSiderOpened={isSiderOpened} windowWidth={windowWidth} />
                 <Content className={styles.contentStyles}>
                     <Space.Compact className={styles.containerStyles} direction="vertical">
                         <Row>
