@@ -1,10 +1,7 @@
-// ==================== Ant Design ====================
 import { Layout, Typography, Col, Row, Button, Divider, Card } from 'antd';
 
-// ==================== Ant Design Icons ====================
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 
-// ==================== Styles ====================
 import styles from "./index.module.scss";
 
 

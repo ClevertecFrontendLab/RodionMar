@@ -6,14 +6,15 @@
 
   & div[class*='ant-card-head-title'] {
     text-align: center;
-    padding: 0 24px
+    padding: 0 22px;
+    box-sizing: border-box;
   }
 }
 
 .cardTitleStyles {
   font-size: 16px;
   font-weight: 400;
-  line-height: 20.8px;
+  line-height: 21px;
   color: #262626;
 }
 

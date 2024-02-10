@@ -10,7 +10,6 @@
   font-weight: 400;
   line-height: 18px;
   color: #262626;
-  margin-bottom: 8px;
 }
 
 .titleStyles {
@@ -19,12 +18,14 @@
   max-width: 1055px;
   line-height: 49.4px;
   color: #262626;
-  margin: 0
+  margin: 0;
+  min-width: 100%;
 }
 
 .mainInfoStyles {
-  display: flex;
-  justify-content: space-between
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-top: 14px;
 }
 
 .settingButtonStyles {
@@ -34,6 +35,7 @@
   border: none;
   background: none;
   transition: all 0.2s;
+  padding: 7px 15px;
   &:hover,
   &:focus,
   &:active{
@@ -57,6 +59,10 @@
     line-height: 31px;
   }
 
+  .isSidebarOpenedStyles{
+    display: block;
+  }
+  
   .settingIconStyles{
     display: none;
   }

@@ -1,16 +1,11 @@
-// ==================== Ant Design ====================
 import { Card, Button, Typography, Divider } from 'antd';
 
-// ==================== Ant Design Icons ====================
 import { CalendarOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 
-// ==================== Styles ====================
 import styles from "./index.module.scss"
 
-// ==================== Types ====================
 type ButtonIconType = "heart" | "calendar" | "profile";
 
-// ==================== Interfaces ====================
 interface IActionCard {
   title: string,
   buttonText: string,

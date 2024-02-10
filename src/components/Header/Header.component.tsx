@@ -1,15 +1,19 @@
-// ==================== Ant Design ====================
 import { Layout, Typography, Col, Row, Button } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
-// ==================== Styles ====================
 import styles from "./index.module.scss";
+
+
+interface IHeaderProps {
+  isSiderOpened: boolean
+  windowWidth: number;
+}
 
 
 const { Header } = Layout;
 const { Title, Text } = Typography;
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ isSiderOpened, windowWidth }: IHeaderProps) => {
   return (
     <Header className={styles.headerStyles}>
       <Row>
@@ -22,7 +26,7 @@ const HeaderComponent = () => {
       <Row className={styles.mainInfoStyles}>
         <Col>
           <Title className={styles.titleStyles}>
-            Приветствуем тебя в CleverFit — приложении, которое поможет тебе добиться своей мечты!
+            Приветствуем тебя в CleverFit — <span className={isSiderOpened && windowWidth < 835 && windowWidth > 704 ? styles.isSidebarOpenedStyles : ""}>приложении, </span> которое поможет тебе добиться своей мечты!
           </Title>
         </Col>
         <Col>
