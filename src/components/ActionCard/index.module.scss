@@ -1,8 +1,10 @@
+@import '../../styles/index.scss';
+
 .cardStyles {
   width: 100%;
   padding: 12px 0;
   row-gap: 12px;
-  background: #FFF;
+  background: $neutral-gray-1;
 
   & div[class*='ant-card-head-title'] {
     text-align: center;
@@ -12,15 +14,12 @@
 }
 
 .cardTitleStyles {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 21px;
-  color: #262626;
+  @include H6-regular($character-light-title-85);
 }
 
 .divider {
   margin: 10px 0;
-  background-color: #F0F0F0;
+  background-color: $character-light-dividers;
   height: 1px;
 }
 
@@ -40,14 +39,16 @@
 }
 
 .iconStyles {
-  color: #2F54EB
+  color: $primary-light-6;
+  svg {
+    path {
+      fill: $primary-light-6
+    }
+  }
 }
 
 .buttonTextStyles {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #2F54EB
+  @include Body-regular($primary-light-6);
 }
 
 @media screen and (max-width: 835px) {
