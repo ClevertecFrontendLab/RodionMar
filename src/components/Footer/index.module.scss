@@ -1,3 +1,5 @@
+@import '../../styles/index.scss';
+
 .footerStyles {
   width: 100%;
   box-sizing: border-box;
@@ -13,10 +15,7 @@
 
 .commentButtonStyles {
   background: transparent;
-  color: #2F54EB;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 21px;
+  @include H6-regular($primary-light-6);
   border: none;
   &:hover,
   &:focus{
@@ -26,31 +25,25 @@
 }
 
 .cardStyles {
-  background-color: #FFF;
+  background-color: $character-light-primary-inverse;
   padding: 12px 0;
   box-sizing: border-box;
 }
 
 .cardTitleStyles {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 21px;
-  color: #2F54EB;
+  @include H6-regular($primary-light-6);
   padding-left: 24px;
 }
 
 .subtitleStyles {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #8C8C8C;
+  @include Body-regular($character-light-secondary-45);
   padding: 0 24px;
 }
 
 .divider {
   margin-top: 12px;
   margin-bottom: 12px;
-  background-color: #F0F0F0;
+  background-color: $character-light-dividers;
   height: 1px;
 }
 
@@ -62,10 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #262626;
+  @include Body-regular($character-light-title-85);
   column-gap: 8px;
   width: 100%;
   border: none;
@@ -76,7 +66,7 @@
   &:active{
     outline: none;
     border: none;
-    background-color: #FAFAFA;
+    background-color: $character-light-table-header;
   }
 }
 
