@@ -1,6 +1,6 @@
 import { Card, Button, Typography, Divider } from 'antd';
 
-import { CalendarOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
+import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 
 import styles from "./index.module.scss"
 
@@ -21,7 +21,7 @@ const ActionCard: React.FC<IActionCard> = ({ title, buttonText, buttonIcon }) =>
       case "heart":
         return <HeartFilled className={styles.iconStyles} />;
       case "calendar":
-        return <CalendarOutlined className={styles.iconStyles} />;
+        return <CalendarTwoTone className={styles.iconStyles} />;
       case "profile":
         return <IdcardOutlined className={styles.iconStyles} />;
       default:
