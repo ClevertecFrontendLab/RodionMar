@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@redux/configure-store';
 
 import cn from 'classnames';
 
 import { Layout, Typography, Button, Image, Menu, MenuProps, Divider } from 'antd';
 
 import { CalendarTwoTone, HeartFilled, IdcardOutlined, MenuFoldOutlined, TrophyFilled } from '@ant-design/icons';
+
+import { logout } from '@pages/auth/store/auth.slice';
 
 import styles from "./index.module.scss";
 
@@ -23,6 +29,8 @@ const { Text } = Typography;
 
 const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: ISidebarProps) => {
   const [activeItemKey, setActiveItemKey] = useState<string>("1");
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const toggleSidebar = () => {
     setIsSidebarOpened(!isSiderOpened);
@@ -63,6 +71,12 @@ const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: ISid
     if (menuItem?.key) setActiveItemKey(menuItem?.key.toString());
   };
 
+  const logoutHandler = () => {
+    dispatch(logout());
+    window.localStorage.removeItem("token");
+    navigate("/");
+  }
+
   const sidebarWidth = windowWidth < 705 ? 106 : (isSiderOpened ? 208 : 64);
 
   return (
@@ -89,6 +103,7 @@ const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: ISid
           <Button
             className={isSiderOpened ? cn(styles.exitButtonStyles, styles.exitButtonOpenedStyles) : cn(styles.exitButtonStyles, styles.exitButtonClosedStyles)}
             icon={<Image src="../../../Exit.svg" alt="exit icon" preview={false} className={styles.exitIconStyles} />}
+            onClick={logoutHandler}
           >
             {isSiderOpened ? (
               <Text className={styles.exitTextStyles}>
