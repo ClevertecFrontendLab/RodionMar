@@ -8,16 +8,4 @@ const $api = axios.create({
   },
 });
 
-
-// ===== set token =====
-$api.interceptors.request.use(
-  async (config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 export default $api;
