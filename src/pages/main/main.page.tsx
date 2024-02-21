@@ -10,13 +10,16 @@ import SiderComponent from '@components/Sider';
 import styles from "./index.module.scss";
 
 import { cards } from './const';
+import { AuthPendingSelector } from '@pages/auth/store/auth.selector';
+import { useSelector } from 'react-redux';
+import LottieLoader from '@components/LottieLoader/LottieLoader';
 
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 
-export const MainPage = () => {
+const MainPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(true);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -32,8 +35,13 @@ export const MainPage = () => {
         };
     }, []);
 
+    const fetchingPending = useSelector(AuthPendingSelector);
+
     return (
         <Layout className={styles.mainLayout}>
+            {fetchingPending !== undefined && fetchingPending === true && (
+            <LottieLoader />
+          )}
             <SiderComponent isSiderOpened={isSiderOpened} setIsSidebarOpened={setIsSidebarOpened} windowWidth={windowWidth} />
             <Layout className={styles.contentWrapper}>
                 <HeaderComponent isSiderOpened={isSiderOpened} windowWidth={windowWidth} />
@@ -63,3 +71,5 @@ export const MainPage = () => {
         </Layout>
     );
 };
+
+export default MainPage;
