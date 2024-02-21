@@ -1,0 +1,23 @@
+@import '../../styles/index.scss';
+
+.wrapper{
+  width: 100%;
+  min-height: 100vh;
+  background: url(../../../enter-page--light.png) center / cover no-repeat;
+  backdrop-filter: blur(12px);
+}
+
+.blur{
+  backdrop-filter: blur(12px);
+  background: #799CD480;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.contentWrapper{
+  padding: 0 16px;
+  max-width: 540px;
+  width: 100%;
+}
