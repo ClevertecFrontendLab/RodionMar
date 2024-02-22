@@ -22,7 +22,7 @@ const SuccessChangePasswordPage = () => {
     <Result 
       result="success"
       title="Пароль успешно изменен"
-      description="Теперь можно войти в аккаунт, используя свой логин и новый пароль"
+      description={<>Теперь можно войти в аккаунт, используя<br />свой логин и новый пароль</>}
       buttonTestId="change-entry-button"
       buttonText="Вход"
       handleRedirect={() => navigationDispatch(push('/auth'))}

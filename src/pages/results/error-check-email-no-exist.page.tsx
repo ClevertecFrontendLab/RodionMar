@@ -24,7 +24,7 @@ const ErrorCheckEmailNoExist = () => {
     <Result
       result="error"
       title="Такой e-mail не зарегистрирован"
-      description="Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail."
+      description={<>Мы не нашли в базе вашего e-mail. Попробуйте<br /> войти с другим e-mail</>}
       buttonText="Попробовать снова"
       buttonTestId="check-retry-button"
       isConfirmEmailPage

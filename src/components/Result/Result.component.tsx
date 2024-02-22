@@ -12,7 +12,7 @@ const { Title, Text } = Typography;
 interface IResultProps {
   result: "warning" | "error" | "success" | "execute" | "error-image" | "404";
   title: string;
-  description: string;
+  description: React.ReactNode;
   buttonText: string;
   buttonTestId: string;
   isConfirmEmailPage?: boolean;
