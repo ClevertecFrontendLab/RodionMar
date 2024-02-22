@@ -65,7 +65,7 @@ const SignUpError = () => {
       <Result
         result="error"
         title="Данные не сохранились"
-        description="Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз."
+        description={<>Что-то пошло не так и ваша регистрация<br />не завершилась. Попробуйте ещё раз.</>}
         buttonText="Повторить"
         buttonTestId="registration-retry-button"
         handleRedirect={handleRepeatRegistration}

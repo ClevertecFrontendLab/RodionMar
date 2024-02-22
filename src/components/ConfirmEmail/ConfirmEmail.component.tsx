@@ -64,7 +64,7 @@ const ConfirmEmailComponent = ({
         }
         </Title>
         <Text className={styles.description}>
-          Мы отправили вам на e-mail {<b>{confirmEmailData}</b>} шестизначный код. Введите его в поле ниже.
+          Мы отправили вам на e-mail {<b>{confirmEmailData}</b>}<br />шестизначный код. Введите его в поле ниже.
         </Text>
       </Space.Compact>
       <VerificationInput 
