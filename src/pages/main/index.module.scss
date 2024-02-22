@@ -1,3 +1,5 @@
+@import '../../styles/index.scss';
+
 .mainLayout {
   display: flex;
   min-height: 100vh;
@@ -6,11 +8,7 @@
 
 .contentWrapper {
   position: relative;
-  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 253, 253, 0.8) 100%);
-  background-image: url("../../../main-screen--light.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background: url("../../../main-screen--light.png") center / cover no-repeat;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -32,13 +30,10 @@
 
 .possibilitiesTextStyles {
   padding: 24px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 21px;
-  color: #061178;
+  @include H6-regular($primary-light-9);
   box-sizing: border-box;
   max-width: 752px;
-  background: #FFF;
+  background: $neutral-gray-1;
 }
 
 .helperWrapperStyles {
@@ -47,27 +42,16 @@
 }
 
 .helperTitleStyles {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 26px;
-  color: #262626;
+  @include H4-medium($character-light-title-85);
   padding: 24px;
   margin: 0;
-  background: #FFF;
+  background: $neutral-gray-1;
 }
 
 .cardWrapperStyles {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 16px;
-}
-
-@media screen and (max-width: 835px) {
-  .cardWrapperStyles {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 16px;
-  }
 }
 
 @media screen and (max-width: 705px) {
@@ -81,5 +65,4 @@
     row-gap: 8px;
     justify-content: center;
   }
-
 }
