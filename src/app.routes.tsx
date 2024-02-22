@@ -3,6 +3,8 @@ import React, { Suspense } from 'react';
 import LottieLoader from '@components/LottieLoader/LottieLoader';
 
 import { Navigate, Routes, Route } from 'react-router-dom';
+import AuthPage from '@pages/auth';
+import ResultPage from '@pages/results';
 
 const isAllowed = () => {
     const token = window.localStorage.getItem('token');
@@ -26,15 +28,11 @@ const PublicRoute = ({ element: Element }: { element: any }) => {
     return isAllowed() ? (
         <Navigate to={'/main'} />
     ) : (
-        <Suspense fallback={<LottieLoader />}>
-            <Element />
-        </Suspense>
+        <Element />
     );
 };
 
 const MainPage = React.lazy(() => import('./pages/main'));
-const AuthPage = React.lazy(() => import('./pages/auth'));
-const ResultPage = React.lazy(() => import('./pages/results'));
 
 const AppRoutes = () => {
     return (

@@ -1,7 +1,20 @@
-import React, { PropsWithChildren, Suspense } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 
 import LottieLoader from '@components/LottieLoader/LottieLoader';
+
+import ChangePasswordPage from '@pages/changePassword/changePassword.page';
+import ConfirmEmailPage from '@pages/confirmEmail';
+import ErrorChangePasswordPage from '@pages/results/error-change-password.page';
+import ErrorCheckEmailNoExist from '@pages/results/error-check-email-no-exist.page';
+import ErrorCheckEmail from '@pages/results/error-check-email.page';
+import ErrorLogin from '@pages/results/error-login.page';
+import SignUpErrorUserExist from '@pages/results/signUp-error-user-exist.page';
+import SignUpError from '@pages/results/signUp-error.page';
+import SignUpSuccess from '@pages/results/signUp-success.page';
+import SuccessChangePasswordPage from '@pages/results/success-change-password.page';
+import SignInPage from './signIn.page';
+import SignUpPage from './signUp.page';
 
 const Suspended = ({ element: Element }: PropsWithChildren & { element: any }) => {
     return (
@@ -11,68 +24,35 @@ const Suspended = ({ element: Element }: PropsWithChildren & { element: any }) =
     );
 };
 
-// ========================== pages ===========================
-const SignInPage = React.lazy(() => import('./signIn.page'));
-
-const SignUpPage = React.lazy(() => import('./signUp.page'));
-
-const ErrorLogin = React.lazy(() => import('../results/error-login.page'));
-
-const SignUpSuccess = React.lazy(() => import('../results/signUp-success.page'));
-
-const SignUpErrorUserExist = React.lazy(
-    () => import('../results/signUp-error-user-exist.page'),
-);
-
-const SignUpError = React.lazy(() => import('../results/signUp-error.page'));
-
-const ConfirmEmailPage = React.lazy(() => import('../confirmEmail'));
-
-const ErrorCheckEmailNoExist = React.lazy(
-    () => import('../results/error-check-email-no-exist.page'),
-);
-
-const ErrorCheckEmail = React.lazy(() => import('../results/error-check-email.page'));
-
-const ChangePasswordPage = React.lazy(() => import('../changePassword'));
-
-const SuccessChangePasswordPage = React.lazy(
-    () => import('../results/success-change-password.page'),
-);
-
-const ErrorChangePasswordPage = React.lazy(
-    () => import('../results/error-change-password.page'),
-);
-
 const AuthRoutes = () => {
     return (
         <Routes>
-            <Route path={'/'} element={<Suspended element={SignInPage} />} />
-            <Route path={'/registration'} element={<Suspended element={SignUpPage} />} />
-            <Route path={'/result/error-login'} element={<Suspended element={ErrorLogin} />} />
-            <Route path={'/result/success'} element={<Suspended element={SignUpSuccess} />} />
+            <Route path={'/'} element={<SignInPage />} />
+            <Route path={'/registration'} element={<SignUpPage />} />
+            <Route path={'/result/error-login'} element={<ErrorLogin />} />
+            <Route path={'/result/success'} element={<SignUpSuccess />} />
             <Route
                 path={'/result/error-user-exist'}
                 element={<Suspended element={SignUpErrorUserExist} />}
             />
-            <Route path={'/result/error'} element={<Suspended element={SignUpError} />} />
-            <Route path={'/confirm-email'} element={<Suspended element={ConfirmEmailPage} />} />
+            <Route path={'/result/error'} element={<SignUpError />} />
+            <Route path={'/confirm-email'} element={<ConfirmEmailPage />} />
             <Route
                 path={'/result/error-check-email-no-exist'}
-                element={<Suspended element={ErrorCheckEmailNoExist} />}
+                element={<ErrorCheckEmailNoExist />}
             />
             <Route
                 path={'/result/error-check-email-no-exist'}
-                element={<Suspended element={ErrorCheckEmail} />}
+                element={<ErrorCheckEmail />}
             />
-            <Route path={'/change-password'} element={<Suspended element={ChangePasswordPage} />} />
+            <Route path={'/change-password'} element={<ChangePasswordPage />} />
             <Route
                 path={'/result/success-change-password'}
-                element={<Suspended element={SuccessChangePasswordPage} />}
+                element={<SuccessChangePasswordPage />}
             />
             <Route
                 path={'/result/error-change-password'}
-                element={<Suspended element={ErrorChangePasswordPage} />}
+                element={<ErrorChangePasswordPage />}
             />
             <Route path='*' element={<Navigate to='/' />} />
         </Routes>

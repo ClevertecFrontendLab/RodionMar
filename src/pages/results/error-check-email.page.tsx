@@ -26,7 +26,7 @@ export const handleResponseCheckEmail = (
   }
 };
 
-const ErrorCheckEmailNoExist = () => {
+const ErrorCheckEmail = () => {
   const authDispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const navigationDispatch = useAppDispatch();
@@ -66,4 +66,4 @@ const ErrorCheckEmailNoExist = () => {
   )
 };
 
-export default ErrorCheckEmailNoExist;
+export default ErrorCheckEmail;
