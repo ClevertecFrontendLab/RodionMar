@@ -4,11 +4,10 @@
   width: 100%;
   min-height: 100vh;
   background: url(../../../enter-page--light.png) center / cover no-repeat;
-  backdrop-filter: blur(12px);
 }
 
 .blur{
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(6px);
   background: #799CD480;
   display: flex;
   justify-content: center;
