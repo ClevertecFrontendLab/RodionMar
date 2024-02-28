@@ -1,73 +1,84 @@
 import $api from "../../../api/api";
+import { AxiosError } from "axios";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { IAuth } from "../../../types/auth.interface";
-import { ICheckEmail } from "../../../types/check-email.interface";
-import { IConfirmEmail } from "../../../types/confirm-email.interface";
-import { IChangePassword } from "../../../types/change-password.interface";
+import { TAuth } from "@shared/auth.type";
+import { TCheckEmail } from "@shared/check-email.type";
+import { TConfirmEmail } from "@shared/confirm-email.type";
+import { TChangePassword } from "@shared/change-password.type";
 
 
 export const fetchSignIn = createAsyncThunk(
   "auth/fetchSignIn",
-  async (data: IAuth, { rejectWithValue }) => {
+  async (data: TAuth, { rejectWithValue }) => {
     try {
       const response = await $api.post(`/auth/login`, data);
       return response.data.accessToken;
-    } catch (error: any) {
-      return rejectWithValue(error?.response?.data?.message as string);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.message as string);
+      }
     }
   }
 );
 
 export const fetchSignUp = createAsyncThunk(
   "auth/fetchSignUp",
-  async (data: IAuth, { rejectWithValue }) => {
+  async (data: TAuth, { rejectWithValue }) => {
     try {
       const response = await $api.post(`/auth/registration`, data);
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.status);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.status);
+      }
     }
   }
 );
 
 export const fetchCheckEmail = createAsyncThunk(
   "auth/fetchCheckEmail",
-  async (data: ICheckEmail, { rejectWithValue }) => {
+  async (data: TCheckEmail, { rejectWithValue }) => {
     try {
       const response = await $api.post(`/auth/check-email`, data);
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue({status: error?.response.status, message: error?.response.data.message});
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue({ status: error.response?.status, message: error.response?.data.message });
+      }
     }
   }
 );
 
 export const fetchConfirmEmail = createAsyncThunk(
   "auth/fetchConfirmEmail",
-  async (data: IConfirmEmail, { rejectWithValue }) => {
+  async (data: TConfirmEmail, { rejectWithValue }) => {
     try {
       const response = await $api.post(`/auth/confirm-email`, data, {
         withCredentials: true,
       });
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error?.response?.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data);
+      }
     }
   }
 );
 
 export const fetchChangePassword = createAsyncThunk(
   "auth/fetchChangePassword",
-  async (data: IChangePassword, { rejectWithValue }) => {
+  async (data: TChangePassword, { rejectWithValue }) => {
     try {
       const response = await $api.post(`/auth/change-password`, data, {
         withCredentials: true
       });
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error?.response?.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error?.response?.data);
+      }
     }
   }
 );

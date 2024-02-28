@@ -36,7 +36,7 @@ const authSlice = createSlice({
       .addCase(fetchSignIn.pending, (state) => {
         state.pending = true;
       })
-      .addCase(fetchSignIn.fulfilled, (state, action) => {
+      .addCase(fetchSignIn.fulfilled, (state, action: any & { payload: any }) => {
         state.pending = false;
         state.token = action.payload;
         state.errors = null;

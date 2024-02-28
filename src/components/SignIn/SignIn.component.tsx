@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Button, Checkbox, Input, Menu, MenuProps, Space, Typography, Form, Image } from "antd";
 import { GooglePlusOutlined } from "@ant-design/icons";
 
-import { IAuth } from "../../types/auth.interface";
-import { ICheckEmail } from "../../types/check-email.interface";
+import { TAuth } from "@shared/auth.type";
+import { TCheckEmail } from "@shared/check-email.type";
 
 import styles from './index.module.scss';
 import 'antd/lib/button/style/index.css';
@@ -24,8 +24,8 @@ const SignInComponent = ({
   handleSignIn,
 }: {
   handleRedirectToSignUp: () => void;
-  handleRedirectToForgetPassword: (data: ICheckEmail) => void;
-  handleSignIn: (data: IAuth) => void;
+  handleRedirectToForgetPassword: (data: TCheckEmail) => void;
+  handleSignIn: (data: TAuth) => void;
 }) => {
   const [form] = Form.useForm();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);

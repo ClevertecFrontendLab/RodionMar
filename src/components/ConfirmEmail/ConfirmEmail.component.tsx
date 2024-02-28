@@ -9,7 +9,7 @@ import cn from "classnames";
 
 import VerificationInput from "react-verification-input";
 
-import { IConfirmEmail } from "../../types/confirm-email.interface";
+import { TConfirmEmail } from "@shared/confirm-email.type";
 
 import styles from './index.module.scss';
 
@@ -21,7 +21,7 @@ const ConfirmEmailComponent = ({
   handleConfirmEmail,
   status = "execute"
 }: {
-  handleConfirmEmail: (data: IConfirmEmail) => void;
+  handleConfirmEmail: (data: TConfirmEmail) => void;
   status?: "execute" | "error";
 }) => {
   const [verificationValue, setVerificationValue] = useState("");

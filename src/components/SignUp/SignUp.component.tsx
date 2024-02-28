@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Input, Menu, MenuProps, Typography, Form, Image } from "antd";
 import { GooglePlusOutlined } from "@ant-design/icons";
 
-import { IAuth } from "../../types/auth.interface";
+import { TAuth } from "@shared/auth.type";
 
 import styles from './index.module.scss';
 import 'antd/lib/button/style/index.css';
@@ -22,7 +22,7 @@ const SignUpComponent = ({
   handleRedirectToSignIn
 }: {
   handleRedirectToSignIn: () => void;
-  handleSignUp: (data: IAuth) => void;
+  handleSignUp: (data: TAuth) => void;
 }) => {
   const [form] = Form.useForm();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
@@ -68,9 +68,6 @@ const SignUpComponent = ({
 
   const handleValidate = () => {
     form.validateFields()
-      .then((values) => {
-        console.log(`Validation passed: ${values}`);
-      })
       .catch((errors) => {
         errors.errorFields.length > 0
           ? setIsButtonDisabled(true)

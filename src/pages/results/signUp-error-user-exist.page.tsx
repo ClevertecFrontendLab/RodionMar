@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 
 import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
 
-import { useLocation } from "react-router-dom"
-import { push } from "redux-first-history";
+import { useLocation } from "react-router-dom";
+import { history } from "@redux/configure-store";
 
 
 const SignUpErrorUserExist = () => {
-  const navigationDispatch = useAppDispatch();
   const location = useLocation();
 
   useEffect(() => {
     const isDirectAccess = !location.state || !location.state.fromServer;
 
     if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
+      history.push('/auth');
     }
     
-  }, [navigationDispatch, location.state]);
+  }, [history, location.state]);
 
   return(
     <Result 
@@ -27,7 +25,7 @@ const SignUpErrorUserExist = () => {
       description="Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail."
       buttonTestId="registration-back-button"
       buttonText="Назад к регистрации"
-      handleRedirect={() => navigationDispatch(push("/auth/registration"))}
+      handleRedirect={() => history.push("/auth/registration")}
     />
   )
 };

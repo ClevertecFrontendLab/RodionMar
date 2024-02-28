@@ -17,7 +17,7 @@ import styles from "./index.module.scss";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-interface ISidebarProps {
+type TSidebarProps = {
   isSiderOpened: boolean;
   setIsSidebarOpened: (isSiderOpened: boolean) => void;
   windowWidth: number;
@@ -27,7 +27,7 @@ const { Sider } = Layout;
 const { Text } = Typography;
 
 
-const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: ISidebarProps) => {
+const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: TSidebarProps) => {
   const [activeItemKey, setActiveItemKey] = useState<string>("1");
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();

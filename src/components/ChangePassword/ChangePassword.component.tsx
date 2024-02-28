@@ -8,7 +8,7 @@ import 'antd/lib/checkbox/style/index.css';
 import 'antd/lib/space/style/index.css';
 import 'antd/lib/typography/style/index.css';
 
-import { IChangePassword } from "../../types/change-password.interface";
+import { TChangePassword } from "@shared/change-password.type";
 
 const { Title } = Typography;
 
@@ -29,7 +29,7 @@ export const handleChangePassword = (
 const ChangePasswordComponent = ({
   handleChangePassword
 }: {
-  handleChangePassword: (data: IChangePassword) => void;
+  handleChangePassword: (data: TChangePassword) => void;
 }) => {
   const [form] = Form.useForm();
 
@@ -37,7 +37,7 @@ const ChangePasswordComponent = ({
     { required: true, min: 8, pattern: /^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*\d).{8,}$/, message: "" },
   ];
 
-  const onFinish = (values: IChangePassword) => {
+  const onFinish = (values: TChangePassword) => {
     localStorage.setItem("changePasswordData", JSON.stringify(values));
 
     handleChangePassword(values)

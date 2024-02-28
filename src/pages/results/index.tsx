@@ -6,12 +6,12 @@ import ResultRoutes from './result.routes';
 import { AuthPendingSelector } from '@pages/auth/store/auth.selector';
 
 const ResultPage = () => {
-    const fetchingPending = useSelector(AuthPendingSelector);
+    const fetchPending = useSelector(AuthPendingSelector);
     return (
         <div className={styles.wrapper}>
             <div className={styles.blur}>
                 <div className={styles.contentWrapper}>
-                    {fetchingPending !== undefined && fetchingPending === true && (
+                    {fetchPending !== undefined && fetchPending === true && (
                         <LottieLoader data-test-id='loader' />
                     )}
                     <ResultRoutes />

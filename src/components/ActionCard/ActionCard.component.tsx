@@ -6,16 +6,16 @@ import styles from "./index.module.scss"
 
 type ButtonIconType = "heart" | "calendar" | "profile";
 
-interface IActionCard {
+type TActionCard = {
   title: string,
   buttonText: string,
-  buttonIcon: ButtonIconType | string
+  buttonIcon: ButtonIconType
 }
 
 const { Text } = Typography;
 
 
-const ActionCard: React.FC<IActionCard> = ({ title, buttonText, buttonIcon }) => {
+const ActionCard = ({ title, buttonText, buttonIcon }: TActionCard) => {
   const renderButtonIcon = () => {
     switch (buttonIcon) {
       case "heart":

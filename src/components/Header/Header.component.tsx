@@ -4,7 +4,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import styles from "./index.module.scss";
 
 
-interface IHeaderProps {
+type THeaderProps = {
   isSiderOpened: boolean
   windowWidth: number;
 }
@@ -13,7 +13,7 @@ interface IHeaderProps {
 const { Header } = Layout;
 const { Title, Text } = Typography;
 
-const HeaderComponent = ({ isSiderOpened, windowWidth }: IHeaderProps) => (
+const HeaderComponent = ({ isSiderOpened, windowWidth }: THeaderProps) => (
   <Header className={styles.headerStyles}>
     <Row>
       <Col>

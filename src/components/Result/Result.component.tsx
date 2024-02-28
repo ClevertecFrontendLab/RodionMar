@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 const { Title, Text } = Typography;
 
-interface IResultProps {
+type TResultProps = {
   result: "warning" | "error" | "success" | "execute" | "error-image" | "404";
   title: string;
   description: React.ReactNode;
@@ -27,7 +27,7 @@ const Result = ({
   buttonTestId,
   isConfirmEmailPage = false,
   handleRedirect
-}: IResultProps) => {
+}: TResultProps) => {
   let iconSrc = "";
   switch (result) {
     case "success":

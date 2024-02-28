@@ -6,12 +6,12 @@ import { AuthPendingSelector } from "./store/auth.selector";
 import LottieLoader from "@components/LottieLoader/LottieLoader";
 
 const AuthPage = () => {
-  const fetchingPending = useSelector(AuthPendingSelector);
+  const fetchPending = useSelector(AuthPendingSelector);
   return (
     <div className={styles.wrapper}>
       <div className={styles.blur}>
         <div className={styles.contentWrapper}>
-          {fetchingPending !== undefined && fetchingPending === true && (
+          {fetchPending !== undefined && fetchPending === true && (
             <LottieLoader data-test-id='loader' />
           )}
           <AuthRoutes />

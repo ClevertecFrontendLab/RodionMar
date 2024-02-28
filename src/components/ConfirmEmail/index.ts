@@ -1,3 +1,3 @@
-import ConfirmEmail from "@pages/confirmEmail/confirmEmail.page";
+import ConfirmEmail from "@pages/auth/confirmEmail.page";
 
 export default ConfirmEmail;

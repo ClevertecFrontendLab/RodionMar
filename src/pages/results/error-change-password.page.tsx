@@ -1,48 +1,41 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useAppDispatch } from '@hooks/index';
-import { AppDispatch } from "@redux/configure-store";
+import { AppDispatch, history } from "@redux/configure-store";
 import { fetchChangePassword } from "@pages/auth/store/auth.actions";
-import { push } from 'redux-first-history';
-import { CallHistoryMethodAction } from "redux-first-history/build/es6/actions";
 
 import Result from "@components/Result";
 
-import { To, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 export const handleResponse = async (
   response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
 ) => {
   if (response.meta.requestStatus === "fulfilled") {
-    navigationDispatch(push("/result/success-change-password", { fromServer: true }));
+    history.push("/result/success-change-password", { fromServer: true });
     localStorage.removeItem("changePasswordData");
     return true;
   } else {
-    navigationDispatch(push("/result/error-change-password", { fromServer: true }));
+    history.push("/result/error-change-password", { fromServer: true });
   }
 };
 
 const ErrorChangePasswordPage = () => {
-  const authDispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 
-  const navigationDispatch = useAppDispatch();
+  useEffect(() => {
+    const isDirectAccess = !location.state || !location.state.fromServer;
 
-  
-    useEffect(() => {
-      const isDirectAccess = !location.state || !location.state.fromServer;
-  
-      if (isDirectAccess) {
-        navigationDispatch(push('/auth'));
-      }
-      
-    }, [navigationDispatch, location.state]);
+    if (isDirectAccess) {
+      history.push('/auth');
+    }
+
+  }, [history, location.state]);
 
   const handleRepeatChangePassword = async () => {
     if (location.pathname === "/auth/result/error-change-password") {
-      navigationDispatch(push("/auth/change-passwword"));
+      history.push("/auth/change-passwword");
     }
 
     const storedPassword = JSON.parse(
@@ -54,8 +47,8 @@ const ErrorChangePasswordPage = () => {
       confirmPassword: storedPassword.password
     };
 
-    const responseData = await authDispatch(fetchChangePassword(data));
-    handleResponse(responseData, navigationDispatch);
+    const responseData = await dispatch(fetchChangePassword(data));
+    handleResponse(responseData);
   };
 
   return (

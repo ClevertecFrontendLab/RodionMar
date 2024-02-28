@@ -1,20 +1,17 @@
-import { To, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { fetchConfirmEmail } from "@pages/auth/store/auth.actions";
-import { AppDispatch, useAppDispatch } from "@redux/configure-store";
+import { AppDispatch, history } from "@redux/configure-store";
 import { useDispatch } from "react-redux";
 
 import ConfirmEmailComponent from "@components/ConfirmEmail/ConfirmEmail.component";
 
-import { IConfirmEmail } from "../../types/confirm-email.interface";
-import { push } from "redux-first-history";
-import { CallHistoryMethodAction } from "redux-first-history/build/es6/actions";
+import { TConfirmEmail } from "@shared/confirm-email.type";
 import { useEffect } from "react";
 
 
 export const handleResponseConfirmEmail = (
   response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
 ) => {
   if (response.meta.requestStatus === "fulfilled") {
     if (window.localStorage.getItem("status")) {
@@ -24,7 +21,7 @@ export const handleResponseConfirmEmail = (
     window.localStorage.setItem("checkEmailData", response.payload.email);
     window.localStorage.setItem("status", "execute");
 
-    navigationDispatch(push("/auth/change-password", { fromServer: true }));
+    history.push("/auth/change-password", { fromServer: true });
     return true;
   } else {
     if (window.localStorage.getItem("status")) {
@@ -32,14 +29,12 @@ export const handleResponseConfirmEmail = (
     }
     window.localStorage.setItem("status", "error");
 
-    navigationDispatch(push("/auth/confirm-email", { fromServer: true }));
+    history.push("/auth/confirm-email", { fromServer: true });
   }
 };
 
 const ConfirmEmailPage = () => {
-  const authDispatch = useDispatch<AppDispatch>();
-
-  const navigationDispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const location = useLocation();
 
@@ -47,15 +42,15 @@ const ConfirmEmailPage = () => {
     const isDirectAccess = !location.state || !location.state.fromServer;
 
     if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
+      history.push("/auth");
     }
 
-  }, [navigationDispatch, location.state]);
+  }, [history, location.state]);
 
 
-  const handleConfirmEmail = async (data: IConfirmEmail) => {
-    const responseData = await authDispatch(fetchConfirmEmail(data));
-    handleResponseConfirmEmail(responseData, navigationDispatch);
+  const handleConfirmEmail = async (data: TConfirmEmail) => {
+    const responseData = await dispatch(fetchConfirmEmail(data));
+    handleResponseConfirmEmail(responseData);
   };
 
   return (

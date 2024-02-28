@@ -1,4 +1,4 @@
-export interface IChangePassword {
+export type TChangePassword = {
   password: string,
   confirmPassword: string
 }

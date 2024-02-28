@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 
 import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
-import { push } from "redux-first-history";
+import { history } from "@redux/configure-store";
 
 import { useLocation } from "react-router-dom"
 
 
 const ErrorCheckEmailNoExist = () => {
-  const navigationDispatch = useAppDispatch();
   const location = useLocation();
 
   useEffect(() => {
     const isDirectAccess = !location.state || !location.state.fromServer;
 
     if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
+      history.push('/auth');
     }
     
-  }, [navigationDispatch, location.state]);
+  }, [history, location.state]);
 
   return (
     <Result
@@ -28,7 +26,7 @@ const ErrorCheckEmailNoExist = () => {
       buttonText="Попробовать снова"
       buttonTestId="check-retry-button"
       isConfirmEmailPage
-      handleRedirect={() => navigationDispatch(push('/auth'))}
+      handleRedirect={() => history.push('/auth')}
     />
   )
 };
