@@ -1,6 +1,6 @@
 # CleverFIT
 
-## Инструкция к спринту №2 https://docs.google.com/document/d/1YifOvaNldwf5tW7mcdszEZr7WjFPxCBdKmf9aRZkbek/edit?usp=sharing
+## Инструкция к спринту №3 https://docs.google.com/document/d/1aVHB_suV1ozIWJK-L7avlFtow9yVetVY/edit?usp=sharing&ouid=107087056934021538327&rtpof=true&sd=true
 
 ## Установка Node.js, npm, nvm, Yarn
 
