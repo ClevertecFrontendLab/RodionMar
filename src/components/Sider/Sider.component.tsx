@@ -80,7 +80,7 @@ const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: TSid
   const sidebarWidth = windowWidth < 705 ? 106 : (isSiderOpened ? 208 : 64);
 
   return (
-    <Sider className={isSiderOpened ? cn(styles.siderStyles, styles.siderOpenedStyles) : cn(styles.siderStyles, styles.siderClosedStyles)} width={sidebarWidth}>
+    <Sider className={isSiderOpened ? cn(styles.siderStyles, styles.siderOpenedStyles) : cn(styles.siderStyles, styles.siderClosedStyles)} width={sidebarWidth} theme="light" collapsedWidth={windowWidth > 705 ? 64 : 0} collapsed={!isSiderOpened}>
       <div className={styles.layoutWrapperStyles}>
         <div>
           {isSiderOpened ? (
@@ -104,6 +104,7 @@ const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: TSid
             className={isSiderOpened ? cn(styles.exitButtonStyles, styles.exitButtonOpenedStyles) : cn(styles.exitButtonStyles, styles.exitButtonClosedStyles)}
             icon={<Image src="../../../Exit.svg" alt="exit icon" preview={false} className={styles.exitIconStyles} />}
             onClick={logoutHandler}
+            type='text'
           >
             {isSiderOpened ? (
               <Text className={styles.exitTextStyles}>

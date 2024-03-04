@@ -1,15 +1,13 @@
-import { Card, Button, Typography, Divider } from 'antd';
+import { Card, Button, Typography } from 'antd';
 
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 
 import styles from "./index.module.scss"
 
-type ButtonIconType = "heart" | "calendar" | "profile";
-
 type TActionCard = {
   title: string,
   buttonText: string,
-  buttonIcon: ButtonIconType
+  buttonIcon: "heart" | "calendar" | "profile"
 }
 
 const { Text } = Typography;
@@ -30,8 +28,7 @@ const ActionCard = ({ title, buttonText, buttonIcon }: TActionCard) => {
   }
   return (
     <Card className={styles.cardStyles} title={<Text className={styles.cardTitleStyles}>{title}</Text>}>
-      <Divider className={styles.divider} />
-      <Button className={styles.buttonStyles} icon={renderButtonIcon()} type="link">
+      <Button className={styles.buttonStyles} icon={renderButtonIcon()} type="link" block>
         <Text className={styles.buttonTextStyles}>
           {buttonText}
         </Text>

@@ -4,11 +4,18 @@
   width: 100%;
   box-sizing: border-box;
   padding: 156px 24px 42px;
+  background: none;
+  & div[class*='ant-card-head-title'] {
+    box-sizing: border-box;
+    padding: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .wrapperStyles {
   display: flex;
-  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: flex-end;
 }
@@ -16,35 +23,21 @@
 .commentButtonStyles {
   background: transparent;
   @include H6-regular($primary-light-6);
-  border: none;
-  &:hover,
-  &:focus{
-    outline: none;
-    border: none;
-  }
 }
 
 .cardStyles {
   background-color: $character-light-primary-inverse;
-  padding: 12px 0;
   box-sizing: border-box;
 }
 
 .cardTitleStyles {
   @include H6-regular($primary-light-6);
-  padding-left: 24px;
+  text-align: left;
 }
 
 .subtitleStyles {
   @include Body-regular($character-light-secondary-45);
-  padding: 0 24px;
-}
-
-.divider {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  background-color: $character-light-dividers;
-  height: 1px;
+  text-align: left;
 }
 
 .buttonContainerStyles {
@@ -52,22 +45,7 @@
 }
 
 .cardButtonStyles {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   @include Body-regular($character-light-title-85);
-  column-gap: 8px;
-  width: 100%;
-  border: none;
-  background: none;
-  transition: all 0.2s;
-  &:hover,
-  &:focus,
-  &:active{
-    outline: none;
-    border: none;
-    background-color: $character-light-table-header;
-  }
 }
 
 @media screen and (max-width: 835px) {
@@ -88,6 +66,12 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     row-gap: 24px;
+    .cardCol {
+      order: 0;
+    }
+    .buttonCol {
+      order: 1;
+    }
   }
 
   div[class*='ant-card-head-title'] {
@@ -95,26 +79,11 @@
   }
 
   .cardTitleStyles {
-    padding-left: 0;
+    text-align: center;
   }
 
   .subtitleStyles {
-    display: block;
     text-align: center;
-    margin-top: 8px;
   }
 
-  .buttonContainerStyles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .cardButtonStyles {
-    padding-top: 7px;
-    padding-bottom: 7px;
-  }
-
-  .commentButtonStyles {
-    width: 100%;
-  }
 }

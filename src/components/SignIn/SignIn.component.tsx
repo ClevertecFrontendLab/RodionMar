@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button, Checkbox, Input, Menu, MenuProps, Space, Typography, Form, Image } from "antd";
 import { GooglePlusOutlined } from "@ant-design/icons";
@@ -7,12 +7,6 @@ import { TAuth } from "@shared/auth.type";
 import { TCheckEmail } from "@shared/check-email.type";
 
 import styles from './index.module.scss';
-import 'antd/lib/button/style/index.css';
-import 'antd/lib/menu/style/index.css';
-import 'antd/lib/input/style/index.css';
-import 'antd/lib/checkbox/style/index.css';
-import 'antd/lib/space/style/index.css';
-import 'antd/lib/typography/style/index.css';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -22,13 +16,16 @@ const SignInComponent = ({
   handleRedirectToSignUp,
   handleRedirectToForgetPassword,
   handleSignIn,
+  handleGoogleAuth
 }: {
   handleRedirectToSignUp: () => void;
   handleRedirectToForgetPassword: (data: TCheckEmail) => void;
   handleSignIn: (data: TAuth) => void;
+  handleGoogleAuth: () => void;
 }) => {
   const [form] = Form.useForm();
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
   const menuItems: MenuItem[] = [
     {
@@ -62,6 +59,9 @@ const SignInComponent = ({
   ];
 
   const onFinish = (values: any) => {
+    if(window.localStorage.getItem("profile")) {
+      window.localStorage.removeItem("profile");
+    }
     window.localStorage.setItem("profile", JSON.stringify(values));
 
     const formValues = {
@@ -95,15 +95,6 @@ const SignInComponent = ({
     handleRedirectToForgetPassword(data);
   }
 
-  useEffect(() => {
-    const storedProfile = JSON.parse(window.localStorage.getItem('profile') || '{}');
-    if (storedProfile.remember) {
-      window.localStorage.setItem('profile', JSON.stringify(storedProfile));
-    } else {
-      window.localStorage.removeItem('profile');
-    }
-  }, []);
-
   return (
     <div className={styles.formWrapper}>
       <Image
@@ -117,7 +108,7 @@ const SignInComponent = ({
         name='signIn'
         form={form}
         initialValues={{
-          remember: true,
+          remember: isCheckboxChecked,
         }}
         onValuesChange={handleValidate}
         autoComplete='off'
@@ -141,7 +132,7 @@ const SignInComponent = ({
             />
           </Form.Item>
 
-          <Form.Item name='password' rules={passwordRules}>
+          <Form.Item name='password' rules={passwordRules} className={styles.fieldWrapper}>
             <Input.Password 
               placeholder='Пароль' 
               className={styles.field} 
@@ -151,10 +142,10 @@ const SignInComponent = ({
         </div>
 
         <Space.Compact direction='horizontal' className={styles.spaceContainer}>
-          <Form.Item name='remember' valuePropName='checked'>
-            <Checkbox data-test-id="login-remember">Запомнить меня</Checkbox>
+          <Form.Item name='remember' className={styles.fieldWrapper} >
+            <Checkbox data-test-id="login-remember" checked={isCheckboxChecked} onClick={() => setIsCheckboxChecked(!isCheckboxChecked)}>Запомнить меня</Checkbox>
           </Form.Item>
-          <Form.Item name='forgotPassword'>
+          <Form.Item name='forgotPassword' className={styles.fieldWrapper}>
             <Button
               type="link"
               onClick={handleClickForgetPassword}
@@ -168,7 +159,7 @@ const SignInComponent = ({
         </Space.Compact>
 
         <div className={styles.buttonWrapper}>
-          <Form.Item>
+          <Form.Item className={styles.fieldWrapper}>
             <Button
               type='primary'
               size='large'
@@ -186,6 +177,7 @@ const SignInComponent = ({
               size='large'
               className={styles.authButton}
               icon={<GooglePlusOutlined className={styles.authIcon} />}
+              onClick={handleGoogleAuth}
             >
               Войти через Google
             </Button>

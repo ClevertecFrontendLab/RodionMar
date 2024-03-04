@@ -6,12 +6,6 @@ import { GooglePlusOutlined } from "@ant-design/icons";
 import { TAuth } from "@shared/auth.type";
 
 import styles from './index.module.scss';
-import 'antd/lib/button/style/index.css';
-import 'antd/lib/menu/style/index.css';
-import 'antd/lib/input/style/index.css';
-import 'antd/lib/checkbox/style/index.css';
-import 'antd/lib/space/style/index.css';
-import 'antd/lib/typography/style/index.css';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -151,7 +145,7 @@ const SignUpComponent = ({
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Form.Item>
+          <Form.Item className={styles.fieldWrapper}>
             <Button
               type="primary"
               size="large"
@@ -164,7 +158,7 @@ const SignUpComponent = ({
             </Button>
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item className={styles.fieldWrapper}>
             <Button htmlType="submit" size="large" className={styles.authButton} icon={<GooglePlusOutlined className={styles.authIcon} />}>
               Регистрация через Google
             </Button>

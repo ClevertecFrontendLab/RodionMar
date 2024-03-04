@@ -1,12 +1,6 @@
 import { Button, Input, Form, Space, Typography } from "antd";
 
 import styles from './index.module.scss';
-import 'antd/lib/button/style/index.css';
-import 'antd/lib/menu/style/index.css';
-import 'antd/lib/input/style/index.css';
-import 'antd/lib/checkbox/style/index.css';
-import 'antd/lib/space/style/index.css';
-import 'antd/lib/typography/style/index.css';
 
 import { TChangePassword } from "@shared/change-password.type";
 
@@ -98,7 +92,7 @@ const ChangePasswordComponent = ({
             </Form.Item>
           </Space.Compact>
 
-          <Form.Item>
+          <Form.Item className={styles.fieldWrapper}>
             <Button
               type="primary"
               size="large"

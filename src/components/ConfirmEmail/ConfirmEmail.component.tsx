@@ -1,9 +1,6 @@
 import { useState } from "react";
 
 import { Space, Typography, Image } from "antd";
-import 'antd/lib/button/style/index.css';
-import 'antd/lib/space/style/index.css';
-import 'antd/lib/typography/style/index.css';
 
 import cn from "classnames";
 

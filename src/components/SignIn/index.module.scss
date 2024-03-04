@@ -29,6 +29,13 @@
       height: auto;
     }
   }
+  .fieldWrapper{
+    margin: 0;
+  
+    .fieldAddon{
+      color: $character-light-title-85;
+    }
+  }
 }
 
 .menu {
@@ -67,27 +74,7 @@ ul[class*='ant-menu-horizontal'] {
   }
 }
 
-.fieldWrapper{
-  width: 100%;
 
-  label{
-    display: block;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-width: 1px 0 1px 1px;
-    border-style: solid;
-    border-color: $neutral-gray-5;
-    padding: 0 12px;
-    height: 100%;
-    color: $character-light-title-85;
-    background: $neutral-gray-2;
-  }
-
-  .fieldAddon{
-    color: $character-light-title-85;
-  }
-}
 
 .field{
   width: 100%;
