@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 
-import Result from "@components/Result";
+import styles from "./index.module.scss";
 
 import { useLocation } from "react-router-dom";
 import { history } from "@redux/configure-store";
+import { Result, Button } from "antd";
 
 
 const SignUpErrorUserExist = () => {
@@ -19,13 +20,23 @@ const SignUpErrorUserExist = () => {
   }, [history, location.state]);
 
   return(
-    <Result 
-      result="error"
+    <Result
+      className={styles.result}
+      status="error"
       title="Данные не сохранились"
-      description="Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail."
-      buttonTestId="registration-back-button"
-      buttonText="Назад к регистрации"
-      handleRedirect={() => history.push("/auth/registration")}
+      subTitle="Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail."
+      extra={<Button
+        type="primary"
+        size="large"
+        htmlType="button"
+        className={styles.button}
+        onClick={() => history.push("/auth/registration")}
+        data-test-id="login-retry-button"
+        block
+      >
+        Назад к регистрации
+      </Button>
+      }
     />
   )
 };

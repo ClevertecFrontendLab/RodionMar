@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 
-import Result from "@components/Result";
 import { fetchCheckEmail } from "@pages/auth/store/auth.actions";
 import { AppDispatch, history } from "@redux/configure-store";
 import { useDispatch } from "react-redux";
 
 import { useLocation } from "react-router-dom"
+import { Result, Button } from "antd";
 
+import cn from "classnames";
+
+import styles from "./index.module.scss";
 
 export const handleResponseCheckEmail = (
   response: any,
@@ -50,13 +53,21 @@ const ErrorCheckEmail = () => {
 
   return (
     <Result
-      result="404"
+      className={cn(styles.result, styles.emailResult)}
+      status="500"
       title="Что-то пошло не так"
-      description="Произошла ошибка, попробуйте отправить форму ещё раз."
-      buttonTestId="check-back-button"
-      buttonText="Назад"
-      isConfirmEmailPage
-      handleRedirect={handleRepeatCheckEmail}
+      subTitle="Произошла ошибка, попробуйте отправить форму ещё раз."
+      extra={<Button
+        type="primary"
+        size="large"
+        htmlType="button"
+        className={styles.button}
+        onClick={handleRepeatCheckEmail}
+        data-test-id="check-back-button"
+      >
+        Назад
+      </Button>
+      }
     />
   )
 };

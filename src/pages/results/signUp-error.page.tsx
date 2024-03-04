@@ -2,16 +2,17 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, history } from "@redux/configure-store";
 import { fetchSignUp } from "@pages/auth/store/auth.actions";
 
-import Result from "@components/Result";
+import styles from "./index.module.scss";
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Result, Button } from "antd";
 
 export const handleResponse = async (
   response: any,
 ) => {
   if (response.meta.requestStatus === "fulfilled") {
-    history.push("/result/success", { fromServer: true } );
+    history.push("/result/success", { fromServer: true });
     return true;
   } else {
     switch (response.payload) {
@@ -34,7 +35,7 @@ const SignUpError = () => {
     if (isDirectAccess) {
       history.push('/auth');
     }
-    
+
   }, [history, location.state]);
 
   const handleRepeatRegistration = async () => {
@@ -56,16 +57,24 @@ const SignUpError = () => {
   };
 
   return (
-    <div>
-      <Result
-        result="error"
-        title="Данные не сохранились"
-        description={<>Что-то пошло не так и ваша регистрация<br />не завершилась. Попробуйте ещё раз.</>}
-        buttonText="Повторить"
-        buttonTestId="registration-retry-button"
-        handleRedirect={handleRepeatRegistration}
-      />
-    </div>
+    <Result
+      className={styles.result}
+      status="error"
+      title="Данные не сохранились"
+      subTitle={<>Что-то пошло не так и ваша регистрация<br />не завершилась. Попробуйте ещё раз.</>}
+      extra={<Button
+        type="primary"
+        size="large"
+        htmlType="button"
+        className={styles.button}
+        onClick={handleRepeatRegistration}
+        data-test-id="registration-retry-button"
+        block
+      >
+        Повторить
+      </Button>
+      }
+    />
   );
 };
 

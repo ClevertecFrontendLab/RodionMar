@@ -1,8 +1,11 @@
-import Result from "@components/Result";
 import { useEffect } from "react";
 
 import { useLocation } from "react-router-dom"
 import { history } from "@redux/configure-store";
+import { Result, Button } from "antd";
+
+import styles from "./index.module.scss";
+
 
 const SuccessChangePasswordPage = () => {
   const location = useLocation();
@@ -17,13 +20,23 @@ const SuccessChangePasswordPage = () => {
   }, [history, location.state]);
   
   return(
-    <Result 
-      result="success"
+    <Result
+      className={styles.result}
+      status="success"
       title="Пароль успешно изменен"
-      description={<>Теперь можно войти в аккаунт, используя<br />свой логин и новый пароль</>}
-      buttonTestId="change-entry-button"
-      buttonText="Вход"
-      handleRedirect={() => history.push('/auth')}
+      subTitle={<>Теперь можно войти в аккаунт, используя<br />свой логин и новый пароль</>}
+      extra={<Button
+        type="primary"
+        size="large"
+        htmlType="button"
+        className={styles.button}
+        onClick={() => history.push('/auth')}
+        data-test-id="registration-enter-button"
+        block
+      >
+        Вход
+      </Button>
+      }
     />
   )
 };

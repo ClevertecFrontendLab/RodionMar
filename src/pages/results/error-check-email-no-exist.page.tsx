@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 
-import Result from "@components/Result";
 import { history } from "@redux/configure-store";
 
 import { useLocation } from "react-router-dom"
+import { Result, Button } from "antd";
+
+import cn from "classnames";
+
+import styles from "./index.module.scss";
 
 
 const ErrorCheckEmailNoExist = () => {
@@ -15,18 +19,26 @@ const ErrorCheckEmailNoExist = () => {
     if (isDirectAccess) {
       history.push('/auth');
     }
-    
+
   }, [history, location.state]);
 
   return (
     <Result
-      result="error"
+      className={cn(styles.result, styles.emailResult)}
+      status="error"
       title="Такой e-mail не зарегистрирован"
-      description={<>Мы не нашли в базе вашего e-mail. Попробуйте<br /> войти с другим e-mail</>}
-      buttonText="Попробовать снова"
-      buttonTestId="check-retry-button"
-      isConfirmEmailPage
-      handleRedirect={() => history.push('/auth')}
+      subTitle={<>Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail</>}
+      extra={<Button
+        type="primary"
+        size="large"
+        htmlType="button"
+        className={styles.button}
+        onClick={() => history.push('/auth')}
+        data-test-id="check-retry-button"
+      >
+        Попробовать снова
+      </Button>
+      }
     />
   )
 };

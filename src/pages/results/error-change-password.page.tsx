@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, history } from "@redux/configure-store";
 import { fetchChangePassword } from "@pages/auth/store/auth.actions";
 
-import Result from "@components/Result";
+import styles from "./index.module.scss";
 
 import { useLocation } from "react-router-dom";
+import { Button, Result } from "antd";
 
 
 export const handleResponse = async (
@@ -34,7 +35,7 @@ const ErrorChangePasswordPage = () => {
   }, [history, location.state]);
 
   const handleRepeatChangePassword = async () => {
-    if (location.pathname === "/auth/result/error-change-password") {
+    if (location.pathname === "/result/error-change-password") {
       history.push("/auth/change-passwword");
     }
 
@@ -52,16 +53,23 @@ const ErrorChangePasswordPage = () => {
   };
 
   return (
-    <div>
-      <Result
-        result="error"
-        title="Данные не сохранились"
-        description="Что-то пошло не так. Попробуйте ещё раз"
-        buttonTestId="change-retry-button"
-        buttonText="Повторить"
-        handleRedirect={handleRepeatChangePassword}
-      />
-    </div>
+    <Result
+      className={styles.result}
+      status="error"
+      title="Данные не сохранились"
+      subTitle="Что-то пошло не так. Попробуйте ещё раз"
+      extra={<Button
+        type="primary"
+        size="large"
+        htmlType="button"
+        className={styles.button}
+        onClick={handleRepeatChangePassword}
+        data-test-id="change-retry-button"
+        block
+      >
+        Повторить
+      </Button>}
+    />
   );
 };
 

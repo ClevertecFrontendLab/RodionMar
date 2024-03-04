@@ -1,9 +1,16 @@
 @import '../../styles/index.scss';
 
+
 .mainLayout {
   display: flex;
   min-height: 100vh;
   overflow: hidden;
+}
+
+.button{
+  padding: 10px 15px;
+  height: auto;
+  @include Body-regular($character-light-primary-inverse);
 }
 
 .contentWrapper {
@@ -48,10 +55,26 @@
   background: $neutral-gray-1;
 }
 
-.cardWrapperStyles {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 16px;
+
+
+.modalWrapper{
+  z-index: 12;
+  opacity: 1;
+  background-color: #799CD480;
+  backdrop-filter: blur(3px);
+  .modal{
+    opacity: 1 !important;
+  }
+  div[class*='ant-modal-body'] {
+    padding: 0;
+  }
+  span[class*='ant-modal-close-x'] {
+    display: none;
+  }
+}
+
+.result{
+  padding: 64px 32px 56px !important;
 }
 
 @media screen and (max-width: 705px) {
@@ -62,6 +85,29 @@
   .cardWrapperStyles {
     display: grid;
     grid-template-columns: 1fr;
+    row-gap: 8px;
+    justify-content: center;
+    .card{
+      max-width: 100%;
+    }
+  }
+
+  .possibilitiesTextStyles {
+    padding: 16px;
+  }
+
+  .helperTitleStyles {
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: 361px) {
+  .containerStyles {
+    padding: 24px 16px;
+  }
+
+  .cardWrapperStyles {
+    flex-direction: column;
     row-gap: 8px;
     justify-content: center;
   }

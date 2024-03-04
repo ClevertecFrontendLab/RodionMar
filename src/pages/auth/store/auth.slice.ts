@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchSignIn, fetchSignUp, fetchCheckEmail, fetchConfirmEmail, fetchChangePassword } from "./auth.actions";
+import { fetchSignIn, fetchSignUp, fetchCheckEmail, fetchConfirmEmail, fetchChangePassword, fetchGoogleAuth } from "./auth.actions";
 
 interface IAuthError {
   statusCode: number;
@@ -90,6 +90,18 @@ const authSlice = createSlice({
         state.errors = null;
       })
       .addCase(fetchChangePassword.rejected, (state, action: any & { payload: any }) => {
+        state.pending = false;
+        state.errors = action.payload;
+      })
+      .addCase(fetchGoogleAuth.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(fetchGoogleAuth.fulfilled, (state, action) => {
+        state.pending = false;
+        state.token = action.payload;
+        state.errors = null;
+      })
+      .addCase(fetchGoogleAuth.rejected, (state, action: any & { payload: any }) => {
         state.pending = false;
         state.errors = action.payload;
       })
