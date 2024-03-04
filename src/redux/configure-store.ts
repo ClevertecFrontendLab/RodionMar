@@ -6,18 +6,22 @@ import { createBrowserHistory } from "history";
 
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 
-import auth from "@pages/auth/store/auth.slice"
+import auth from "@pages/auth/store/auth.slice";
+import feedback from "@pages/feedbacks/store/feedback.slice";
+import loading from "@components/LottieLoader/loading.slice";
 
 const {
   createReduxHistory,
   routerMiddleware,
   routerReducer
-} = createReduxHistoryContext({ history: createBrowserHistory() });
+} = createReduxHistoryContext({ history: createBrowserHistory(), savePreviousLocations: 5 });
 
 export const store = configureStore({
   reducer: {
     router: routerReducer,
-    auth
+    auth,
+    feedback,
+    loading
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });
