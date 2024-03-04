@@ -1,0 +1,15 @@
+@import '../../styles/index.scss';
+
+.modalWrapper{
+  background-color: #799CD480;
+  backdrop-filter: blur(3px);
+  div[class*='ant-modal-body'] {
+    padding: 0;
+  }
+  span[class*='ant-modal-close-x'] {
+    display: none;
+  }
+  div[class*='ant-result-title'] {
+    @include H3-medium($character-light-title-85);
+  }
+}
