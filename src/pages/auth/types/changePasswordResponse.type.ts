@@ -1,5 +1,5 @@
 export type TChangePasswordResponse = {
-  meta: {
-      requestStatus: string;
-  };
+    meta: {
+        requestStatus: string;
+    };
 };

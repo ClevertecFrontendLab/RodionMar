@@ -8,6 +8,11 @@ import { TAuth } from '@shared/auth.type';
 import styles from './index.module.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
+type TFinishValues = {
+    email: string;
+    confirmPassword: string;
+    password: string;
+};
 
 const { Link, Text } = Typography;
 
@@ -49,7 +54,8 @@ export const SignUpComponent = ({
         },
     ];
 
-    const onFinish = (values: any) => {
+    const onFinish = (values: TFinishValues) => {
+        console.log(values);
         sessionStorage.setItem('signUpData', JSON.stringify(values));
 
         const formValues = {

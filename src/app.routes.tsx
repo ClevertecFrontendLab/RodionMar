@@ -1,16 +1,15 @@
 import React, { Suspense } from 'react';
 
-import {LottieLoader} from '@components/LottieLoader';
+import { LottieLoader } from '@components/LottieLoader';
 
 import { Navigate, Routes, Route } from 'react-router-dom';
 
 import { AppRouteEnum } from '@constants/app-routes.enum';
 
-import {AuthPage} from '@pages/auth';
-import {ResultPage} from '@pages/results';
-import {FeedbacksPage} from '@pages/feedbacks';
+import { AuthPage } from '@pages/auth';
+import { ResultPage } from '@pages/results';
+import { FeedbacksPage } from '@pages/feedbacks';
 const MainPage = React.lazy(() => import('./pages/main'));
-
 
 const isAllowed = () => {
     const token = window.localStorage.getItem('token');
@@ -47,7 +46,10 @@ const AppRoutes = () => {
 
             {/* PRIVATE */}
             <Route path={AppRouteEnum.MAIN} element={<PrivateRouteMainPage element={MainPage} />} />
-            <Route path={AppRouteEnum.FEEDBACKS} element={<PrivateRoute element={FeedbacksPage} />} />
+            <Route
+                path={AppRouteEnum.FEEDBACKS}
+                element={<PrivateRoute element={FeedbacksPage} />}
+            />
 
             {/* DEFAULT */}
             <Route path='*' element={<Navigate to={AppRouteEnum.BASIC_AUTH} />} />

@@ -13,19 +13,19 @@ export type TAuthResponse = {
 };
 
 type TEmailResponse = {
-    email: string,
-    message: "string"
+    email: string;
+    message: 'string';
 };
 
 type TChangePasswordResponse = {
-    message: "string"
+    message: 'string';
 };
 
 type TAuthError = {
     status?: number;
     error?: string;
     message?: string;
-}
+};
 
 type TInitialState = {
     token?: string;
@@ -89,7 +89,7 @@ const authSlice = createSlice({
             })
             .addCase(fetchCheckEmail.rejected, (state, action) => {
                 state.pending = false;
-                state.errors = action.payload as { status: number, message: string };
+                state.errors = action.payload as { status: number; message: string };
             })
             .addCase(fetchConfirmEmail.pending, (state) => {
                 state.pending = true;
@@ -114,7 +114,7 @@ const authSlice = createSlice({
             .addCase(fetchChangePassword.rejected, (state, action) => {
                 state.pending = false;
                 state.errors = action.payload as TAuthError;
-            })
+            });
     },
 });
 

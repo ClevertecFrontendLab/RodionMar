@@ -5,6 +5,7 @@ import styles from './index.module.scss';
 import { useLocation } from 'react-router-dom';
 import { history } from '@redux/configure-store';
 import { Result, Button } from 'antd';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ErrorLogin = () => {
     const location = useLocation();
@@ -13,9 +14,9 @@ export const ErrorLogin = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
 
     return (
         <Result
@@ -29,7 +30,7 @@ export const ErrorLogin = () => {
                     size='large'
                     htmlType='button'
                     className={styles.button}
-                    onClick={() => history.push('/auth')}
+                    onClick={() => history.push(AppRouteEnum.AUTH)}
                     data-test-id='login-retry-button'
                     block
                 >

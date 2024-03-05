@@ -1,1 +1,1 @@
-export {ResultModal} from './ResultModal.component';
+export { ResultModal } from './ResultModal.component';

@@ -5,6 +5,7 @@ import { history } from '@redux/configure-store';
 import { Result, Button } from 'antd';
 
 import styles from './index.module.scss';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const SuccessChangePasswordPage = () => {
     const location = useLocation();
@@ -13,9 +14,9 @@ export const SuccessChangePasswordPage = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
 
     return (
         <Result
@@ -35,7 +36,7 @@ export const SuccessChangePasswordPage = () => {
                     size='large'
                     htmlType='button'
                     className={styles.button}
-                    onClick={() => history.push('/auth')}
+                    onClick={() => history.push(AppRouteEnum.AUTH)}
                     data-test-id='registration-enter-button'
                     block
                 >

@@ -1,4 +1,4 @@
-import {$api} from '../../../api/api';
+import { $api } from '../../../api/api';
 import { AxiosError } from 'axios';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -13,7 +13,7 @@ export const fetchSignIn = createAsyncThunk(
     async (data: TAuth, { rejectWithValue }) => {
         try {
             const response = await $api.post(`/auth/login`, data);
-            console.log(response.data)
+            console.log(response.data);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {

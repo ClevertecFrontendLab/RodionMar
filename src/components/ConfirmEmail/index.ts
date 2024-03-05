@@ -1,1 +1,1 @@
-export { ConfirmEmailComponent } from "./ConfirmEmail.component";
+export { ConfirmEmailComponent } from './ConfirmEmail.component';

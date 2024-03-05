@@ -1,1 +1,1 @@
-export {ActionCard} from './ActionCard.component';
+export { ActionCard } from './ActionCard.component';

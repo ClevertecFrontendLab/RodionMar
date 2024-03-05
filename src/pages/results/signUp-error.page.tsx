@@ -7,21 +7,8 @@ import styles from './index.module.scss';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Result, Button } from 'antd';
-
-export const handleResponse = async (response: any) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        history.push('/result/success', { fromServer: true });
-        return true;
-    } else {
-        switch (response.payload) {
-            case 409:
-                history.push('/result/error-user-exist', { fromServer: true });
-                break;
-            default:
-                history.push('/result/error', { fromServer: true });
-        }
-    }
-};
+import { TSignUpResponse } from '@shared/sign-up-response.type copy';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const SignUpError = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -31,13 +18,28 @@ export const SignUpError = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
+
+    const handleResponse = async (response: TSignUpResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.SUCCESS, { fromServer: true });
+            return true;
+        } else {
+            switch (response.payload) {
+                case 409:
+                    history.push(AppRouteEnum.ERROR_USER_EXIST, { fromServer: true });
+                    break;
+                default:
+                    history.push(AppRouteEnum.ERROR, { fromServer: true });
+            }
+        }
+    };
 
     const handleRepeatRegistration = async () => {
-        if (location.pathname === '/auth/result/error') {
-            history.push('/auth/registration');
+        if (location.pathname === AppRouteEnum.ERROR) {
+            history.push(AppRouteEnum.REGISTRATION);
         }
 
         const storedProfile = JSON.parse(sessionStorage.getItem('signUpData') || '{}');
@@ -47,7 +49,13 @@ export const SignUpError = () => {
             password: storedProfile.password,
         };
 
-        const responseData = await dispatch(fetchSignUp(data));
+        const response = await dispatch(fetchSignUp(data));
+
+        const responseData: TSignUpResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
+
         handleResponse(responseData);
     };
 

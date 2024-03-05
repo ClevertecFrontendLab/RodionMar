@@ -31,7 +31,11 @@ type TSidebarProps = {
 const { Sider } = Layout;
 const { Text } = Typography;
 
-export const SiderComponent = ({ isSiderOpened, setIsSidebarOpened, windowWidth }: TSidebarProps) => {
+export const SiderComponent = ({
+    isSiderOpened,
+    setIsSidebarOpened,
+    windowWidth,
+}: TSidebarProps) => {
     const [activeItemKey, setActiveItemKey] = useState<string>('1');
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

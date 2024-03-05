@@ -90,17 +90,21 @@ export const FeedbackModal = ({
                         <Rate
                             className={styles.rate}
                             character={({ value, index }) => {
-                                return value && index! < value ? (
-                                    <StarFilled
-                                        key={`star-filled-${index}`}
-                                        className={styles.starFilled}
-                                    />
-                                ) : (
-                                    <StarOutlined
-                                        key={`star-outlined-${index}`}
-                                        className={styles.starOutlined}
-                                    />
-                                );
+                                return value !== null &&
+                                    value !== undefined &&
+                                    index !== undefined ? (
+                                    value > index ? (
+                                        <StarFilled
+                                            key={`star-filled-${index}`}
+                                            className={styles.starFilled}
+                                        />
+                                    ) : (
+                                        <StarOutlined
+                                            key={`star-outlined-${index}`}
+                                            className={styles.starOutlined}
+                                        />
+                                    )
+                                ) : null;
                             }}
                         />
                     </Form.Item>

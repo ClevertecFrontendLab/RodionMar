@@ -6,38 +6,21 @@ import { FeedbackPendingSelector } from '@pages/feedbacks/store/feedback.selecto
 
 import { Layout, Row, Col, Typography, Space } from 'antd';
 
-import {HeaderComponent} from '@components/Header';
-import {ActionCard} from '@components/ActionCard';
-import {FooterComponent} from '@components/Footer';
-import {SiderComponent} from '@components/Sider';
-import {LottieLoader} from '@components/LottieLoader';
+import { HeaderComponent } from '@components/Header';
+import { ActionCard } from '@components/ActionCard';
+import { FooterComponent } from '@components/Footer';
+import { SiderComponent } from '@components/Sider';
+import { LottieLoader } from '@components/LottieLoader';
 
 import styles from './index.module.scss';
 
 import { cards } from './const';
 
 import { TGetFeedbackResponse } from './types/getFeedbackResponse.type';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 const { Content } = Layout;
 const { Title } = Typography;
-
-export const handleResponseFeedbacks = (response: TGetFeedbackResponse) => {
-    console.log(response)
-    if (response.meta.requestStatus === 'fulfilled') {
-        history.push('/feedbacks', { fromServer: true });
-        return true;
-    } else {
-        switch (response.payload.status) {
-            case 403:
-                localStorage.removeItem('token');
-                history.push('/auth');
-                break;
-            default:
-                history.push('/feedbacks', { fromServer: true });
-                break;
-        }
-    }
-};
 
 const MainPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(true);
@@ -57,13 +40,30 @@ const MainPage = () => {
         };
     }, []);
 
+    const handleResponseFeedbacks = (response: TGetFeedbackResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.FEEDBACKS, { fromServer: true });
+            return true;
+        } else {
+            switch (response.payload.status) {
+                case 403:
+                    localStorage.removeItem('token');
+                    history.push(AppRouteEnum.AUTH);
+                    break;
+                default:
+                    history.push(AppRouteEnum.FEEDBACKS, { fromServer: true });
+                    break;
+            }
+        }
+    };
+
     const handleFeedbacks = async () => {
         const response = await dispatch(fetchFeedbacks());
 
         const responseData: TGetFeedbackResponse = {
             meta: response.meta,
-            payload: response.payload
-        }
+            payload: response.payload,
+        };
 
         handleResponseFeedbacks(responseData);
     };

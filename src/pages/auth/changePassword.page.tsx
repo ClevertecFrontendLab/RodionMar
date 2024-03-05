@@ -8,16 +8,7 @@ import { ChangePasswordComponent } from '@components/ChangePassword';
 import { TChangePassword } from '@shared/change-password.type';
 import { useEffect } from 'react';
 import { TChangePasswordResponse } from './types/changePasswordResponse.type';
-
-export const handleResponse = (response: TChangePasswordResponse) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        localStorage.removeItem('changePasswordData');
-        history.push('/result/success-change-password', { fromServer: true });
-        return true;
-    } else {
-        history.push('/result/error-change-password', { fromServer: true });
-    }
-};
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ChangePasswordPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -27,16 +18,26 @@ export const ChangePasswordPage = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.BASIC_AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
+
+    const handleResponse = (response: TChangePasswordResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            localStorage.removeItem('changePasswordData');
+            history.push(AppRouteEnum.SUCCESS_CHANGE_PASSWORD, { fromServer: true });
+            return true;
+        } else {
+            history.push(AppRouteEnum.ERROR_CHANGE_PASSWORD, { fromServer: true });
+        }
+    };
 
     const handleChangePassword = async (data: TChangePassword) => {
         const response = await dispatch(fetchChangePassword(data));
 
         const responseData: TChangePasswordResponse = {
-            meta: response.meta
-        }
+            meta: response.meta,
+        };
 
         handleResponse(responseData);
     };

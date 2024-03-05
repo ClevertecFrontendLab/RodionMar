@@ -1,1 +1,1 @@
-export {FeedbackCard} from './FeedbackCard.component';
+export { FeedbackCard } from './FeedbackCard.component';

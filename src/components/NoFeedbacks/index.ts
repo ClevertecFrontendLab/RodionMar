@@ -1,1 +1,1 @@
-export {NoFeedbacks} from './NoFeedbacks.component';
+export { NoFeedbacks } from './NoFeedbacks.component';

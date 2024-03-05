@@ -3,7 +3,7 @@ export type TSignInResponse = {
         requestStatus: string;
     };
     payload: {
-        accessToken: string
+        accessToken: string;
     };
-    type?: string
+    type?: string;
 };

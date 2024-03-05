@@ -31,30 +31,18 @@ const { Content } = Layout;
 import styles from './index.module.scss';
 import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
 import { ResultModal } from '@components/ResultModal';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 const items = [
     {
-        path: '/main',
+        path: AppRouteEnum.BASIC_MAIN,
         breadcrumbName: 'Главная',
     },
     {
-        path: '/feedbacks',
+        path: AppRouteEnum.FEEDBACKS,
         breadcrumbName: 'Отзывы пользователей',
     },
 ];
-
-export const handleResponseCreateFeedback = (
-    response: TCreateFeedbackResponse,
-    setIsSuccessModalOpen: (value: boolean) => void,
-    setIsErrorModalOpen: (value: boolean) => void,
-) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        setIsSuccessModalOpen(true);
-        return true;
-    } else {
-        setIsErrorModalOpen(true);
-    }
-};
 
 export const FeedbacksPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -100,7 +88,7 @@ export const FeedbacksPage = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [dispatch, fetchErrors]);
 
     const location = useLocation();
 
@@ -108,19 +96,28 @@ export const FeedbacksPage = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/');
+            history.push(AppRouteEnum.BASIC);
         }
-    }, [history, location.state]);
+    }, [location.state]);
+
+    const handleResponseCreateFeedback = (
+        response: TCreateFeedbackResponse,
+        setIsSuccessModalOpen: (value: boolean) => void,
+        setIsErrorModalOpen: (value: boolean) => void,
+    ) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            setIsSuccessModalOpen(true);
+            return true;
+        } else {
+            setIsErrorModalOpen(true);
+        }
+    };
 
     const handleFeedback = async (data: TCreateFeedback) => {
         const response = await dispatch(fetchCreateFeedback(data));
         dispatch(fetchFeedbacks());
 
-        handleResponseCreateFeedback(
-            response,
-            setIsSuccessModalOpen,
-            setIsErrorModalOpen,
-        );
+        handleResponseCreateFeedback(response, setIsSuccessModalOpen, setIsErrorModalOpen);
     };
 
     return (
@@ -143,7 +140,7 @@ export const FeedbacksPage = () => {
                     className={cn(
                         styles.contentStyles,
                         feedbacks.length > 0 ? null : styles.noFeedback,
-                        displayedFeedbacks.length < 5 ? styles.fourFeedbacks : styles.allFeedbacks
+                        displayedFeedbacks.length < 5 ? styles.fourFeedbacks : styles.allFeedbacks,
                     )}
                 >
                     {feedbacks.length > 0 ? (
@@ -176,34 +173,34 @@ export const FeedbacksPage = () => {
                         <NoFeedbacks setIsFeedbackModalOpen={setIsFeedbackModalOpen} />
                     )}
                 </Content>
-                {feedbacks.length > 0 ? (<Row gutter={8} className={styles.buttons}>
-                    <Col>
-                        <Button
-                            type='primary'
-                            size='large'
-                            className={cn(styles.button, styles.primaryButton)}
-                            onClick={() => setIsFeedbackModalOpen(true)}
-                            data-test-id='write-review'
-                            block
-                        >
-                            Написать отзыв
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button
-                            type='text'
-                            size='large'
-                            onClick={handleShowAllFeedbacks}
-                            className={cn(styles.button, styles.textButton)}
-                            data-test-id='all-reviews-button'
-                            block
-                        >
-                            {showAllFeedbacks
-                                ? 'Свернуть все отзывы'
-                                : 'Развернуть все отзывы'}
-                        </Button>
-                    </Col>
-                </Row>) : null}
+                {feedbacks.length > 0 ? (
+                    <Row gutter={8} className={styles.buttons}>
+                        <Col>
+                            <Button
+                                type='primary'
+                                size='large'
+                                className={cn(styles.button, styles.primaryButton)}
+                                onClick={() => setIsFeedbackModalOpen(true)}
+                                data-test-id='write-review'
+                                block
+                            >
+                                Написать отзыв
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button
+                                type='text'
+                                size='large'
+                                onClick={handleShowAllFeedbacks}
+                                className={cn(styles.button, styles.textButton)}
+                                data-test-id='all-reviews-button'
+                                block
+                            >
+                                {showAllFeedbacks ? 'Свернуть все отзывы' : 'Развернуть все отзывы'}
+                            </Button>
+                        </Col>
+                    </Row>
+                ) : null}
             </Layout>
             <FeedbackModal
                 setIsFeedbackModalOpen={setIsFeedbackModalOpen}

@@ -1,35 +1,33 @@
-import {SignUpComponent} from '@components/SignUp';
-
+import { SignUpComponent } from '@components/SignUp';
 import { clearErrors } from './store/auth.slice';
-
 import { TAuth } from '@shared/auth.type';
-import { TSignUpResponse } from './types/signUpResponse.type copy';
-
+import { TSignUpResponse } from '@shared/sign-up-response.type copy';
 import { fetchSignUp } from './store/auth.actions';
 import { useAppDispatch } from '@hooks/index';
 import { history } from '@redux/configure-store';
-
-export const handleResponse = (response: TSignUpResponse) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        history.push('/result/success', { fromServer: true });
-        return true;
-    } else {
-        switch (response.payload) {
-            case 409:
-                history.push('/result/error-user-exist', { fromServer: true });
-                break;
-            default:
-                history.push('/result/error', { fromServer: true });
-        }
-    }
-};
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const SignUpPage = () => {
     const dispatch = useAppDispatch();
 
     const handleRedirectToSignIn = () => {
         dispatch(clearErrors());
-        history.push('/auth');
+        history.push(AppRouteEnum.BASIC_AUTH);
+    };
+
+    const handleResponse = (response: TSignUpResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.SUCCESS, { fromServer: true });
+            return true;
+        } else {
+            switch (response.payload) {
+                case 409:
+                    history.push(AppRouteEnum.ERROR_USER_EXIST, { fromServer: true });
+                    break;
+                default:
+                    history.push(AppRouteEnum.ERROR, { fromServer: true });
+            }
+        }
     };
 
     const handleSignUp = async (data: TAuth) => {
@@ -37,8 +35,8 @@ export const SignUpPage = () => {
 
         const responseData: TSignUpResponse = {
             meta: response.meta,
-            payload: response.payload
-        }
+            payload: response.payload,
+        };
 
         handleResponse(responseData);
     };

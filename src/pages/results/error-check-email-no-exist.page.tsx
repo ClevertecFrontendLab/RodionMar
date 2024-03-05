@@ -8,6 +8,7 @@ import { Result, Button } from 'antd';
 import cn from 'classnames';
 
 import styles from './index.module.scss';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ErrorCheckEmailNoExist = () => {
     const location = useLocation();
@@ -16,9 +17,9 @@ export const ErrorCheckEmailNoExist = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
 
     return (
         <Result
@@ -32,7 +33,7 @@ export const ErrorCheckEmailNoExist = () => {
                     size='large'
                     htmlType='button'
                     className={styles.button}
-                    onClick={() => history.push('/auth')}
+                    onClick={() => history.push(AppRouteEnum.AUTH)}
                     data-test-id='check-retry-button'
                 >
                     Попробовать снова

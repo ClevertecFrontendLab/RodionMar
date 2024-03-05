@@ -1,1 +1,1 @@
-export {FeedbackModal} from './FeedbackModal.component';
+export { FeedbackModal } from './FeedbackModal.component';

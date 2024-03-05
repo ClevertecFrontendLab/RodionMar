@@ -3,5 +3,5 @@ export type TSignUpResponse = {
         requestStatus: string;
     };
     payload: number;
-    type?: string
+    type?: string;
 };

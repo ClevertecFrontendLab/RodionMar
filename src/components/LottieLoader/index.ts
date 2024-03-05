@@ -1,1 +1,1 @@
-export { LottieLoader } from "./LottieLoader";
+export { LottieLoader } from './LottieLoader';

@@ -9,28 +9,7 @@ import { ConfirmEmailComponent } from '@components/ConfirmEmail';
 import { TConfirmEmail } from '@shared/confirm-email.type';
 import { useEffect } from 'react';
 import { TConfirmEmailResponse } from './types/confirmEmailResponse.type';
-
-
-export const handleResponseConfirmEmail = (response: TConfirmEmailResponse) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        if (window.localStorage.getItem('status')) {
-            window.localStorage.removeItem('status');
-        }
-
-        window.localStorage.setItem('checkEmailData', response.payload.email);
-        window.localStorage.setItem('status', 'execute');
-
-        history.push('/auth/change-password', { fromServer: true });
-        return true;
-    } else {
-        if (window.localStorage.getItem('status')) {
-            window.localStorage.removeItem('status');
-        }
-        window.localStorage.setItem('status', 'error');
-
-        history.push('/auth/confirm-email', { fromServer: true });
-    }
-};
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ConfirmEmailPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -43,17 +22,38 @@ export const ConfirmEmailPage = () => {
         if (isDirectAccess) {
             history.push('/auth');
         }
-    }, [history, location.state]);
+    }, [location.state]);
+
+    const handleResponse = (response: TConfirmEmailResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            if (window.localStorage.getItem('status')) {
+                window.localStorage.removeItem('status');
+            }
+
+            window.localStorage.setItem('checkEmailData', response.payload.email);
+            window.localStorage.setItem('status', 'execute');
+
+            history.push(AppRouteEnum.CHANGE_PASSWORD, { fromServer: true });
+            return true;
+        } else {
+            if (window.localStorage.getItem('status')) {
+                window.localStorage.removeItem('status');
+            }
+            window.localStorage.setItem('status', 'error');
+
+            history.push(AppRouteEnum.CONFIRM_EMAIL, { fromServer: true });
+        }
+    };
 
     const handleConfirmEmail = async (data: TConfirmEmail) => {
         const response = await dispatch(fetchConfirmEmail(data));
 
         const responseData: TConfirmEmailResponse = {
             meta: response.meta,
-            payload: response.payload
-        }
+            payload: response.payload,
+        };
 
-        handleResponseConfirmEmail(responseData);
+        handleResponse(responseData);
     };
 
     return (

@@ -7,7 +7,11 @@ import styles from './index.module.scss';
 const { Footer } = Layout;
 const { Text } = Typography;
 
-export const FooterComponent = ({ handleResponseFeedbacks }: { handleResponseFeedbacks: () => void }) => (
+export const FooterComponent = ({
+    handleResponseFeedbacks,
+}: {
+    handleResponseFeedbacks: () => void;
+}) => (
     <Footer className={styles.footerStyles}>
         <Row className={styles.wrapperStyles}>
             <Col className={styles.buttonCol}>

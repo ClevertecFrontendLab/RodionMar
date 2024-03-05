@@ -6,16 +6,6 @@ import { TChangePassword } from '@shared/change-password.type';
 
 const { Title } = Typography;
 
-export const handleChangePassword = (response: any, navigate: (path: string) => void) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        window.localStorage.setItem('token', response.payload);
-        navigate('/main');
-        return true;
-    } else {
-        navigate('/auth/result/error-login');
-    }
-};
-
 export const ChangePasswordComponent = ({
     handleChangePassword,
 }: {

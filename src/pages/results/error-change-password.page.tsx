@@ -7,16 +7,7 @@ import styles from './index.module.scss';
 
 import { useLocation } from 'react-router-dom';
 import { Button, Result } from 'antd';
-
-export const handleResponse = async (response: any) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        history.push('/result/success-change-password', { fromServer: true });
-        localStorage.removeItem('changePasswordData');
-        return true;
-    } else {
-        history.push('/result/error-change-password', { fromServer: true });
-    }
-};
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ErrorChangePasswordPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -26,13 +17,23 @@ export const ErrorChangePasswordPage = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
+
+    const handleResponse = async (response: { meta: { requestStatus: string } }) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.SUCCESS_CHANGE_PASSWORD, { fromServer: true });
+            localStorage.removeItem('changePasswordData');
+            return true;
+        } else {
+            history.push(AppRouteEnum.ERROR_CHANGE_PASSWORD, { fromServer: true });
+        }
+    };
 
     const handleRepeatChangePassword = async () => {
-        if (location.pathname === '/result/error-change-password') {
-            history.push('/auth/change-passwword');
+        if (location.pathname === AppRouteEnum.ERROR_CHANGE_PASSWORD) {
+            history.push(AppRouteEnum.CHANGE_PASSWORD);
         }
 
         const storedPassword = JSON.parse(localStorage.getItem('changePasswordData') || '{}');

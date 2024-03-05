@@ -10,18 +10,8 @@ import { Result, Button } from 'antd';
 import cn from 'classnames';
 
 import styles from './index.module.scss';
-
-export const handleResponseCheckEmail = (response: any) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        window.localStorage.setItem('checkEmailData', response.payload.email);
-        history.push('/auth/confirm-email', { fromServer: true });
-        return true;
-    } else {
-        response.payload.statusCode === 404 && response.payload.message === 'Email не найден'
-            ? history.push('/result/error-check-email-no-exist', { fromServer: true })
-            : history.push('/result/error-check-email', { fromServer: true });
-    }
-};
+import { AppRouteEnum } from '@constants/app-routes.enum';
+import { TCheckEmailResponse } from '@shared/check-email-response.type';
 
 export const ErrorCheckEmail = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -31,12 +21,24 @@ export const ErrorCheckEmail = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.AUTH);
         }
-    }, [history, location.state]);
+    }, [location.state]);
+
+    const handleResponseCheckEmail = (response: TCheckEmailResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            window.localStorage.setItem('checkEmailData', response.payload.email);
+            history.push(AppRouteEnum.CONFIRM_EMAIL, { fromServer: true });
+            return true;
+        } else {
+            response.payload.status === 404 && response.payload.message === 'Email не найден'
+                ? history.push(AppRouteEnum.ERROR_CHECK_EMAIL_NO_EXIST, { fromServer: true })
+                : history.push(AppRouteEnum.ERROR_CHECK_EMAIL, { fromServer: true });
+        }
+    };
 
     const handleRepeatCheckEmail = async () => {
-        history.push('/auth');
+        history.push(AppRouteEnum.AUTH);
 
         const confirmEmailData = window.localStorage.getItem('checkEmailData') || '';
 
@@ -44,7 +46,13 @@ export const ErrorCheckEmail = () => {
             email: confirmEmailData,
         };
 
-        const responseData = await dispatch(fetchCheckEmail(data));
+        const response = await dispatch(fetchCheckEmail(data));
+
+        const responseData: TCheckEmailResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
+
         handleResponseCheckEmail(responseData);
     };
 

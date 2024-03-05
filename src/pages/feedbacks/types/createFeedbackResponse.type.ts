@@ -1,5 +1,5 @@
 export type TCreateFeedbackResponse = {
-  meta: {
-      requestStatus: string;
-  };
+    meta: {
+        requestStatus: string;
+    };
 };

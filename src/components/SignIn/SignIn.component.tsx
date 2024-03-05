@@ -9,6 +9,12 @@ import { TCheckEmail } from '@shared/check-email.type';
 import styles from './index.module.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
+type TFinishValues = {
+    email: string;
+    forgotPassword: boolean | undefined;
+    password: string;
+    remember: boolean;
+};
 
 const { Link, Text } = Typography;
 
@@ -59,7 +65,7 @@ export const SignInComponent = ({
         },
     ];
 
-    const onFinish = (values: any) => {
+    const onFinish = (values: TFinishValues) => {
         if (window.localStorage.getItem('profile')) {
             window.localStorage.removeItem('profile');
         }

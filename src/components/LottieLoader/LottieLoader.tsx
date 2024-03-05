@@ -18,4 +18,4 @@ export const LottieLoader = () => {
             <Lottie options={defaultOptions} height={150} width={150} />
         </div>
     );
-}
+};
