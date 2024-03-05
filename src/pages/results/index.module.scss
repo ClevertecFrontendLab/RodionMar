@@ -1,22 +1,49 @@
 @import '../../styles/index.scss';
 
-.wrapper{
-  width: 100%;
-  min-height: 100vh;
-  background: url(../../../enter-page--light.png) center / cover no-repeat;
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background: url(../../../enter-page--light.png) center / cover no-repeat;
 }
 
-.blur{
-  backdrop-filter: blur(6px);
-  background: #799CD480;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+.blur {
+    backdrop-filter: blur(6px);
+    background: #799cd480;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.contentWrapper{
-  padding: 0 16px;
-  max-width: 540px;
-  width: 100%;
+.contentWrapper {
+    padding: 0 16px;
+    box-sizing: content-box;
+    max-width: 540px;
+    width: 100%;
+    .result {
+        background-color: $neutral-gray-1;
+        padding: 64px 85px;
+        width: 100%;
+    }
+    .emailResult {
+        padding: 64px 32px 56px;
+    }
+    div[class*='ant-result-title'] {
+        @include H3-medium($character-light-title-85);
+    }
+    .button {
+        @include Body-regular($character-light-primary-inverse);
+        padding: 11px 17px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .contentWrapper {
+        .result {
+            padding: 32px 16px;
+        }
+        .emailResult {
+            padding: 64px 32px 56px;
+        }
+    }
 }

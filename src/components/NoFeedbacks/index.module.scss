@@ -1,0 +1,49 @@
+@import '../../styles/index.scss';
+
+.noFeedback {
+    gap: 20px;
+    padding: 0 24px;
+    .textSection {
+        display: grid;
+        grid-template-rows: auto auto;
+        justify-content: center;
+        background: $neutral-gray-1;
+        text-align: center;
+        gap: 48px;
+        padding: 56px 0;
+    }
+    .title {
+        @include H3-medium($primary-light-9);
+        margin: 0;
+    }
+    .text {
+        max-width: 521px;
+        @include Body-regular($character-light-secondary-45);
+        margin: 0;
+    }
+    .buttonCol {
+        display: flex;
+        justify-content: center;
+    }
+    .button {
+        max-width: 142px;
+        padding: 10px 15px;
+        height: auto;
+        @include Body-regular($character-light-primary-inverse);
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .noFeedback {
+        padding: 0 16px;
+        gap: 48px;
+        .textSection {
+            text-align: center;
+            gap: 48px;
+            padding: 48px 32px;
+        }
+        .button {
+            max-width: 100%;
+        }
+    }
+}

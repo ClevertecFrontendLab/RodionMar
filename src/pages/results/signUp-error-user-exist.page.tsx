@@ -1,35 +1,42 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
+import styles from './index.module.scss';
 
-import { useLocation } from "react-router-dom"
-import { push } from "redux-first-history";
+import { useLocation } from 'react-router-dom';
+import { history } from '@redux/configure-store';
+import { Result, Button } from 'antd';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
+export const SignUpErrorUserExist = () => {
+    const location = useLocation();
 
-const SignUpErrorUserExist = () => {
-  const navigationDispatch = useAppDispatch();
-  const location = useLocation();
+    useEffect(() => {
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-  useEffect(() => {
-    const isDirectAccess = !location.state || !location.state.fromServer;
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
 
-    if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
-    }
-    
-  }, [navigationDispatch, location.state]);
-
-  return(
-    <Result 
-      result="error"
-      title="Данные не сохранились"
-      description="Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail."
-      buttonTestId="registration-back-button"
-      buttonText="Назад к регистрации"
-      handleRedirect={() => navigationDispatch(push("/auth/registration"))}
-    />
-  )
+    return (
+        <Result
+            className={styles.result}
+            status='error'
+            title='Данные не сохранились'
+            subTitle='Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail.'
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={() => history.push(AppRouteEnum.REGISTRATION)}
+                    data-test-id='login-retry-button'
+                    block
+                >
+                    Назад к регистрации
+                </Button>
+            }
+        />
+    );
 };
-
-export default SignUpErrorUserExist;

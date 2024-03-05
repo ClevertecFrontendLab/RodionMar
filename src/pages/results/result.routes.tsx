@@ -1,44 +1,34 @@
 import { Navigate, Routes, Route } from 'react-router-dom';
 
-import ErrorChangePasswordPage from './error-change-password.page';
-import ErrorCheckEmailNoExist from './error-check-email-no-exist.page';
-import ErrorCheckEmail from './error-check-email.page';
-import ErrorLogin from './error-login.page';
-import SignUpErrorUserExist from './signUp-error-user-exist.page';
-import SignUpError from './signUp-error.page';
-import SignUpSuccess from './signUp-success.page';
-import SuccessChangePasswordPage from './success-change-password.page';
+import { ErrorChangePasswordPage } from './error-change-password.page';
+import { ErrorCheckEmailNoExist } from './error-check-email-no-exist.page';
+import { ErrorCheckEmail } from './error-check-email.page';
+import { ErrorLogin } from './error-login.page';
+import { SignUpErrorUserExist } from './signUp-error-user-exist.page';
+import { SignUpError } from './signUp-error.page';
+import { SignUpSuccess } from './signUp-success.page';
+import { SuccessChangePasswordPage } from './success-change-password.page';
 
+import { RouteEnum } from './types/routes.enum';
 
-const ResultRoutes = () => {
+export const ResultRoutes = () => {
     return (
         <Routes>
-            <Route path={'/error-login'} element={<ErrorLogin />} />
-            <Route path={'/success'} element={<SignUpSuccess />} />
+            <Route path={RouteEnum.ERROR_LOGIN} element={<ErrorLogin />} />
+            <Route path={RouteEnum.SUCCESS} element={<SignUpSuccess />} />
+            <Route path={RouteEnum.ERROR_USER_EXIST} element={<SignUpErrorUserExist />} />
+            <Route path={RouteEnum.ERROR} element={<SignUpError />} />
             <Route
-                path={'/error-user-exist'}
-                element={<SignUpErrorUserExist />}
-            />
-            <Route path={'/error'} element={<SignUpError />} />
-            <Route
-                path={'/error-check-email-no-exist'}
+                path={RouteEnum.ERROR_CHECK_EMAIL_NO_EXIST}
                 element={<ErrorCheckEmailNoExist />}
             />
+            <Route path={RouteEnum.ERROR_CHECK_EMAIL} element={<ErrorCheckEmail />} />
             <Route
-                path={'/error-check-email'}
-                element={<ErrorCheckEmail />}
-            />
-            <Route
-                path={'/success-change-password'}
+                path={RouteEnum.SUCCESS_CHANGE_PASSWORD}
                 element={<SuccessChangePasswordPage />}
             />
-            <Route
-                path={'/error-change-password'}
-                element={<ErrorChangePasswordPage />}
-            />
-            <Route path='*' element={<Navigate to='/auth' />} />
+            <Route path={RouteEnum.ERROR_CHANGE_PASSWORD} element={<ErrorChangePasswordPage />} />
+            <Route path='*' element={<Navigate to={RouteEnum.AUTH} />} />
         </Routes>
     );
 };
-
-export default ResultRoutes;

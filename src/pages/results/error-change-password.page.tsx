@@ -1,75 +1,71 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useAppDispatch } from '@hooks/index';
-import { AppDispatch } from "@redux/configure-store";
-import { fetchChangePassword } from "@pages/auth/store/auth.actions";
-import { push } from 'redux-first-history';
-import { CallHistoryMethodAction } from "redux-first-history/build/es6/actions";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, history } from '@redux/configure-store';
+import { fetchChangePassword } from '@pages/auth/store/auth.actions';
 
-import Result from "@components/Result";
+import styles from './index.module.scss';
 
-import { To, useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+import { Button, Result } from 'antd';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
+export const ErrorChangePasswordPage = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const location = useLocation();
 
-export const handleResponse = async (
-  response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
-) => {
-  if (response.meta.requestStatus === "fulfilled") {
-    navigationDispatch(push("/result/success-change-password", { fromServer: true }));
-    localStorage.removeItem("changePasswordData");
-    return true;
-  } else {
-    navigationDispatch(push("/result/error-change-password", { fromServer: true }));
-  }
-};
-
-const ErrorChangePasswordPage = () => {
-  const authDispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
-
-  const navigationDispatch = useAppDispatch();
-
-  
     useEffect(() => {
-      const isDirectAccess = !location.state || !location.state.fromServer;
-  
-      if (isDirectAccess) {
-        navigationDispatch(push('/auth'));
-      }
-      
-    }, [navigationDispatch, location.state]);
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-  const handleRepeatChangePassword = async () => {
-    if (location.pathname === "/auth/result/error-change-password") {
-      navigationDispatch(push("/auth/change-passwword"));
-    }
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
 
-    const storedPassword = JSON.parse(
-      localStorage.getItem("changePasswordData") || "{}"
-    );
-
-    const data = {
-      password: storedPassword.password,
-      confirmPassword: storedPassword.password
+    const handleResponse = async (response: { meta: { requestStatus: string } }) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.SUCCESS_CHANGE_PASSWORD, { fromServer: true });
+            localStorage.removeItem('changePasswordData');
+            return true;
+        } else {
+            history.push(AppRouteEnum.ERROR_CHANGE_PASSWORD, { fromServer: true });
+        }
     };
 
-    const responseData = await authDispatch(fetchChangePassword(data));
-    handleResponse(responseData, navigationDispatch);
-  };
+    const handleRepeatChangePassword = async () => {
+        if (location.pathname === AppRouteEnum.ERROR_CHANGE_PASSWORD) {
+            history.push(AppRouteEnum.CHANGE_PASSWORD);
+        }
 
-  return (
-    <div>
-      <Result
-        result="error"
-        title="Данные не сохранились"
-        description="Что-то пошло не так. Попробуйте ещё раз"
-        buttonTestId="change-retry-button"
-        buttonText="Повторить"
-        handleRedirect={handleRepeatChangePassword}
-      />
-    </div>
-  );
+        const storedPassword = JSON.parse(localStorage.getItem('changePasswordData') || '{}');
+
+        const data = {
+            password: storedPassword.password,
+            confirmPassword: storedPassword.password,
+        };
+
+        const responseData = await dispatch(fetchChangePassword(data));
+        handleResponse(responseData);
+    };
+
+    return (
+        <Result
+            className={styles.result}
+            status='error'
+            title='Данные не сохранились'
+            subTitle='Что-то пошло не так. Попробуйте ещё раз'
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={handleRepeatChangePassword}
+                    data-test-id='change-retry-button'
+                    block
+                >
+                    Повторить
+                </Button>
+            }
+        />
+    );
 };
-
-export default ErrorChangePasswordPage;

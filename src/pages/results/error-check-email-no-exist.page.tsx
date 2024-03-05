@@ -1,36 +1,44 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
-import { push } from "redux-first-history";
+import { history } from '@redux/configure-store';
 
-import { useLocation } from "react-router-dom"
+import { useLocation } from 'react-router-dom';
+import { Result, Button } from 'antd';
 
+import cn from 'classnames';
 
-const ErrorCheckEmailNoExist = () => {
-  const navigationDispatch = useAppDispatch();
-  const location = useLocation();
+import styles from './index.module.scss';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
-  useEffect(() => {
-    const isDirectAccess = !location.state || !location.state.fromServer;
+export const ErrorCheckEmailNoExist = () => {
+    const location = useLocation();
 
-    if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
-    }
-    
-  }, [navigationDispatch, location.state]);
+    useEffect(() => {
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-  return (
-    <Result
-      result="error"
-      title="Такой e-mail не зарегистрирован"
-      description={<>Мы не нашли в базе вашего e-mail. Попробуйте<br /> войти с другим e-mail</>}
-      buttonText="Попробовать снова"
-      buttonTestId="check-retry-button"
-      isConfirmEmailPage
-      handleRedirect={() => navigationDispatch(push('/auth'))}
-    />
-  )
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
+
+    return (
+        <Result
+            className={cn(styles.result, styles.emailResult)}
+            status='error'
+            title='Такой e-mail не зарегистрирован'
+            subTitle={<>Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail</>}
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={() => history.push(AppRouteEnum.AUTH)}
+                    data-test-id='check-retry-button'
+                >
+                    Попробовать снова
+                </Button>
+            }
+        />
+    );
 };
-
-export default ErrorCheckEmailNoExist;

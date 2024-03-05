@@ -1,77 +1,89 @@
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@redux/configure-store";
-import { fetchSignUp } from "@pages/auth/store/auth.actions";
+import { useDispatch } from 'react-redux';
+import { AppDispatch, history } from '@redux/configure-store';
+import { fetchSignUp } from '@pages/auth/store/auth.actions';
 
-import Result from "@components/Result";
+import styles from './index.module.scss';
 
-import { To, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { push } from "redux-first-history";
-import { useAppDispatch } from "@hooks/index";
-import { CallHistoryMethodAction } from "redux-first-history/build/es6/actions";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Result, Button } from 'antd';
+import { TSignUpResponse } from '@shared/sign-up-response.type copy';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
-export const handleResponse = async (
-  response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
-) => {
-  if (response.meta.requestStatus === "fulfilled") {
-    navigationDispatch(push("/result/success", { fromServer: true } ));
-    return true;
-  } else {
-    switch (response.payload) {
-      case 409:
-        navigationDispatch(push("/result/error-user-exist", { fromServer: true }));
-        break;
-      default:
-        navigationDispatch(push("/result/error", { fromServer: true }));
-    }
-  }
-};
+export const SignUpError = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const location = useLocation();
 
-const SignUpError = () => {
-  const authDispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
-  const navigationDispatch = useAppDispatch();
+    useEffect(() => {
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-  useEffect(() => {
-    const isDirectAccess = !location.state || !location.state.fromServer;
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
 
-    if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
-    }
-    
-  }, [navigationDispatch, location.state]);
-
-  const handleRepeatRegistration = async () => {
-    if (location.pathname === "/auth/result/error") {
-      navigationDispatch(push("/auth/registration"));
-    }
-
-    const storedProfile = JSON.parse(
-      sessionStorage.getItem("signUpData") || "{}"
-    );
-
-    const data = {
-      email: storedProfile.email,
-      password: storedProfile.password
+    const handleResponse = async (response: TSignUpResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.SUCCESS, { fromServer: true });
+            return true;
+        } else {
+            switch (response.payload) {
+                case 409:
+                    history.push(AppRouteEnum.ERROR_USER_EXIST, { fromServer: true });
+                    break;
+                default:
+                    history.push(AppRouteEnum.ERROR, { fromServer: true });
+            }
+        }
     };
 
-    const responseData = await authDispatch(fetchSignUp(data));
-    handleResponse(responseData, navigationDispatch);
-  };
+    const handleRepeatRegistration = async () => {
+        if (location.pathname === AppRouteEnum.ERROR) {
+            history.push(AppRouteEnum.REGISTRATION);
+        }
 
-  return (
-    <div>
-      <Result
-        result="error"
-        title="Данные не сохранились"
-        description={<>Что-то пошло не так и ваша регистрация<br />не завершилась. Попробуйте ещё раз.</>}
-        buttonText="Повторить"
-        buttonTestId="registration-retry-button"
-        handleRedirect={handleRepeatRegistration}
-      />
-    </div>
-  );
+        const storedProfile = JSON.parse(sessionStorage.getItem('signUpData') || '{}');
+
+        const data = {
+            email: storedProfile.email,
+            password: storedProfile.password,
+        };
+
+        const response = await dispatch(fetchSignUp(data));
+
+        const responseData: TSignUpResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
+
+        handleResponse(responseData);
+    };
+
+    return (
+        <Result
+            className={styles.result}
+            status='error'
+            title='Данные не сохранились'
+            subTitle={
+                <>
+                    Что-то пошло не так и ваша регистрация
+                    <br />
+                    не завершилась. Попробуйте ещё раз.
+                </>
+            }
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={handleRepeatRegistration}
+                    data-test-id='registration-retry-button'
+                    block
+                >
+                    Повторить
+                </Button>
+            }
+        />
+    );
 };
-
-export default SignUpError;

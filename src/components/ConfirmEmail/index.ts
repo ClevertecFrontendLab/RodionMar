@@ -1,3 +1,1 @@
-import ConfirmEmail from "@pages/confirmEmail/confirmEmail.page";
-
-export default ConfirmEmail;
+export { ConfirmEmailComponent } from './ConfirmEmail.component';

@@ -1,33 +1,41 @@
-import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { push } from "redux-first-history";
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { history } from '@redux/configure-store';
+import { Result, Button } from 'antd';
 
+import styles from './index.module.scss';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
-const SignUpSuccess = () => {
-  const location = useLocation();
-  const navigationDispatch = useAppDispatch();
+export const SignUpSuccess = () => {
+    const location = useLocation();
 
-  useEffect(() => {
-    const isDirectAccess = !location.state || !location.state.fromServer;
+    useEffect(() => {
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-    if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
-    }
-    
-  }, [navigationDispatch, location.state]);
-  
-  return(
-    <Result 
-      result="success"
-      title="Регистрация успешна"
-      description="Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль."
-      buttonText="Войти"
-      buttonTestId='registration-enter-button'
-      handleRedirect={() => navigationDispatch(push("/auth"))}
-    />
-  )
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
+
+    return (
+        <Result
+            className={styles.result}
+            status='success'
+            title='Регистрация успешна'
+            subTitle='Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль.'
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={() => history.push(AppRouteEnum.AUTH)}
+                    data-test-id='registration-enter-button'
+                    block
+                >
+                    Войти
+                </Button>
+            }
+        />
+    );
 };
-
-export default SignUpSuccess;

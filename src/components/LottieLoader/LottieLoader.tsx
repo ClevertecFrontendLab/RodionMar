@@ -1,9 +1,9 @@
 import loaderAnimation from './loader.json';
 import Lottie from 'react-lottie';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-export default function LottieLoader() {
+export const LottieLoader = () => {
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -14,8 +14,8 @@ export default function LottieLoader() {
     };
 
     return (
-        <div className={styles.wrapper} data-test-id="loader">
+        <div className={styles.wrapper} data-test-id='loader'>
             <Lottie options={defaultOptions} height={150} width={150} />
         </div>
     );
-}
+};

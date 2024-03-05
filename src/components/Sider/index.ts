@@ -1,3 +1,1 @@
-import SiderComponent  from "./Sider.component";
-
-export default SiderComponent;
+export { SiderComponent } from './Sider.component';

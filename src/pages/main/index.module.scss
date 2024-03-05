@@ -1,68 +1,117 @@
 @import '../../styles/index.scss';
 
 .mainLayout {
-  display: flex;
-  min-height: 100vh;
-  overflow: hidden;
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.button {
+    padding: 10px 15px;
+    height: auto;
+    @include Body-regular($character-light-primary-inverse);
 }
 
 .contentWrapper {
-  position: relative;
-  background: url("../../../main-screen--light.png") center / cover no-repeat;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+    position: relative;
+    background: url('../../../main-screen--light.png') center / cover no-repeat;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .contentStyles {
-  flex: 1;
-  display: flex;
+    flex: 1;
+    display: flex;
 }
 
 .containerStyles {
-  max-width: 752px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  box-sizing: border-box;
+    max-width: 752px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: content-box;
 }
 
 .possibilitiesTextStyles {
-  padding: 24px;
-  @include H6-regular($primary-light-9);
-  box-sizing: border-box;
-  max-width: 752px;
-  background: $neutral-gray-1;
+    padding: 24px;
+    @include H6-regular($primary-light-9);
+    box-sizing: border-box;
+    max-width: 752px;
+    background: $neutral-gray-1;
 }
 
 .helperWrapperStyles {
-  display: grid;
-  row-gap: 16px;
+    display: grid;
+    row-gap: 16px;
 }
 
 .helperTitleStyles {
-  @include H4-medium($character-light-title-85);
-  padding: 24px;
-  margin: 0;
-  background: $neutral-gray-1;
+    @include H4-medium($character-light-title-85);
+    padding: 24px;
+    margin: 0;
+    background: $neutral-gray-1;
 }
 
 .cardWrapperStyles {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 16px;
+    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.modalWrapper {
+    z-index: 12;
+    opacity: 1;
+    background-color: #799cd480;
+    backdrop-filter: blur(3px);
+    .modal {
+        opacity: 1 !important;
+    }
+    div[class*='ant-modal-body'] {
+        padding: 0;
+    }
+    span[class*='ant-modal-close-x'] {
+        display: none;
+    }
+}
+
+.result {
+    padding: 64px 32px 56px !important;
 }
 
 @media screen and (max-width: 705px) {
-  .containerStyles {
-    padding: 24px 16px;
-  }
+    .containerStyles {
+        padding: 24px 16px;
+    }
 
-  .cardWrapperStyles {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 8px;
-    justify-content: center;
-  }
+    .cardWrapperStyles {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 8px;
+        justify-content: center;
+        .card {
+            max-width: 100%;
+        }
+    }
+
+    .possibilitiesTextStyles {
+        padding: 16px;
+    }
+
+    .helperTitleStyles {
+        padding: 16px;
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .containerStyles {
+        padding: 24px 16px;
+    }
+
+    .cardWrapperStyles {
+        flex-direction: column;
+        row-gap: 8px;
+        justify-content: center;
+    }
 }

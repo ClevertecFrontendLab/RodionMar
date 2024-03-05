@@ -1,3 +1,1 @@
-import HeaderComponent  from "./Header.component";
-
-export default HeaderComponent;
+export { HeaderComponent } from './Header.component';

@@ -1,3 +1,1 @@
-import ChangePasswordComponent from "./ChangePassword.component";
-
-export default ChangePasswordComponent;
+export { ChangePasswordComponent } from './ChangePassword.component';

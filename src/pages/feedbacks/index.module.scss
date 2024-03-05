@@ -1,0 +1,146 @@
+@import '../../styles/index.scss';
+
+.mainLayout {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    z-index: 20;
+    height: 100vh;
+    .contentWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: url('../../../main-screen--light.png') center / cover no-repeat;
+        .breadcrumbs {
+            li {
+                @include Body-regular($character-light-title-85);
+            }
+
+            width: 100%;
+            background-color: $primary-light-1;
+
+            padding: 16px 24px;
+            box-sizing: border-box;
+
+            .separator {
+                color: $character-light-secondary-45;
+            }
+        }
+
+        .buttons {
+            padding: 112px 24px 48px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+
+            .button {
+                padding: 10px 15px;
+                height: auto;
+            }
+
+            .primaryButton {
+                @include Body-regular($character-light-primary-inverse);
+            }
+
+            .textButton {
+                @include Body-regular($primary-light-6);
+            }
+        }
+    }
+
+    .fourFeedbacks {
+        flex-grow: 0;
+        .swiper {
+            flex-grow: 1;
+            width: 100%;
+            max-height: 70vh;
+        }
+    }
+
+    .allFeedbacks {
+        flex-grow: 1;
+        height: 100%;
+        position: relative;
+        .swiper {
+            flex-grow: 1;
+            width: 100%;
+            height: 70vh;
+        }
+    }
+}
+
+.result {
+    padding: 64px 85px !important;
+}
+
+.noFeedback {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+}
+
+.contentStyles {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    position: relative;
+}
+
+.containerStyles {
+    padding: 24px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+
+    .swiperSlide {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .mainLayout {
+        .contentWrapper {
+            .buttons {
+                flex-direction: column;
+                gap: 16px;
+                padding: 32px 16px 42px;
+            }
+        }
+    }
+
+    .containerStyles {
+        padding: 24px 16px 16px;
+
+        .swiperSlide {
+            gap: 16px;
+        }
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .result {
+        padding: 32px 16px !important;
+    }
+
+    .mainLayout {
+        .fourFeedbacks {
+            flex-grow: 1;
+        }
+    }
+
+    .fourFeedbacks {
+        .swiper {
+            height: 80vh;
+        }
+    }
+
+    .allFeedbacks {
+        .swiper {
+            height: 80vh;
+        }
+    }
+}

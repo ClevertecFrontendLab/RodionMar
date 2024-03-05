@@ -1,68 +1,52 @@
 @import '../../styles/index.scss';
 
 .cardStyles {
-  width: 100%;
-  padding: 12px 0;
-  row-gap: 12px;
-  background: $neutral-gray-1;
+    width: 100%;
+    row-gap: 12px;
+    background: $neutral-gray-1;
+}
 
-  & div[class*='ant-card-head-title'] {
+div[class*='ant-card-head-title'] {
     text-align: center;
-    padding: 0 22px;
     box-sizing: border-box;
-  }
+    padding: 12px 0;
+    white-space: wrap;
+}
+
+div[class*='ant-card-body'] {
+    padding: 12px 0;
 }
 
 .cardTitleStyles {
-  @include H6-regular($character-light-title-85);
-}
-
-.divider {
-  margin: 10px 0;
-  background-color: $character-light-dividers;
-  height: 1px;
-}
-
-.buttonStyles {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 8px;
-  border: none;
-  background: transparent;
-  &:hover,
-  &:focus{
-    outline: none;
-    border: none;
-  }
+    @include H6-regular($character-light-title-85);
 }
 
 .iconStyles {
-  color: $primary-light-6;
-  svg {
-    path {
-      fill: $primary-light-6
+    color: $primary-light-6;
+    svg {
+        path {
+            fill: $primary-light-6;
+        }
     }
-  }
 }
 
 .buttonTextStyles {
-  @include Body-regular($primary-light-6);
+    @include Body-regular($primary-light-6);
 }
 
 @media screen and (max-width: 835px) {
-  .cardStyles {
-    & div[class*='ant-card-head-title'] {
-      text-align: left;
+    .cardStyles {
+        & div[class*='ant-card-head-title'] {
+            text-align: left;
+            white-space: wrap;
+        }
     }
-  }
 }
 
 @media screen and (max-width: 705px) {
-  .cardStyles {
-    & div[class*='ant-card-head-title'] {
-      text-align: center;
+    .cardStyles {
+        & div[class*='ant-card-head-title'] {
+            text-align: center;
+        }
     }
-  }
 }

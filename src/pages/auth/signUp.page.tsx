@@ -1,44 +1,44 @@
-import SignUpComponent from '@components/SignUp';
-
-import { To } from 'react-router-dom';
-
+import { SignUpComponent } from '@components/SignUp';
 import { clearErrors } from './store/auth.slice';
-
-import { IAuth } from '../../types/auth.interface';
+import { TAuth } from '@shared/auth.type';
+import { TSignUpResponse } from '@shared/sign-up-response.type copy';
 import { fetchSignUp } from './store/auth.actions';
-import { CallHistoryMethodAction, push } from 'redux-first-history/build/es6/actions';
 import { useAppDispatch } from '@hooks/index';
+import { history } from '@redux/configure-store';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
-export const handleResponse = (
-    response: any,
-    navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void,
-) => {
-    if (response.meta.requestStatus === 'fulfilled') {
-        navigationDispatch(push('/result/success', { fromServer: true }));
-        return true;
-    } else {
-        switch (response.payload) {
-            case 409:
-                navigationDispatch(push('/result/error-user-exist', { fromServer: true }));
-                break;
-            default:
-                navigationDispatch(push('/result/error', { fromServer: true }));
-        }
-    }
-};
-
-const SignUpPage = () => {
-    const authDispatch = useAppDispatch();
-    const navigationDispatch = useAppDispatch();
+export const SignUpPage = () => {
+    const dispatch = useAppDispatch();
 
     const handleRedirectToSignIn = () => {
-        authDispatch(clearErrors());
-        navigationDispatch(push('/auth'));
+        dispatch(clearErrors());
+        history.push(AppRouteEnum.BASIC_AUTH);
     };
 
-    const handleSignUp = async (data: IAuth) => {
-        const responseData = await authDispatch(fetchSignUp(data));
-        handleResponse(responseData, navigationDispatch);
+    const handleResponse = (response: TSignUpResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            history.push(AppRouteEnum.SUCCESS, { fromServer: true });
+            return true;
+        } else {
+            switch (response.payload) {
+                case 409:
+                    history.push(AppRouteEnum.ERROR_USER_EXIST, { fromServer: true });
+                    break;
+                default:
+                    history.push(AppRouteEnum.ERROR, { fromServer: true });
+            }
+        }
+    };
+
+    const handleSignUp = async (data: TAuth) => {
+        const response = await dispatch(fetchSignUp(data));
+
+        const responseData: TSignUpResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
+
+        handleResponse(responseData);
     };
 
     return (
@@ -48,5 +48,3 @@ const SignUpPage = () => {
         />
     );
 };
-
-export default SignUpPage;

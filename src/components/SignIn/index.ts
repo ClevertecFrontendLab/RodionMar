@@ -1,3 +1,1 @@
-import SignInComponent from "./SignIn.component";
-
-export default SignInComponent;
+export { SignInComponent } from './SignIn.component';

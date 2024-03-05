@@ -1,87 +1,107 @@
-import { To } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@redux/configure-store';
+import { AppDispatch, RootState, history, useAppSelector } from '@redux/configure-store';
 import { clearErrors, fetchSignIn } from './store/auth.slice';
-
-import { IAuth } from '../../types/auth.interface';
-import { ICheckEmail } from '../../types/check-email.interface';
-
-import { useAppDispatch } from "@hooks/index";
-
-import SignInComponent from '@components/SignIn';
 import { fetchCheckEmail } from './store/auth.actions';
-import { CallHistoryMethodAction, push } from 'redux-first-history/build/es6/actions';
+import { setLoading } from '@components/LottieLoader/loading.slice';
 
+import { TAuth } from '@shared/auth.type';
+import { TCheckEmail } from '@shared/check-email.type';
+import { TSignInResponse } from './types/signInResponse.type';
+import { TCheckEmailResponse } from '@shared/check-email-response.type';
 
-export const handleResponseSignIn = (
-  response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
-) => {
-  if (response.meta.requestStatus === "fulfilled") {
-    window.localStorage.setItem("token", response.payload);
-    navigationDispatch(push("/main"));
-    return true;
-  } else {
-    navigationDispatch(push("/result/error-login", { fromServer: true }));
-  }
-};
-
-export const handleResponseCheckEmail = (
-  response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
-) => {
-  if (response.meta.requestStatus === "fulfilled") {
-    window.localStorage.setItem("checkEmailData", response.payload.email);
-    navigationDispatch(push("/auth/confirm-email", { fromServer: true }));
-    return true;
-  } else {
-    response.payload.status === 404 && response.payload.message === "Email не найден" 
-      ? navigationDispatch(push("/result/error-check-email-no-exist", { fromServer: true }))
-      : navigationDispatch(push("/result/error-check-email", { fromServer: true }));
-  }
-};
+import { SignInComponent } from '@components/SignIn';
+import { useEffect } from 'react';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 window.addEventListener('beforeunload', () => {
-  const storedProfile = JSON.parse(window.localStorage.getItem('profile') || '{}');
-  
-  if (storedProfile.remember === false) {
-    window.localStorage.removeItem("token");
-  }
+    const storedProfile = JSON.parse(window.localStorage.getItem('profile') || '{}');
+
+    if (storedProfile.remember === false) {
+        window.localStorage.removeItem('token');
+    }
 });
 
-const SignInPage = () => {
-  const authDispatch = useDispatch<AppDispatch>();
-  const navigationDispatch = useAppDispatch();
-  
-  const handleSignIn = async (data: IAuth) => {
-    const newToken = await authDispatch(fetchSignIn(data));
-    handleResponseSignIn(newToken, navigationDispatch);
-  };
+export const SignInPage = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const location = useAppSelector((state: RootState) => state.router.previousLocations);
+    const isLoading = useAppSelector((state: RootState) => state.loading.isLoading);
 
-  const handleRedirectToSignUp = () => {
-    authDispatch(clearErrors());
-    navigationDispatch(push("/auth/registration"));
-  };
+    const handleResponseSignIn = (response: TSignInResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            console.log(response.payload);
+            window.localStorage.setItem('token', response.payload.accessToken);
+            history.push(AppRouteEnum.BASIC_MAIN);
+            return true;
+        } else {
+            history.push(AppRouteEnum.ERROR_LOGIN, { fromServer: true });
+        }
+    };
 
-  const handleRedirectToForgetPassword = async (data: ICheckEmail) => {
-    authDispatch(clearErrors());
+    const handleResponseCheckEmail = (response: TCheckEmailResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            window.localStorage.setItem('checkEmailData', response.payload.email);
+            history.push(AppRouteEnum.CONFIRM_EMAIL, { fromServer: true });
+            return true;
+        } else {
+            response.payload.status === 404 && response.payload.message === 'Email не найден'
+                ? history.push(AppRouteEnum.ERROR_CHECK_EMAIL_NO_EXIST, { fromServer: true })
+                : history.push(AppRouteEnum.ERROR_CHECK_EMAIL, { fromServer: true });
+        }
+    };
 
-    if(window.localStorage.getItem("status")) {
-      window.localStorage.removeItem("status");
-    }
+    const handleSignIn = async (data: TAuth) => {
+        const response = await dispatch(fetchSignIn(data));
 
-    const responseData = await authDispatch(fetchCheckEmail(data));
-    handleResponseCheckEmail(responseData, navigationDispatch)
-  };
+        const responseData: TSignInResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
 
-  return (
-    <SignInComponent
-      handleSignIn={handleSignIn}
-      handleRedirectToSignUp={handleRedirectToSignUp}
-      handleRedirectToForgetPassword={handleRedirectToForgetPassword}
-    />
-  );
+        handleResponseSignIn(responseData);
+    };
+
+    const handleRedirectToSignUp = () => {
+        dispatch(clearErrors());
+        history.push(AppRouteEnum.REGISTRATION);
+    };
+
+    const handleRedirectToForgetPassword = async (data: TCheckEmail) => {
+        dispatch(clearErrors());
+
+        if (window.localStorage.getItem('status')) {
+            window.localStorage.removeItem('status');
+        }
+
+        const response = await dispatch(fetchCheckEmail(data));
+
+        const responseData: TCheckEmailResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
+
+        handleResponseCheckEmail(responseData);
+    };
+
+    const handleGoogleAuth = () => {
+        dispatch(setLoading(true));
+        window.location.href = 'https://marathon-api.clevertec.ru/auth/google';
+    };
+
+    useEffect(() => {
+        if (isLoading) dispatch(setLoading(false));
+        if (location && location.length > 0 && location[2]?.location?.search) {
+            const token = location[2].location?.search.slice(13);
+            localStorage.setItem('token', token);
+            history.push(AppRouteEnum.MAIN);
+        }
+    }, [dispatch, isLoading, location]);
+
+    return (
+        <SignInComponent
+            handleSignIn={handleSignIn}
+            handleRedirectToSignUp={handleRedirectToSignUp}
+            handleRedirectToForgetPassword={handleRedirectToForgetPassword}
+            handleGoogleAuth={handleGoogleAuth}
+        />
+    );
 };
-
-export default SignInPage;

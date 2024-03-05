@@ -1,99 +1,121 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchSignIn, fetchSignUp, fetchCheckEmail, fetchConfirmEmail, fetchChangePassword } from "./auth.actions";
+import {
+    fetchSignIn,
+    fetchSignUp,
+    fetchCheckEmail,
+    fetchConfirmEmail,
+    fetchChangePassword,
+} from './auth.actions';
 
-interface IAuthError {
-  statusCode: number;
-  error: string;
-  message: string;
-}
+export type TAuthResponse = {
+    accessToken: 'string';
+};
 
-type IInitialState = {
-  token: string;
-  errors: IAuthError | null;
-  pending: boolean;
+type TEmailResponse = {
+    email: string;
+    message: 'string';
+};
+
+type TChangePasswordResponse = {
+    message: 'string';
+};
+
+type TAuthError = {
+    status?: number;
+    error?: string;
+    message?: string;
+};
+
+type TInitialState = {
+    token?: string;
+    emailData?: TEmailResponse;
+    changePasswordData?: TChangePasswordResponse;
+    errors: TAuthError | null;
+    pending: boolean;
 };
 
 const initialState = {
-  token: "",
-  errors: null,
-  pending: false,
-} as IInitialState;
+    token: '',
+    emailData: {},
+    changePasswordData: {},
+    errors: null,
+    pending: false,
+} as TInitialState;
 
 const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    logout: (state) => {
-      state.token = "";
+    name: 'auth',
+    initialState,
+    reducers: {
+        logout: (state) => {
+            state.token = '';
+        },
+        clearErrors: (state) => {
+            state.errors = null;
+        },
     },
-    clearErrors: (state) => {
-      state.errors = null;
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchSignIn.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchSignIn.fulfilled, (state, action) => {
+                state.pending = false;
+                state.token = action.payload.accessToken;
+                state.errors = null;
+            })
+            .addCase(fetchSignIn.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as { message: string };
+            })
+            .addCase(fetchSignUp.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchSignUp.fulfilled, (state) => {
+                state.pending = false;
+                state.errors = null;
+            })
+            .addCase(fetchSignUp.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as { status: number };
+            })
+            .addCase(fetchCheckEmail.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchCheckEmail.fulfilled, (state, action) => {
+                state.pending = false;
+                state.emailData = action.payload;
+                state.errors = null;
+            })
+            .addCase(fetchCheckEmail.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as { status: number; message: string };
+            })
+            .addCase(fetchConfirmEmail.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchConfirmEmail.fulfilled, (state, action) => {
+                state.pending = false;
+                state.emailData = action.payload;
+                state.errors = null;
+            })
+            .addCase(fetchConfirmEmail.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as TAuthError;
+            })
+            .addCase(fetchChangePassword.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchChangePassword.fulfilled, (state, action) => {
+                state.pending = false;
+                state.changePasswordData = action.payload;
+                state.errors = null;
+            })
+            .addCase(fetchChangePassword.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as TAuthError;
+            });
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSignIn.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchSignIn.fulfilled, (state, action) => {
-        state.pending = false;
-        state.token = action.payload;
-        state.errors = null;
-      })
-      .addCase(fetchSignIn.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload;
-      })
-      .addCase(fetchSignUp.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchSignUp.fulfilled, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.token = action.payload;
-        state.errors = null;
-      })
-      .addCase(fetchSignUp.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload || { statusCode: 0, error: "Unknown", message: "Unknown error" };
-      })
-      .addCase(fetchCheckEmail.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchCheckEmail.fulfilled, (state, action) => {
-        state.pending = false;
-        state.token = action.payload;
-        state.errors = null;
-      })
-      .addCase(fetchCheckEmail.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload;
-      })
-      .addCase(fetchConfirmEmail.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchConfirmEmail.fulfilled, (state, action) => {
-        state.pending = false;
-        state.token = action.payload;
-        state.errors = null;
-      })
-      .addCase(fetchConfirmEmail.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload;
-      })
-      .addCase(fetchChangePassword.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchChangePassword.fulfilled, (state, action) => {
-        state.pending = false;
-        state.token = action.payload;
-        state.errors = null;
-      })
-      .addCase(fetchChangePassword.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload;
-      })
-  },
 });
 
 const { reducer } = authSlice;

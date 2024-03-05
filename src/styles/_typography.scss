@@ -1,76 +1,76 @@
 @mixin H1-bold($text-color) {
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 49px;
-  color: $text-color;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 49px;
+    color: $text-color;
 }
 
 @mixin H2-medium($text-color) {
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 42px;
-  color: $text-color;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    color: $text-color;
 }
 
 @mixin H3-medium($text-color) {
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 31px;
-  color: $text-color;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 31px;
+    color: $text-color;
 }
 
 @mixin H4-medium($text-color) {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 26px;
-  color: $text-color;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 26px;
+    color: $text-color;
 }
 
 @mixin H5-medium($text-color) {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 21px;
-  color: $text-color;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+    color: $text-color;
 }
 
 @mixin H5-bold($text-color) {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 21px;
-  color: $text-color;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 21px;
+    color: $text-color;
 }
 
 @mixin H6-regular($text-color) {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 21px;
-  color: $text-color;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    color: $text-color;
 }
 
 @mixin Body-regular($text-color) {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  color: $text-color;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color: $text-color;
 }
 
 @mixin Body-medium($text-color) {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  color: $text-color;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: $text-color;
 }
 
 @mixin Body-strong($text-color) {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 18px;
-  color: $text-color;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    color: $text-color;
 }
 
 @mixin Footnote-str($text-color) {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  color: $text-color;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: $text-color;
 }

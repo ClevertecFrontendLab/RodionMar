@@ -1,155 +1,140 @@
 @import '../../styles/index.scss';
 
-.formWrapper{
-  background-color: $neutral-gray-1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 64px 85px 174px;
-  box-sizing: border-box;
-  max-width: 540px;
-  width: 100%;
-}
-
-.logo{
-  min-width: 309px;
-  min-height: 76px;
-  margin-bottom: 48px;
-}
-
-.form{
-  min-width: 100%;
-  box-sizing: border-box;
-  .spaceContainer{
+.formWrapper {
+    background-color: $neutral-gray-1;
     display: flex;
-    justify-content: space-between;
-    .forgotButton{
-      padding: 0;
-      @include H6-regular($primary-light-6);
-      height: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 85px 174px;
+    box-sizing: border-box;
+    max-width: 540px;
+    width: 100%;
+}
+
+.logo {
+    min-width: 309px;
+    min-height: 76px;
+    margin-bottom: 48px;
+}
+
+.form {
+    min-width: 100%;
+    box-sizing: border-box;
+    .spaceContainer {
+        display: flex;
+        justify-content: space-between;
+        .forgotButton {
+            padding: 0;
+            @include H6-regular($primary-light-6);
+            height: auto;
+        }
     }
-  }
+    .fieldWrapper {
+        margin: 0;
+
+        .fieldAddon {
+            color: $character-light-title-85;
+        }
+    }
 }
 
 .menu {
-  min-width: 100%;
-  margin: 0;
-  padding-left: 0;
+    min-width: 100%;
+    margin: 0;
+    padding-left: 0;
 }
 
-.menuLabel{
-  display: flex;
-  justify-content: center;
+.menuLabel {
+    display: flex;
+    justify-content: center;
 }
 
 ul[class*='ant-menu-horizontal'] {
-  &:before {
-    display: none;
-  }
-  & > li[class*='ant-menu-item'] {
-    padding: 0 !important;
-    flex: 0 0 49.9%;
-    &:after{
-      right: 0;
-      left: 0;
+    &:before {
+        display: none;
     }
-  }
+    & > li[class*='ant-menu-item'] {
+        padding: 0 !important;
+        flex: 0 0 49.9%;
+        &:after {
+            right: 0;
+            left: 0;
+        }
+    }
 }
 
-.fieldsWrapper{
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
-  row-gap: 32px;
-  margin: 24px 0 54px;
-  .fieldHelp{
-    @include Footnote-str($character-light-secondary-45);
-  }
+.fieldsWrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 32px;
+    margin: 24px 0 54px;
+    .fieldHelp {
+        @include Footnote-str($character-light-secondary-45);
+    }
 }
 
-.fieldWrapper{
-  width: 100%;
-
-  label{
-    display: block;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-width: 1px 0 1px 1px;
-    border-style: solid;
-    border-color: $neutral-gray-5;
-    padding: 0 12px;
-    height: 100%;
-    color: $character-light-title-85;
-    background: $neutral-gray-2;
-  }
-
-  .fieldAddon{
-    color: $character-light-title-85;
-  }
+.field {
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.field{
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.confirmPassword{
-  margin-bottom: 30px;
-  position: relative;
+.confirmPassword {
+    margin-bottom: 30px;
+    position: relative;
 }
 
 div[class*='ant-form-item-explain '] {
-  position: relative;
-  width: 100%
+    position: relative;
+    width: 100%;
 }
 
 div[class*='ant-form-item-explain'] {
-  & > div {
-    @include Footnote-str($character-light-title-85);
-    position: absolute;
-  top: 4px;
-  transition: all 0.2s;
-  }
+    & > div {
+        @include Footnote-str($character-light-title-85);
+        position: absolute;
+        top: 4px;
+        transition: all 0.2s;
+    }
 
-  &>div[class*='ant-form-item-explain-error'] {
-    @include Footnote-str($character-light-error);
-    position: absolute;
-  }
+    & > div[class*='ant-form-item-explain-error'] {
+        @include Footnote-str($character-light-error);
+        position: absolute;
+    }
 }
 
 span[class*='ant-checkbox'] {
-  &+span{
-    padding-right: 0;
-  }
+    & + span {
+        padding-right: 0;
+    }
 }
 
-.buttonWrapper{
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
+.buttonWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
 }
 
-.authButton{
-  width: 100%;
-  box-sizing: border-box
+.authButton {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 571px) {
-  .formWrapper{
-    padding: 32px 16px 124px;
-  }
-
-  .logo{
-    min-width: 203px;
-    min-height: 50px;
-    margin-bottom: 32px;
-  }
-
-  .authButton{
-    .authIcon{
-      display: none;
+    .formWrapper {
+        padding: 32px 16px 124px;
     }
-  }
+
+    .logo {
+        min-width: 203px;
+        min-height: 50px;
+        margin-bottom: 32px;
+    }
+
+    .authButton {
+        .authIcon {
+            display: none;
+        }
+    }
 }

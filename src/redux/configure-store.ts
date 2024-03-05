@@ -1,25 +1,28 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import { createReduxHistoryContext } from "redux-first-history";
+import { createReduxHistoryContext } from 'redux-first-history';
 
-import { createBrowserHistory } from "history";
+import { createBrowserHistory } from 'history';
 
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 
-import auth from "@pages/auth/store/auth.slice"
+import auth from '@pages/auth/store/auth.slice';
+import feedback from '@pages/feedbacks/store/feedback.slice';
+import loading from '@components/LottieLoader/loading.slice';
 
-const {
-  createReduxHistory,
-  routerMiddleware,
-  routerReducer
-} = createReduxHistoryContext({ history: createBrowserHistory() });
+const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
+    history: createBrowserHistory(),
+    savePreviousLocations: 5,
+});
 
 export const store = configureStore({
-  reducer: {
-    router: routerReducer,
-    auth
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
+    reducer: {
+        router: routerReducer,
+        auth,
+        feedback,
+        loading,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });
 
 export const history = createReduxHistory(store);

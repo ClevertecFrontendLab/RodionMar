@@ -24,7 +24,7 @@
             "@hooks/*": ["./src/hooks/*"],
             "@pages/*": ["./src/pages/*"],
             "@redux/*": ["./src/redux/*"],
-            "@types/*": ["./src/types/*"],
+            "@shared/*": ["./src/shared/*"],
             "@utils/*": ["./src/utils/*"]
         },
         "plugins": [

@@ -1,34 +1,42 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
+import styles from './index.module.scss';
 
-import { useLocation } from "react-router-dom"
-import { push } from "redux-first-history";
+import { useLocation } from 'react-router-dom';
+import { history } from '@redux/configure-store';
+import { Result, Button } from 'antd';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
-const ErrorLogin = () => {
-  const navigationDispatch = useAppDispatch();
-  const location = useLocation();
+export const ErrorLogin = () => {
+    const location = useLocation();
 
-  useEffect(() => {
-    const isDirectAccess = !location.state || !location.state.fromServer;
+    useEffect(() => {
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-    if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
-    }
-    
-  }, [navigationDispatch, location.state]);
-  
-  return(
-    <Result 
-      result="warning"
-      title="Вход не выполнен"
-      description="Что-то пошло не так. Попробуйте еще раз"
-      buttonTestId="login-retry-button"
-      buttonText="Повторить"
-      handleRedirect={() => navigationDispatch(push('/auth'))}
-    />
-  )
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
+
+    return (
+        <Result
+            className={styles.result}
+            status='warning'
+            title='Вход не выполнен'
+            subTitle='Что-то пошло не так. Попробуйте еще раз'
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={() => history.push(AppRouteEnum.AUTH)}
+                    data-test-id='login-retry-button'
+                    block
+                >
+                    Повторить
+                </Button>
+            }
+        />
+    );
 };
-
-export default ErrorLogin;

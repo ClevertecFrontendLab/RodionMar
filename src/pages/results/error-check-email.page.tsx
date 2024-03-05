@@ -1,69 +1,79 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import Result from "@components/Result";
-import { useAppDispatch } from "@hooks/index";
-import { fetchCheckEmail } from "@pages/auth/store/auth.actions";
-import { AppDispatch } from "@redux/configure-store";
-import { useDispatch } from "react-redux";
+import { fetchCheckEmail } from '@pages/auth/store/auth.actions';
+import { AppDispatch, history } from '@redux/configure-store';
+import { useDispatch } from 'react-redux';
 
-import { To, useLocation } from "react-router-dom"
-import { push } from "redux-first-history";
-import { CallHistoryMethodAction } from "redux-first-history/build/es6/actions";
+import { useLocation } from 'react-router-dom';
+import { Result, Button } from 'antd';
 
+import cn from 'classnames';
 
-export const handleResponseCheckEmail = (
-  response: any,
-  navigationDispatch: (path: CallHistoryMethodAction<[to: To, state?: any]>) => void
-) => {
-  if (response.meta.requestStatus === "fulfilled") {
-    window.localStorage.setItem("checkEmailData", response.payload.email);
-    navigationDispatch(push("/auth/confirm-email", { fromServer: true }));
-    return true;
-  } else {
-    response.payload.statusCode === 404 && response.payload.message === "Email не найден" 
-      ? navigationDispatch(push("/result/error-check-email-no-exist", { fromServer: true }))
-      : navigationDispatch(push("/result/error-check-email", { fromServer: true }))
-  }
-};
+import styles from './index.module.scss';
+import { AppRouteEnum } from '@constants/app-routes.enum';
+import { TCheckEmailResponse } from '@shared/check-email-response.type';
 
-const ErrorCheckEmail = () => {
-  const authDispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
-  const navigationDispatch = useAppDispatch();
+export const ErrorCheckEmail = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const location = useLocation();
 
-  useEffect(() => {
-    const isDirectAccess = !location.state || !location.state.fromServer;
+    useEffect(() => {
+        const isDirectAccess = !location.state || !location.state.fromServer;
 
-    if (isDirectAccess) {
-      navigationDispatch(push('/auth'));
-    }
-    
-  }, [navigationDispatch, location.state]);
+        if (isDirectAccess) {
+            history.push(AppRouteEnum.AUTH);
+        }
+    }, [location.state]);
 
-  const handleRepeatCheckEmail = async () => {
-    navigationDispatch(push('/auth'));
-
-    const confirmEmailData = window.localStorage.getItem('checkEmailData') || ""
-
-    const data = {
-      email: confirmEmailData,
+    const handleResponseCheckEmail = (response: TCheckEmailResponse) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+            window.localStorage.setItem('checkEmailData', response.payload.email);
+            history.push(AppRouteEnum.CONFIRM_EMAIL, { fromServer: true });
+            return true;
+        } else {
+            response.payload.status === 404 && response.payload.message === 'Email не найден'
+                ? history.push(AppRouteEnum.ERROR_CHECK_EMAIL_NO_EXIST, { fromServer: true })
+                : history.push(AppRouteEnum.ERROR_CHECK_EMAIL, { fromServer: true });
+        }
     };
 
-    const responseData = await authDispatch(fetchCheckEmail(data));
-    handleResponseCheckEmail(responseData, navigationDispatch);
-  };
-  
-  return(
-    <Result 
-      result="404"
-      title="Что-то пошло не так"
-      description="Произошла ошибка, попробуйте отправить форму ещё раз."
-      buttonTestId="check-back-button"
-      buttonText="Назад"
-      isConfirmEmailPage
-      handleRedirect={handleRepeatCheckEmail}
-    />
-  )
-};
+    const handleRepeatCheckEmail = async () => {
+        history.push(AppRouteEnum.AUTH);
 
-export default ErrorCheckEmail;
+        const confirmEmailData = window.localStorage.getItem('checkEmailData') || '';
+
+        const data = {
+            email: confirmEmailData,
+        };
+
+        const response = await dispatch(fetchCheckEmail(data));
+
+        const responseData: TCheckEmailResponse = {
+            meta: response.meta,
+            payload: response.payload,
+        };
+
+        handleResponseCheckEmail(responseData);
+    };
+
+    return (
+        <Result
+            className={cn(styles.result, styles.emailResult)}
+            status='500'
+            title='Что-то пошло не так'
+            subTitle='Произошла ошибка, попробуйте отправить форму ещё раз.'
+            extra={
+                <Button
+                    type='primary'
+                    size='large'
+                    htmlType='button'
+                    className={styles.button}
+                    onClick={handleRepeatCheckEmail}
+                    data-test-id='check-back-button'
+                >
+                    Назад
+                </Button>
+            }
+        />
+    );
+};

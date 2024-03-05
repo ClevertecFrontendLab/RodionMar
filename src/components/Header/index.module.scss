@@ -1,80 +1,87 @@
 @import '../../styles/index.scss';
 
 .headerStyles {
-  width: 100%;
-  background-color: $primary-light-1;
-  padding: 16px 24px;
-  box-sizing: border-box;
-}
+    width: 100%;
+    background-color: $primary-light-1;
+    padding: 16px 24px;
+    box-sizing: border-box;
+    height: auto;
 
-.pageIndentifierStyles {
-  @include Body-regular($character-light-title-85);
-}
+    .breadcrumbs {
+        @include Body-regular($character-light-title-85);
+    }
 
-.titleStyles {
-  @include H1-bold($character-light-title-85);
-  margin: 0;
-  min-width: 100%;
+    .title {
+        @include H1-bold($character-light-title-85);
+        margin: 0;
+        min-width: 100%;
+    }
 }
 
 .mainInfoStyles {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-top: 14px;
 }
 
 .settingButtonStyles {
-  display: flex;
-  column-gap: 10px;
-  align-items: center;
-  border: none;
-  background: none;
-  transition: all 0.2s;
-  padding: 7px 15px;
-  &:hover,
-  &:focus,
-  &:active{
-    outline: none;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
     border: none;
-    background-color: $character-light-table-header;
-  }
+    background: none;
+    transition: all 0.2s;
+    padding: 7px 15px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        outline: none;
+        border: none;
+        background-color: $character-light-table-header;
+    }
 }
 
-.settingTextStyles{
-  @include Body-regular($character-light-title-85);
+.settingTextStyles {
+    @include Body-regular($character-light-title-85);
 }
 
 @media screen and (max-width: 835px) {
-  .titleStyles {
-    @include H3-medium($character-light-title-85);
-  }
+    .headerStyles {
+        .title {
+            @include H3-medium($character-light-title-85);
+        }
 
-  .isSidebarOpenedStyles{
-    display: block;
-  }
-  
-  .settingIconStyles{
-    display: none;
-  }
+        .isSidebarOpenedStyles {
+            display: block;
+        }
+
+        .settingIconStyles {
+            display: none;
+        }
+    }
 }
 
 @media screen and (max-width: 361px) {
-  .titleStyles {
-    @include H4-medium($character-light-title-85);
-  }
+    .headerStyles {
+        .title {
+            @include H4-medium($character-light-title-85);
+        }
 
-  .settingButtonStyles {
-    padding: 9px;
-    border-radius: 50%;
-    border: 1px solid $character-light-border;
-    box-shadow: 0 2px 0 0 #0000000B;
-  }
+        .settingButtonStyles {
+            padding: 9px;
+            border-radius: 50%;
+            border: 1px solid $character-light-border;
+            box-shadow: 0 2px 0 0 #0000000b;
+            background: $neutral-gray-1;
+        }
 
-  .settingTextStyles{
-    display: none;;
-  }
+        .settingTextStyles {
+            display: none;
+        }
 
-  .settingIconStyles{
-    display: block;
-  }
+        .settingIconStyles {
+            display: block;
+        }
+    }
 }
