@@ -59,7 +59,6 @@ const MainPage = () => {
 
     const handleFeedbacks = async () => {
         const response = await dispatch(fetchFeedbacks());
-        console.log(response)
 
         const responseData: TGetFeedbackResponse = {
             meta: response.meta,

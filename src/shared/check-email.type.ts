@@ -1,3 +1,3 @@
 export type TCheckEmail = {
-  email: string;
-}
+    email: string;
+};

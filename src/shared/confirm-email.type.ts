@@ -1,4 +1,4 @@
 export type TConfirmEmail = {
-  email: string;
-  code: string;
-}
+    email: string;
+    code: string;
+};

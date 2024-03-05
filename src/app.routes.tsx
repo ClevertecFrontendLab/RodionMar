@@ -35,7 +35,7 @@ const PrivateRoute = ({ element: Element }: { element: React.FC }) => {
 };
 
 const PublicRoute = ({ element: Element }: { element: React.FC }) => {
-    return isAllowed() ? <Navigate to={AppRouteEnum.MAIN} /> : <Element />;
+    return isAllowed() ? <Navigate to={AppRouteEnum.BASIC_MAIN} /> : <Element />;
 };
 
 const AppRoutes = () => {

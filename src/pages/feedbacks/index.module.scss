@@ -1,56 +1,76 @@
 @import '../../styles/index.scss';
 
-section[class*='ant-layout'] {
-    min-height: 100vh;
-}
-
 .mainLayout {
     display: flex;
-    min-height: 100vh;
     overflow: hidden;
     position: relative;
+    z-index: 20;
+    height: 100vh;
     .contentWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: url('../../../main-screen--light.png') center / cover no-repeat;
         .breadcrumbs {
             li {
                 @include Body-regular($character-light-title-85);
             }
+
             width: 100%;
             background-color: $primary-light-1;
 
             padding: 16px 24px;
             box-sizing: border-box;
+
             .separator {
                 color: $character-light-secondary-45;
             }
         }
+
         .buttons {
             padding: 112px 24px 48px;
             box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+
             .button {
                 padding: 10px 15px;
                 height: auto;
             }
+
             .primaryButton {
                 @include Body-regular($character-light-primary-inverse);
             }
+
             .textButton {
                 @include Body-regular($primary-light-6);
             }
+        }
+    }
+
+    .fourFeedbacks {
+        flex-grow: 0;
+        .swiper {
+            flex-grow: 1;
+            width: 100%;
+            max-height: 70vh;
+        }
+    }
+
+    .allFeedbacks {
+        flex-grow: 1;
+        height: 100%;
+        position: relative;
+        .swiper {
+            flex-grow: 1;
+            width: 100%;
+            height: 70vh;
         }
     }
 }
 
 .result {
     padding: 64px 85px !important;
-}
-
-.contentWrapper {
-    position: relative;
-    background: url('../../../main-screen--light.png') center / cover no-repeat;
-
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 .noFeedback {
@@ -62,11 +82,8 @@ section[class*='ant-layout'] {
 .contentStyles {
     display: flex;
     flex-direction: column;
-}
-
-.swiper {
-    width: 100%;
-    max-height: 71vh;
+    max-height: 100%;
+    position: relative;
 }
 
 .containerStyles {
@@ -75,6 +92,7 @@ section[class*='ant-layout'] {
     flex-direction: column;
     gap: 20px;
     box-sizing: border-box;
+
     .swiperSlide {
         display: flex;
         flex-direction: column;
@@ -93,8 +111,10 @@ section[class*='ant-layout'] {
             }
         }
     }
+
     .containerStyles {
         padding: 24px 16px 16px;
+
         .swiperSlide {
             gap: 16px;
         }
@@ -105,7 +125,24 @@ section[class*='ant-layout'] {
     .result {
         padding: 32px 16px !important;
     }
-    .swiper {
-        max-height: 78vh;
+
+    .mainLayout {
+    
+        .fourFeedbacks {
+            flex-grow: 1;
+        }
+
+    }
+
+    .fourFeedbacks {
+        .swiper {
+            height: 80vh;
+        }
+    }
+
+    .allFeedbacks {
+        .swiper {
+            height: 80vh;
+        }
     }
 }

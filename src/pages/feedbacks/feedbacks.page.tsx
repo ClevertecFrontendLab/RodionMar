@@ -10,11 +10,11 @@ import { useLocation } from 'react-router-dom';
 
 import cn from 'classnames';
 
-import {SiderComponent} from '@components/Sider';
-import {LottieLoader} from '@components/LottieLoader';
-import {FeedbackCard} from '@components/FeedbackCard';
-import {FeedbackModal} from '@components/FeedbackModal';
-import {NoFeedbacks} from '@components/NoFeedbacks';
+import { SiderComponent } from '@components/Sider';
+import { LottieLoader } from '@components/LottieLoader';
+import { FeedbackCard } from '@components/FeedbackCard';
+import { FeedbackModal } from '@components/FeedbackModal';
+import { NoFeedbacks } from '@components/NoFeedbacks';
 
 import { TCreateFeedback } from '@shared/create-feedback.type';
 import { TCreateFeedbackResponse } from './types/createFeedbackResponse.type';
@@ -25,13 +25,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import 'swiper/css/scrollbar';
 
 const { Content } = Layout;
 
 import styles from './index.module.scss';
 import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
-import {ResultModal} from '@components/ResultModal';
+import { ResultModal } from '@components/ResultModal';
 
 const items = [
     {
@@ -79,7 +78,7 @@ export const FeedbacksPage = () => {
 
     const displayedFeedbacks = showAllFeedbacks
         ? feedbacksCopy
-        : feedbacksCopy.slice(Math.max(feedbacksCopy.length - 8, 0));
+        : feedbacksCopy.slice(Math.max(feedbacksCopy.length - 4, 0));
 
     const handleShowAllFeedbacks = () => {
         setShowAllFeedbacks(!showAllFeedbacks);
@@ -134,7 +133,7 @@ export const FeedbacksPage = () => {
                 setIsSidebarOpened={setIsSidebarOpened}
                 windowWidth={windowWidth}
             />
-            <Content className={styles.contentWrapper}>
+            <Layout className={styles.contentWrapper}>
                 <Breadcrumb
                     routes={items}
                     className={styles.breadcrumbs}
@@ -144,6 +143,7 @@ export const FeedbacksPage = () => {
                     className={cn(
                         styles.contentStyles,
                         feedbacks.length > 0 ? null : styles.noFeedback,
+                        displayedFeedbacks.length < 5 ? styles.fourFeedbacks : styles.allFeedbacks
                     )}
                 >
                     {feedbacks.length > 0 ? (
@@ -171,40 +171,40 @@ export const FeedbacksPage = () => {
                                     </SwiperSlide>
                                 </Swiper>
                             </Space.Compact>
-                            <Row gutter={8} className={styles.buttons}>
-                                <Col>
-                                    <Button
-                                        type='primary'
-                                        size='large'
-                                        className={cn(styles.button, styles.primaryButton)}
-                                        onClick={() => setIsFeedbackModalOpen(true)}
-                                        data-test-id='write-review'
-                                        block
-                                    >
-                                        Написать отзыв
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        type='text'
-                                        size='large'
-                                        onClick={handleShowAllFeedbacks}
-                                        className={cn(styles.button, styles.textButton)}
-                                        data-test-id='all-reviews-button'
-                                        block
-                                    >
-                                        {showAllFeedbacks
-                                            ? 'Свернуть все отзывы'
-                                            : 'Развернуть все отзывы'}
-                                    </Button>
-                                </Col>
-                            </Row>
                         </>
                     ) : (
                         <NoFeedbacks setIsFeedbackModalOpen={setIsFeedbackModalOpen} />
                     )}
                 </Content>
-            </Content>
+                {feedbacks.length > 0 ? (<Row gutter={8} className={styles.buttons}>
+                    <Col>
+                        <Button
+                            type='primary'
+                            size='large'
+                            className={cn(styles.button, styles.primaryButton)}
+                            onClick={() => setIsFeedbackModalOpen(true)}
+                            data-test-id='write-review'
+                            block
+                        >
+                            Написать отзыв
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button
+                            type='text'
+                            size='large'
+                            onClick={handleShowAllFeedbacks}
+                            className={cn(styles.button, styles.textButton)}
+                            data-test-id='all-reviews-button'
+                            block
+                        >
+                            {showAllFeedbacks
+                                ? 'Свернуть все отзывы'
+                                : 'Развернуть все отзывы'}
+                        </Button>
+                    </Col>
+                </Row>) : null}
+            </Layout>
             <FeedbackModal
                 setIsFeedbackModalOpen={setIsFeedbackModalOpen}
                 isFeedbackModalOpen={isFeedbackModalOpen}

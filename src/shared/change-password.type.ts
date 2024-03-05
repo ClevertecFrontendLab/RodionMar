@@ -1,4 +1,4 @@
 export type TChangePassword = {
-  password: string,
-  confirmPassword: string
-}
+    password: string;
+    confirmPassword: string;
+};
