@@ -1,3 +1,1 @@
-import ResultModal from "./ResultModal.component";
-
-export default ResultModal;
+export {ResultModal} from './ResultModal.component';

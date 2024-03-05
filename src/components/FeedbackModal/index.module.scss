@@ -1,56 +1,56 @@
 @import '../../styles/index.scss';
 
-.modalWrapper{
-  background-color: #799CD480;
-  backdrop-filter: blur(3px);
-  .wrapper{
-    background-color: $neutral-gray-1;
-    span[class*='ant-modal-close-x'] {
-      svg{
-        color: $character-light-title-85;
-      }
-    }
-    .starFilled {
-      color: $character-light-warning;
-    }
-    .starOutlined {
-      path {
-        color: $character-light-warning
-      }
-    }
-    .button{
-      padding: 10px 15px;
-      height: auto;
-      @include Body-regular($character-light-primary-inverse);
-    }
-    .fieldsWrapper{
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .fieldWrapper{
-      margin-bottom: 0;
-      word-break: break-word;
-      textarea{
-        min-height: 46px !important;
-        height: 100%;
-        overflow: hidden;
-        resize: vertical;
-        @include Body-regular($character-light-title-85);
-        [class*='ant-input:placeholder-shown'] {
-          @include Body-regular($character-light-disable-25);
+.modalWrapper {
+    background-color: #799cd480;
+    backdrop-filter: blur(3px);
+    .wrapper {
+        background-color: $neutral-gray-1;
+        span[class*='ant-modal-close-x'] {
+            svg {
+                color: $character-light-title-85;
+            }
         }
-      }
+        .starFilled {
+            color: $character-light-warning;
+        }
+        .starOutlined {
+            path {
+                color: $character-light-warning;
+            }
+        }
+        .button {
+            padding: 10px 15px;
+            height: auto;
+            @include Body-regular($character-light-primary-inverse);
+        }
+        .fieldsWrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .fieldWrapper {
+            margin-bottom: 0;
+            word-break: break-word;
+            textarea {
+                min-height: 46px !important;
+                height: 100%;
+                overflow: hidden;
+                resize: vertical;
+                @include Body-regular($character-light-title-85);
+                [class*='ant-input:placeholder-shown'] {
+                    @include Body-regular($character-light-disable-25);
+                }
+            }
+        }
     }
-  }
 }
 
 @media screen and (max-width: 361px) {
-  .modalWrapper{
-    .wrapper{
-      .button{
-        width: 100%;
-      }
+    .modalWrapper {
+        .wrapper {
+            .button {
+                width: 100%;
+            }
+        }
     }
-  }
 }

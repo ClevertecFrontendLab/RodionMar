@@ -1,3 +1,1 @@
-import ActionCard from "./ActionCard.component";
-
-export default ActionCard;
+export {ActionCard} from './ActionCard.component';

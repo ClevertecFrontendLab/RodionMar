@@ -1,3 +1,1 @@
-import FeedbackModal from "./FeedbackModal.component";
-
-export default FeedbackModal;
+export {FeedbackModal} from './FeedbackModal.component';

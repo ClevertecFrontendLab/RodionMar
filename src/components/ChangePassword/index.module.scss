@@ -1,62 +1,62 @@
 @import '../../styles/index.scss';
 
-.form{
-  background: $neutral-gray-1;
-  .wrapper {
-    padding: 64px 85px;
-    box-sizing: border-box;
-    max-width: 540px;
-    min-width: 100%;
-    .title{
-      @include H3-medium($character-light-title-85);
-      margin: 0;
-      text-align: center;
-    }
-    .fieldsWrapper{
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-      gap: 16px;
-
-      .fieldWrapper{
-        padding-bottom: 30px;
-        max-width: 100%;
-        .field {
-          width: 100%;
-          box-sizing: border-box;
+.form {
+    background: $neutral-gray-1;
+    .wrapper {
+        padding: 64px 85px;
+        box-sizing: border-box;
+        max-width: 540px;
+        min-width: 100%;
+        .title {
+            @include H3-medium($character-light-title-85);
+            margin: 0;
+            text-align: center;
         }
-      }
+        .fieldsWrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            gap: 16px;
+
+            .fieldWrapper {
+                padding-bottom: 30px;
+                max-width: 100%;
+                .field {
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+            }
+        }
+        .fieldWrapper {
+            margin-bottom: 0;
+        }
     }
-    .fieldWrapper{
-      margin-bottom: 0;
-    }
-  }
 }
 
 div[class*='ant-form-item-explain'] {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
 
-  &>div {
-    @include Footnote-str($character-light-secondary-45);
-    position: absolute;
-    top: 4px;
-    transition: all 0.2s;
-  }
+    & > div {
+        @include Footnote-str($character-light-secondary-45);
+        position: absolute;
+        top: 4px;
+        transition: all 0.2s;
+    }
 
-  &>div[class*='ant-form-item-explain-error'] {
-    @include Footnote-str($character-light-error);
-    position: absolute;
-  }
+    & > div[class*='ant-form-item-explain-error'] {
+        @include Footnote-str($character-light-error);
+        position: absolute;
+    }
 }
 
 @media screen and (max-width: 430px) {
-  .form{
-    .wrapper {
-      padding: 32px 16px;
-      .fieldsWrapper{
-        gap: 12px;
-      }
+    .form {
+        .wrapper {
+            padding: 32px 16px;
+            .fieldsWrapper {
+                gap: 12px;
+            }
+        }
     }
-  }
 }

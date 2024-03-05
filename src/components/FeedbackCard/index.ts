@@ -1,3 +1,1 @@
-import FeedbackCard from "./FeedbackCard.component";
-
-export default FeedbackCard;
+export {FeedbackCard} from './FeedbackCard.component';

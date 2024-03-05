@@ -1,3 +1,1 @@
-import NoFeedbacks from "./NoFeedbacks.component";
-
-export default NoFeedbacks;
+export {NoFeedbacks} from './NoFeedbacks.component';

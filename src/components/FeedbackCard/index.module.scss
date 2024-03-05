@@ -1,106 +1,105 @@
 @import '../../styles/index.scss';
 
 .card {
-  width: 100%;
-  padding: 12px 0;
-  row-gap: 12px;
-  background: $neutral-gray-1;
-  box-shadow: 0 2px 8 0 #00000026;
+    width: 100%;
+    padding: 12px 0;
+    row-gap: 12px;
+    background: $neutral-gray-1;
+    box-shadow: 0 2px 8 0 #00000026;
 
-  & div[class*='ant-card-body'] {
-    padding: 16px;
-  }
-  & div[class*='ant-col'] {
-    padding: 0;
-  }
-
-  .imageCell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-
-    .fullname {
-      text-align: center;
-      word-wrap: break-word;
-      @include H6-regular($character-light-title-85);
+    & div[class*='ant-card-body'] {
+        padding: 16px;
     }
-  }
-
-  .messageCell{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    .date{
-      @include Footnote-str($neutral-gray-6);
+    & div[class*='ant-col'] {
+        padding: 0;
     }
-    .feedback{
-      @include Body-regular($character-light-secondary-45);
-    }
-  }
 
-  .starFilled {
-    color: $character-light-warning;
-  }
+    .imageCell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
 
-  .starOutlined {
-    path {
-      color: $character-light-warning
+        .fullname {
+            text-align: center;
+            word-wrap: break-word;
+            @include H6-regular($character-light-title-85);
+        }
     }
-  }
+
+    .messageCell {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        .date {
+            @include Footnote-str($neutral-gray-6);
+        }
+        .feedback {
+            @include Body-regular($character-light-secondary-45);
+        }
+    }
+
+    .starFilled {
+        color: $character-light-warning;
+    }
+
+    .starOutlined {
+        path {
+            color: $character-light-warning;
+        }
+    }
 }
 
-
 @media screen and (max-width: 835px) {
-  .card {
-    & div[class*='ant-card-head-title'] {
-      text-align: left;
+    .card {
+        & div[class*='ant-card-head-title'] {
+            text-align: left;
+        }
     }
-  }
 }
 
 @media screen and (max-width: 705px) {
-  .card {
-    & div[class*='ant-card-head-title'] {
-      text-align: center;
+    .card {
+        & div[class*='ant-card-head-title'] {
+            text-align: center;
+        }
     }
-  }
 }
 
 @media screen and (max-width: 560px) {
-  .card {
-    padding: 16px 0;
+    .card {
+        padding: 16px 0;
 
-    .cardContent{
-      flex-direction: column;
-      gap: 12px;
+        .cardContent {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        & div[class*='ant-card-body'] {
+            padding: 16px;
+        }
+
+        .imageCell {
+            display: flex;
+            flex-direction: row;
+            flex: 0 0 auto !important;
+            gap: 16px;
+        }
+
+        .messageCell {
+            padding-left: 0;
+            padding-right: 0;
+            gap: 16px;
+        }
+
+        .starFilled {
+            color: $character-light-warning;
+        }
+
+        .starOutlined {
+            path {
+                color: $character-light-warning;
+            }
+        }
     }
-  
-    & div[class*='ant-card-body'] {
-      padding: 16px;
-    }
-  
-    .imageCell {
-      display: flex;
-      flex-direction: row;
-      flex: 0 0 auto !important;
-      gap: 16px;
-    }
-  
-    .messageCell{
-      padding-left: 0;
-      padding-right: 0;
-      gap: 16px;
-    }
-  
-    .starFilled {
-      color: $character-light-warning;
-    }
-  
-    .starOutlined {
-      path {
-        color: $character-light-warning
-      }
-    }
-  }
 }

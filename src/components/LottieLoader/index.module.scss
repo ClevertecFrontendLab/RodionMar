@@ -1,13 +1,13 @@
-.wrapper{
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  min-height: 100%;
-  z-index: 10;
-  background-color: rgba(121, 156, 213, 0.5);
-  backdrop-filter: blur(6px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: 10;
+    background-color: rgba(121, 156, 213, 0.5);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

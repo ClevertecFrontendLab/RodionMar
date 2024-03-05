@@ -1,51 +1,52 @@
 @import '../../styles/index.scss';
 
 .cardStyles {
-  width: 100%;
-  row-gap: 12px;
-  background: $neutral-gray-1;
+    width: 100%;
+    row-gap: 12px;
+    background: $neutral-gray-1;
 }
 
 div[class*='ant-card-head-title'] {
-  text-align: center;
-  box-sizing: border-box;
-  padding: 12px 6px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 12px 0;
+    white-space: wrap;
 }
 
 div[class*='ant-card-body'] {
-  padding: 12px 0
+    padding: 12px 0;
 }
 
 .cardTitleStyles {
-  @include H6-regular($character-light-title-85);
+    @include H6-regular($character-light-title-85);
 }
 
 .iconStyles {
-  color: $primary-light-6;
-  svg {
-    path {
-      fill: $primary-light-6
+    color: $primary-light-6;
+    svg {
+        path {
+            fill: $primary-light-6;
+        }
     }
-  }
 }
 
 .buttonTextStyles {
-  @include Body-regular($primary-light-6);
+    @include Body-regular($primary-light-6);
 }
 
 @media screen and (max-width: 835px) {
-  .cardStyles {
-    & div[class*='ant-card-head-title'] {
-      text-align: left;
-      white-space: wrap;
+    .cardStyles {
+        & div[class*='ant-card-head-title'] {
+            text-align: left;
+            white-space: wrap;
+        }
     }
-  }
 }
 
 @media screen and (max-width: 705px) {
-  .cardStyles {
-    & div[class*='ant-card-head-title'] {
-      text-align: center;
+    .cardStyles {
+        & div[class*='ant-card-head-title'] {
+            text-align: center;
+        }
     }
-  }
 }

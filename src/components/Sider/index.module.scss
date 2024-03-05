@@ -1,237 +1,236 @@
 @import '../../styles/index.scss';
 
 .siderStyles {
-  transition: all .5s;
-  position: relative;
-  background-color: $character-light-sider-background;
+    transition: all 0.5s;
+    position: relative;
+    background-color: $character-light-sider-background;
 
-  &>div {
-    height: 100%;
-  }
-  .commonSwitcherStyles {
-    position: absolute;
-    padding: 0;
-    z-index: 5;
-    background: none;
-    border-radius: 0;
-    border: none;
-    background-color: $neutral-gray-1;
-  
-    &:focus,
-    &:hover {
-      border: none;
-      outline: none
+    & > div {
+        height: 100%;
     }
-  }
+    .commonSwitcherStyles {
+        position: absolute;
+        padding: 0;
+        z-index: 5;
+        background: none;
+        border-radius: 0;
+        border: none;
+        background-color: $neutral-gray-1;
 
-  .divider {
-    background-color: $character-light-dividers;
-    height: 1px;
-    margin: 0;
-  }
-
-  .exitButtonClosedStyles {
-    padding: 12px 16px 12px 0;
-    margin-left: 16px;
-    margin-bottom: 12px;
-    .exitIconStyles{
-      width: 16px;
-      height: 16px;
+        &:focus,
+        &:hover {
+            border: none;
+            outline: none;
+        }
     }
-  }
 
-  .switcherStyles {
-    top: 50%;
-    right: -20px;
-    width: 22px;
-    height: 66px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    clip-path: polygon(0 0, 20px 8px, 20px 58px, 0 66px);
-  }
+    .divider {
+        background-color: $character-light-dividers;
+        height: 1px;
+        margin: 0;
+    }
+
+    .exitButtonClosedStyles {
+        padding: 12px 16px 12px 0;
+        margin-left: 16px;
+        margin-bottom: 12px;
+        .exitIconStyles {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .switcherStyles {
+        top: 50%;
+        right: -20px;
+        width: 22px;
+        height: 66px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        clip-path: polygon(0 0, 20px 8px, 20px 58px, 0 66px);
+    }
 }
 
 .layoutWrapperStyles {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .logoStyles {
-  margin-top: 30px;
-  margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 .logoOpenedStyles {
-  padding: 14px 46px 17px 29px;
+    padding: 14px 46px 17px 29px;
 }
 
 .logoClosedStyles {
-  padding: 19px 17px;
+    padding: 19px 17px;
 }
 
 .menuIconStyles {
-  svg {
-    path {
-      fill: $primary-light-6
+    svg {
+        path {
+            fill: $primary-light-6;
+        }
     }
-  }
 
-  fill: $primary-light-6;
+    fill: $primary-light-6;
 }
 
 .menuLabelStyles {
-  @include Body-regular($character-light-title-85);
+    @include Body-regular($character-light-title-85);
 }
 
 .menuStyles {
-  display: flex;
-  flex-direction: column;
-  row-gap: 16px;
-  list-style: none;
-  margin: 0;
-  padding-left: 0;
-  & li[class*='ant-menu-item'] {
     display: flex;
-    align-items: center;
-    column-gap: 10px;
-    cursor: pointer;
-    box-sizing: border-box;
-    min-height: 48px;
-    border-right: none;
-    transition: all 0.2s;
-    background-color: transparent;
-    &:hover {
-      background-color: $geek-blue-1;
-      .menuLabelStyles {
-        color: $primary-light-7;
-      }
+    flex-direction: column;
+    row-gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    & li[class*='ant-menu-item'] {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        cursor: pointer;
+        box-sizing: border-box;
+        min-height: 48px;
+        border-right: none;
+        transition: all 0.2s;
+        background-color: transparent;
+        &:hover {
+            background-color: $geek-blue-1;
+            .menuLabelStyles {
+                color: $primary-light-7;
+            }
+        }
     }
-  }
 
-  & li[class*='ant-menu-item-selected'] {
-    border-right: 3px solid $primary-light-6;
-    background-color: $geek-blue-1;
-    .menuLabelStyles {
-      color: $primary-light-7;
+    & li[class*='ant-menu-item-selected'] {
+        border-right: 3px solid $primary-light-6;
+        background-color: $geek-blue-1;
+        .menuLabelStyles {
+            color: $primary-light-7;
+        }
     }
-  }
 }
 
 .menuOpenedStyles {
-  & li[class*='ant-menu-item'] {
-    padding: 12px 0 12px 16px;
-  }
+    & li[class*='ant-menu-item'] {
+        padding: 12px 0 12px 16px;
+    }
 }
 
 .menuClosedStyles {
-  padding: 0;
-  & li[class*='ant-menu-item'] {
-    display: grid;
-    grid-template-columns: 1fr;
-    padding: 12px 0 !important;
-    justify-content: center;
-  }
+    padding: 0;
+    & li[class*='ant-menu-item'] {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 12px 0 !important;
+        justify-content: center;
+    }
 }
 
 .exitButtonOpenedStyles {
-  margin: 7px 0 7px 16px;
-  .exitIconStyles{
-    margin-right: 10px;
-    width: 16px;
-    height: 16px;
-  }
+    margin: 7px 0 7px 16px;
+    .exitIconStyles {
+        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+    }
 }
 
 .exitTextStyles {
-  @include Body-regular($character-light-title-85);
+    @include Body-regular($character-light-title-85);
 }
 
 .switcherIconStyles {
-  svg{
-    color: $character-light-secondary-45;
-  }
-  width: 15px;
-  height: 15px;
+    svg {
+        color: $character-light-secondary-45;
+    }
+    width: 15px;
+    height: 15px;
 }
 
 @media screen and (max-width: 705px) {
-  .siderStyles {
-    position: fixed !important;
-    z-index: 3;
-    height: 100%;
-    top: 0;
-    left: 0;
-    .switcherStyles {
-      display: none;
-    }
-  
-    .switcherMobileStyles {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      top: 24px;
-      right: -30px;
-      width: 32px;
-      height: 48px;
-      clip-path: polygon(0 0, 32px 5.81818px, 32px 42.1818px, 0 48px);
-    }
-
-    .logoStyles {
-      margin-top: 0;
-      margin-bottom: 16px;
-    }
-  
-    .logoOpenedStyles {
-      padding: 16px 17px;
-    }
-  
-    .logoClosedStyles {
-      display: block;
-    }
-  
-    .menuIconStyles {
-      display: none;
-    }
-  
-    .menuStyles {
-      row-gap: 9px;
-    }
-  
-    .menuOpenedStyles {
-      & li[class*='ant-menu-item'] {
-        padding-left: 0;
-        justify-content: center;
-        margin: 0;
-        & span{
-          margin-left: 0;
+    .siderStyles {
+        position: fixed !important;
+        z-index: 3;
+        height: 100%;
+        top: 0;
+        left: 0;
+        .switcherStyles {
+            display: none;
         }
-      }
-    }
-  
-    .exitButtonStyles {
-      padding: 4px 15px;
-      margin-left: 0;
-      gap: 0;
-    }
-  
-    .exitButtonOpenedStyles {
-      margin: 7px 16px;
-    }
-  
-    .exitButtonClosedStyles {
-      padding: 0;
-    }
-  
-    .exitIconStyles {
-      display: none;
-    }
-  }
 
-  .siderClosedStyles {
-    transform: translateX(-100%);
-  }
+        .switcherMobileStyles {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 24px;
+            right: -30px;
+            width: 32px;
+            height: 48px;
+            clip-path: polygon(0 0, 32px 5.81818px, 32px 42.1818px, 0 48px);
+        }
 
+        .logoStyles {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .logoOpenedStyles {
+            padding: 16px 17px;
+        }
+
+        .logoClosedStyles {
+            display: block;
+        }
+
+        .menuIconStyles {
+            display: none;
+        }
+
+        .menuStyles {
+            row-gap: 9px;
+        }
+
+        .menuOpenedStyles {
+            & li[class*='ant-menu-item'] {
+                padding-left: 0;
+                justify-content: center;
+                margin: 0;
+                & span {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .exitButtonStyles {
+            padding: 4px 15px;
+            margin-left: 0;
+            gap: 0;
+        }
+
+        .exitButtonOpenedStyles {
+            margin: 7px 16px;
+        }
+
+        .exitButtonClosedStyles {
+            padding: 0;
+        }
+
+        .exitIconStyles {
+            display: none;
+        }
+    }
+
+    .siderClosedStyles {
+        transform: translateX(-100%);
+    }
 }
