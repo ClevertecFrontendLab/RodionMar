@@ -1,5 +1,4 @@
-import { RootState } from "@redux/configure-store";
-
+import { RootState } from '@redux/configure-store';
 
 export const FeedbackSelector = (state: RootState) => state.feedback.feedbacks;
 

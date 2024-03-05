@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FeedbackErrorSelector, FeedbackPendingSelector, FeedbackSelector } from './store/feedback.selector';
+import {
+    FeedbackErrorSelector,
+    FeedbackPendingSelector,
+    FeedbackSelector,
+} from './store/feedback.selector';
 import { useAppSelector, history, AppDispatch } from '@redux/configure-store';
 import { useLocation } from 'react-router-dom';
 
-import cn from "classnames";
+import cn from 'classnames';
 
-import SiderComponent from "@components/Sider";
-import LottieLoader from '@components/LottieLoader/LottieLoader';
-import FeedbackCard from '@components/FeedbackCard';
-import FeedbackModal from '@components/FeedbackModal';
-import NoFeedbacks from '@components/NoFeedbacks';
+import {SiderComponent} from '@components/Sider';
+import {LottieLoader} from '@components/LottieLoader';
+import {FeedbackCard} from '@components/FeedbackCard';
+import {FeedbackModal} from '@components/FeedbackModal';
+import {NoFeedbacks} from '@components/NoFeedbacks';
 
 import { TCreateFeedback } from '@shared/create-feedback.type';
+import { TCreateFeedbackResponse } from './types/createFeedbackResponse.type';
 
 import { Layout, Row, Col, Space, Breadcrumb, Button } from 'antd';
 
@@ -24,36 +29,35 @@ import 'swiper/css/scrollbar';
 
 const { Content } = Layout;
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
-import ResultModal from '@components/ResultModal';
+import {ResultModal} from '@components/ResultModal';
 
 const items = [
     {
         path: '/main',
-        breadcrumbName: "Главная",
+        breadcrumbName: 'Главная',
     },
     {
         path: '/feedbacks',
-        breadcrumbName: "Отзывы пользователей",
+        breadcrumbName: 'Отзывы пользователей',
     },
 ];
 
 export const handleResponseCreateFeedback = (
-    response: any,
+    response: TCreateFeedbackResponse,
     setIsSuccessModalOpen: (value: boolean) => void,
-    setIsErrorModalOpen: (value: boolean) => void
+    setIsErrorModalOpen: (value: boolean) => void,
 ) => {
     if (response.meta.requestStatus === 'fulfilled') {
-        setIsSuccessModalOpen(true)
+        setIsSuccessModalOpen(true);
         return true;
     } else {
-        setIsErrorModalOpen(true)
+        setIsErrorModalOpen(true);
     }
 };
 
-
-const FeedbacksPage = () => {
+export const FeedbacksPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [isSiderOpened, setIsSidebarOpened] = useState(true);
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -68,10 +72,14 @@ const FeedbacksPage = () => {
 
     const feedbacksCopy = [...feedbacks];
     if (feedbacksCopy) {
-        feedbacksCopy.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        feedbacksCopy.sort(
+            (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        );
     }
 
-    const displayedFeedbacks = showAllFeedbacks ? feedbacksCopy : feedbacksCopy.slice(Math.max(feedbacksCopy.length - 4, 0));
+    const displayedFeedbacks = showAllFeedbacks
+        ? feedbacksCopy
+        : feedbacksCopy.slice(Math.max(feedbacksCopy.length - 8, 0));
 
     const handleShowAllFeedbacks = () => {
         setShowAllFeedbacks(!showAllFeedbacks);
@@ -83,12 +91,12 @@ const FeedbacksPage = () => {
         };
 
         if (fetchErrors && fetchErrors !== 403) {
-            setIsServerErrorModalOpen(true)
+            setIsServerErrorModalOpen(true);
         }
 
         window.addEventListener('resize', handleResize);
 
-        dispatch(fetchFeedbacks())
+        dispatch(fetchFeedbacks());
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -103,13 +111,17 @@ const FeedbacksPage = () => {
         if (isDirectAccess) {
             history.push('/');
         }
-
     }, [history, location.state]);
 
     const handleFeedback = async (data: TCreateFeedback) => {
-        const responseCreteFeedback = await dispatch(fetchCreateFeedback(data));
-        dispatch(fetchFeedbacks())
-        handleResponseCreateFeedback(responseCreteFeedback, setIsSuccessModalOpen, setIsErrorModalOpen);
+        const response = await dispatch(fetchCreateFeedback(data));
+        dispatch(fetchFeedbacks());
+
+        handleResponseCreateFeedback(
+            response,
+            setIsSuccessModalOpen,
+            setIsErrorModalOpen,
+        );
     };
 
     return (
@@ -117,13 +129,26 @@ const FeedbacksPage = () => {
             {fetchPending !== undefined && fetchPending === true && (
                 <LottieLoader data-test-id='loader' />
             )}
-            <SiderComponent isSiderOpened={isSiderOpened} setIsSidebarOpened={setIsSidebarOpened} windowWidth={windowWidth} />
+            <SiderComponent
+                isSiderOpened={isSiderOpened}
+                setIsSidebarOpened={setIsSidebarOpened}
+                windowWidth={windowWidth}
+            />
             <Content className={styles.contentWrapper}>
-                <Breadcrumb routes={items} className={styles.breadcrumbs} separator={<span className={styles.separator}>/</span>} />
-                <Content className={cn(styles.contentStyles, feedbacks.length > 0 ? null : styles.noFeedback)}>
+                <Breadcrumb
+                    routes={items}
+                    className={styles.breadcrumbs}
+                    separator={<span className={styles.separator}>/</span>}
+                />
+                <Content
+                    className={cn(
+                        styles.contentStyles,
+                        feedbacks.length > 0 ? null : styles.noFeedback,
+                    )}
+                >
                     {feedbacks.length > 0 ? (
                         <>
-                            <Space.Compact className={styles.containerStyles} direction="vertical">
+                            <Space.Compact className={styles.containerStyles} direction='vertical'>
                                 <Swiper
                                     direction={'vertical'}
                                     slidesPerView={'auto'}
@@ -148,23 +173,36 @@ const FeedbacksPage = () => {
                             </Space.Compact>
                             <Row gutter={8} className={styles.buttons}>
                                 <Col>
-                                    <Button type="primary" size="large" className={cn(styles.button, styles.primaryButton)} onClick={() => setIsFeedbackModalOpen(true)} data-test-id='write-review' block>
+                                    <Button
+                                        type='primary'
+                                        size='large'
+                                        className={cn(styles.button, styles.primaryButton)}
+                                        onClick={() => setIsFeedbackModalOpen(true)}
+                                        data-test-id='write-review'
+                                        block
+                                    >
                                         Написать отзыв
                                     </Button>
                                 </Col>
                                 <Col>
-                                    <Button type="text" size="large" onClick={handleShowAllFeedbacks} className={cn(styles.button, styles.textButton)} data-test-id='all-reviews-button' block>
-                                        {showAllFeedbacks ? "Свернуть все отзывы" : "Развернуть все отзывы"}
+                                    <Button
+                                        type='text'
+                                        size='large'
+                                        onClick={handleShowAllFeedbacks}
+                                        className={cn(styles.button, styles.textButton)}
+                                        data-test-id='all-reviews-button'
+                                        block
+                                    >
+                                        {showAllFeedbacks
+                                            ? 'Свернуть все отзывы'
+                                            : 'Развернуть все отзывы'}
                                     </Button>
                                 </Col>
                             </Row>
                         </>
                     ) : (
-                        <NoFeedbacks
-                            setIsFeedbackModalOpen={setIsFeedbackModalOpen}
-                        />
+                        <NoFeedbacks setIsFeedbackModalOpen={setIsFeedbackModalOpen} />
                     )}
-
                 </Content>
             </Content>
             <FeedbackModal
@@ -174,15 +212,15 @@ const FeedbacksPage = () => {
             />
             <ResultModal
                 isModalOpen={isSuccessModalOpen}
-                status="success"
-                title="Отзыв успешно опубликован"
+                status='success'
+                title='Отзыв успешно опубликован'
                 subTitle={null}
                 resultClassName={styles.result}
                 button={
                     <Button
-                        type="primary"
-                        size="large"
-                        htmlType="button"
+                        type='primary'
+                        size='large'
+                        htmlType='button'
                         className={styles.button}
                         onClick={() => setIsSuccessModalOpen(false)}
                         block
@@ -193,17 +231,17 @@ const FeedbacksPage = () => {
             />
             <ResultModal
                 isModalOpen={isErrorModalOpen}
-                status="error"
-                title="Данные не сохранились"
-                subTitle="Что-то пошло не так. Попробуйте ещё раз."
+                status='error'
+                title='Данные не сохранились'
+                subTitle='Что-то пошло не так. Попробуйте ещё раз.'
                 resultClassName={styles.result}
                 button={
                     <Row className={styles.errorButtons} gutter={8}>
                         <Col span={12}>
                             <Button
-                                type="primary"
-                                size="large"
-                                htmlType="button"
+                                type='primary'
+                                size='large'
+                                htmlType='button'
                                 className={cn(styles.button, styles.errorButton)}
                                 onClick={() => {
                                     setIsErrorModalOpen(false);
@@ -217,8 +255,8 @@ const FeedbacksPage = () => {
                         </Col>
                         <Col span={12}>
                             <Button
-                                size="large"
-                                htmlType="button"
+                                size='large'
+                                htmlType='button'
                                 className={cn(styles.button, styles.errorButton)}
                                 onClick={() => setIsErrorModalOpen(false)}
                                 block
@@ -231,25 +269,25 @@ const FeedbacksPage = () => {
             />
             <ResultModal
                 isModalOpen={isServerErrorModalOpen}
-                status="500"
-                title="Что-то пошло не так"
-                subTitle="Произошла ошибка, попробуйте ещё раз."
+                status='500'
+                title='Что-то пошло не так'
+                subTitle='Произошла ошибка, попробуйте ещё раз.'
                 resultClassName={styles.result}
                 button={
                     <Button
-                        type="primary"
-                        size="large"
-                        htmlType="button"
+                        type='primary'
+                        size='large'
+                        htmlType='button'
                         className={styles.button}
-                        onClick={() => { setIsServerErrorModalOpen(false); history.push("/main") }}
+                        onClick={() => {
+                            setIsServerErrorModalOpen(false);
+                            history.push('/main');
+                        }}
                     >
                         Назад
                     </Button>
                 }
             />
-
         </Layout>
     );
-}
-
-export default FeedbacksPage;
+};

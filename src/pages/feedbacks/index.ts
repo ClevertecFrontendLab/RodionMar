@@ -1,3 +1,1 @@
-import FeedbacksPage from "./feedbacks.page";
-
-export default FeedbacksPage;
+export { FeedbacksPage } from './feedbacks.page';

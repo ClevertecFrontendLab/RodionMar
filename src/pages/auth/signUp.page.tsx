@@ -1,15 +1,15 @@
-import SignUpComponent from '@components/SignUp';
+import {SignUpComponent} from '@components/SignUp';
 
 import { clearErrors } from './store/auth.slice';
 
 import { TAuth } from '@shared/auth.type';
+import { TSignUpResponse } from './types/signUpResponse.type copy';
+
 import { fetchSignUp } from './store/auth.actions';
 import { useAppDispatch } from '@hooks/index';
 import { history } from '@redux/configure-store';
 
-export const handleResponse = (
-    response: any,
-) => {
+export const handleResponse = (response: TSignUpResponse) => {
     if (response.meta.requestStatus === 'fulfilled') {
         history.push('/result/success', { fromServer: true });
         return true;
@@ -24,7 +24,7 @@ export const handleResponse = (
     }
 };
 
-const SignUpPage = () => {
+export const SignUpPage = () => {
     const dispatch = useAppDispatch();
 
     const handleRedirectToSignIn = () => {
@@ -34,7 +34,13 @@ const SignUpPage = () => {
 
     const handleSignUp = async (data: TAuth) => {
         const response = await dispatch(fetchSignUp(data));
-        handleResponse(response);
+
+        const responseData: TSignUpResponse = {
+            meta: response.meta,
+            payload: response.payload
+        }
+
+        handleResponse(responseData);
     };
 
     return (
@@ -44,5 +50,3 @@ const SignUpPage = () => {
         />
     );
 };
-
-export default SignUpPage;

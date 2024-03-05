@@ -1,55 +1,55 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchFeedbacks, fetchCreateFeedback } from "./feedback.actions";
+import { fetchFeedbacks, fetchCreateFeedback } from './feedback.actions';
 
-import { TGetFeedback } from "@shared/get-feedback.type";
+import { TGetFeedback } from '@shared/get-feedback.type';
 
-type IInitialState = {
-  feedbacks: TGetFeedback[],
-  errors: number | null;
-  pending: boolean;
+type TInitialState = {
+    feedbacks: TGetFeedback[];
+    errors: string | number | null;
+    pending: boolean;
 };
 
 const initialState = {
-  feedbacks: [],
-  errors: null,
-  pending: false,
-} as IInitialState;
+    feedbacks: [],
+    errors: null,
+    pending: false,
+} as TInitialState;
 
 const feedbackSlice = createSlice({
-  name: "feedback",
-  initialState,
-  reducers: {
-    clearErrors: (state) => {
-      state.errors = null;
+    name: 'feedback',
+    initialState,
+    reducers: {
+        clearErrors: (state) => {
+            state.errors = null;
+        },
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchFeedbacks.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchFeedbacks.fulfilled, (state, action: any) => {
-        state.pending = false;
-        state.errors = null;
-        state.feedbacks = action.payload.data
-      })
-      .addCase(fetchFeedbacks.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload;
-      })
-      .addCase(fetchCreateFeedback.pending, (state) => {
-        state.pending = true;
-      })
-      .addCase(fetchCreateFeedback.fulfilled, (state) => {
-        state.pending = false;
-        state.errors = null;
-      })
-      .addCase(fetchCreateFeedback.rejected, (state, action: any & { payload: any }) => {
-        state.pending = false;
-        state.errors = action.payload || { statusCode: 0, error: "Unknown", message: "Unknown error" };
-      })
-  },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchFeedbacks.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchFeedbacks.fulfilled, (state, action) => {
+                state.pending = false;
+                state.errors = null;
+                state.feedbacks = action.payload;
+            })
+            .addCase(fetchFeedbacks.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as number;
+            })
+            .addCase(fetchCreateFeedback.pending, (state) => {
+                state.pending = true;
+            })
+            .addCase(fetchCreateFeedback.fulfilled, (state) => {
+                state.pending = false;
+                state.errors = null;
+            })
+            .addCase(fetchCreateFeedback.rejected, (state, action) => {
+                state.pending = false;
+                state.errors = action.payload as string;
+            });
+    },
 });
 
 const { reducer } = feedbackSlice;

@@ -1,20 +1,20 @@
 import { Navigate, Routes, Route } from 'react-router-dom';
 
-import ChangePasswordPage from './changePassword.page';
-import ConfirmEmailPage from './confirmEmail.page';
-import SignInPage from './signIn.page';
-import SignUpPage from './signUp.page';
+import { ChangePasswordPage } from './changePassword.page';
+import { ConfirmEmailPage } from './confirmEmail.page';
+import { SignInPage } from './signIn.page';
+import { SignUpPage } from './signUp.page';
 
-const AuthRoutes = () => {
+import { RouteEnum } from './types/routes.enum';
+
+export const AuthRoutes = () => {
     return (
         <Routes>
-            <Route path={'/'} element={<SignInPage />} />
-            <Route path={'/registration'} element={<SignUpPage />} />
-            <Route path={'/confirm-email'} element={<ConfirmEmailPage />} />
-            <Route path={'/change-password'} element={<ChangePasswordPage />} />
-            <Route path='*' element={<Navigate to='/' />} />
+            <Route path={RouteEnum.AUTH} element={<SignInPage />} />
+            <Route path={RouteEnum.REGISTARTION} element={<SignUpPage />} />
+            <Route path={RouteEnum.CONFIRM_EMAIL} element={<ConfirmEmailPage />} />
+            <Route path={RouteEnum.CHANGE_PASSWORD} element={<ChangePasswordPage />} />
+            <Route path='*' element={<Navigate to={RouteEnum.AUTH} />} />
         </Routes>
     );
 };
-
-export default AuthRoutes;
