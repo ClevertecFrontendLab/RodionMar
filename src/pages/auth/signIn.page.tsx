@@ -28,7 +28,6 @@ export const SignInPage = () => {
 
     const handleResponseSignIn = (response: TSignInResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
-            console.log(response.payload);
             window.localStorage.setItem('token', response.payload.accessToken);
             history.push(AppRouteEnum.BASIC_MAIN);
             return true;
@@ -88,8 +87,8 @@ export const SignInPage = () => {
     };
 
     useEffect(() => {
-        if (isLoading) dispatch(setLoading(false));
         if (location && location.length > 0 && location[2]?.location?.search) {
+            if (isLoading) dispatch(setLoading(false));
             const token = location[2].location?.search.slice(13);
             localStorage.setItem('token', token);
             history.push(AppRouteEnum.MAIN);
