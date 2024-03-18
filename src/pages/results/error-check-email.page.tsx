@@ -11,7 +11,7 @@ import cn from 'classnames';
 
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
-import { TCheckEmailResponse } from '@shared/check-email-response.type';
+import { TCheckEmailResponse } from '@shared/types/check-email-response.type';
 
 export const ErrorCheckEmail = () => {
     const dispatch = useDispatch<AppDispatch>();

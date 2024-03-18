@@ -16,7 +16,7 @@ import { FeedbackCard } from '@components/FeedbackCard';
 import { FeedbackModal } from '@components/FeedbackModal';
 import { NoFeedbacks } from '@components/NoFeedbacks';
 
-import { TCreateFeedback } from '@shared/create-feedback.type';
+import { TCreateFeedback } from '@shared/types/create-feedback.type';
 import { TCreateFeedbackResponse } from './types/createFeedbackResponse.type';
 
 import { Layout, Row, Col, Space, Breadcrumb, Button } from 'antd';
@@ -32,15 +32,16 @@ import styles from './index.module.scss';
 import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
 import { ResultModal } from '@components/ResultModal';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { PageEnum } from '@constants/pages.enum';
 
 const items = [
     {
         path: AppRouteEnum.BASIC_MAIN,
-        breadcrumbName: 'Главная',
+        breadcrumbName: PageEnum.MAIN,
     },
     {
         path: AppRouteEnum.FEEDBACKS,
-        breadcrumbName: 'Отзывы пользователей',
+        breadcrumbName: PageEnum.FEEDBACKS,
     },
 ];
 

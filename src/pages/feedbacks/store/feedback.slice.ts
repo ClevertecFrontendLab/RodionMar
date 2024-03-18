@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchFeedbacks, fetchCreateFeedback } from './feedback.actions';
 
-import { TGetFeedback } from '@shared/get-feedback.type';
+import { TGetFeedback } from '@shared/types/get-feedback.type';
 
 type TInitialState = {
     feedbacks: TGetFeedback[];

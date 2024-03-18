@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Result, Button } from 'antd';
-import { TSignUpResponse } from '@shared/sign-up-response.type copy';
+import { TSignUpResponse } from '@shared/types/sign-up-response.type copy';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const SignUpError = () => {

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { ConfirmEmailComponent } from '@components/ConfirmEmail';
 
-import { TConfirmEmail } from '@shared/confirm-email.type';
+import { TConfirmEmail } from '@shared/types/confirm-email.type';
 import { useEffect } from 'react';
 import { TConfirmEmailResponse } from './types/confirmEmailResponse.type';
 import { AppRouteEnum } from '@constants/app-routes.enum';

@@ -3,17 +3,16 @@ import { AxiosError } from 'axios';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { TAuth } from '@shared/auth.type';
-import { TCheckEmail } from '@shared/check-email.type';
-import { TConfirmEmail } from '@shared/confirm-email.type';
-import { TChangePassword } from '@shared/change-password.type';
+import { TAuth } from '@shared/types/auth.type';
+import { TCheckEmail } from '@shared/types/check-email.type';
+import { TConfirmEmail } from '@shared/types/confirm-email.type';
+import { TChangePassword } from '@shared/types/change-password.type';
 
 export const fetchSignIn = createAsyncThunk(
     'auth/fetchSignIn',
     async (data: TAuth, { rejectWithValue }) => {
         try {
             const response = await $api.post(`/auth/login`, data);
-            console.log(response.data);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
