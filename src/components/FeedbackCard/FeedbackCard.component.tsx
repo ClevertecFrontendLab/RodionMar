@@ -4,7 +4,7 @@ import { StarFilled, StarOutlined } from '@ant-design/icons';
 
 import styles from './index.module.scss';
 
-import { TGetFeedback } from '@shared/get-feedback.type';
+import { TGetFeedback } from '@shared/types/get-feedback.type';
 
 const { Text } = Typography;
 

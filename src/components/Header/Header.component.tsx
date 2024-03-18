@@ -2,6 +2,8 @@ import { Layout, Typography, Col, Row, Button, Breadcrumb } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
 import styles from './index.module.scss';
+import { PageEnum } from '@constants/pages.enum';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 type THeaderProps = {
     isSiderOpened: boolean;
@@ -13,8 +15,8 @@ const { Title, Text } = Typography;
 
 const items = [
     {
-        path: '/main',
-        breadcrumbName: 'Главная',
+        path: AppRouteEnum.BASIC_MAIN,
+        breadcrumbName: PageEnum.MAIN,
     },
 ];
 

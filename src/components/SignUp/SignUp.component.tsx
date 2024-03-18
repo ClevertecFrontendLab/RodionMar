@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button, Input, Menu, MenuProps, Typography, Form, Image } from 'antd';
 import { GooglePlusOutlined } from '@ant-design/icons';
 
-import { TAuth } from '@shared/auth.type';
+import { TAuth } from '@shared/types/auth.type';
 
 import styles from './index.module.scss';
 
@@ -55,7 +55,6 @@ export const SignUpComponent = ({
     ];
 
     const onFinish = (values: TFinishValues) => {
-        console.log(values);
         sessionStorage.setItem('signUpData', JSON.stringify(values));
 
         const formValues = {

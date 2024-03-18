@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@redux/configure-store';
+import { AppDispatch, history } from '@redux/configure-store';
 
 import cn from 'classnames';
 
@@ -19,6 +18,7 @@ import {
 import { logout } from '@pages/auth/store/auth.slice';
 
 import styles from './index.module.scss';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -26,6 +26,8 @@ type TSidebarProps = {
     isSiderOpened: boolean;
     setIsSidebarOpened: (isSiderOpened: boolean) => void;
     windowWidth: number;
+    activeMenuItemKey?: string;
+    handleTrainings?: () => void;
 };
 
 const { Sider } = Layout;
@@ -35,9 +37,10 @@ export const SiderComponent = ({
     isSiderOpened,
     setIsSidebarOpened,
     windowWidth,
+    activeMenuItemKey = '',
+    handleTrainings,
 }: TSidebarProps) => {
-    const [activeItemKey, setActiveItemKey] = useState<string>('1');
-    const navigate = useNavigate();
+    const [activeItemKey, setActiveItemKey] = useState<string>('' || activeMenuItemKey);
     const dispatch = useDispatch<AppDispatch>();
 
     const toggleSidebar = () => {
@@ -81,6 +84,10 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Календарь</Text> : null,
             key: '1',
             icon: <CalendarTwoTone className={styles.menuIconStyles} />,
+            onClick: () => {
+                setActiveItemKey('1');
+                if (handleTrainings) handleTrainings();
+            },
         },
         {
             label: isSiderOpened ? (
@@ -110,7 +117,7 @@ export const SiderComponent = ({
     const logoutHandler = () => {
         dispatch(logout());
         window.localStorage.removeItem('token');
-        navigate('/');
+        history.push(AppRouteEnum.BASIC);
     };
 
     const sidebarWidth = windowWidth < 705 ? 106 : isSiderOpened ? 208 : 64;
@@ -135,6 +142,7 @@ export const SiderComponent = ({
                             alt='logo'
                             preview={false}
                             className={cn(styles.logoStyles, styles.logoOpenedStyles)}
+                            onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}
                         />
                     ) : (
                         <Image
@@ -142,10 +150,11 @@ export const SiderComponent = ({
                             alt='logo'
                             preview={false}
                             className={cn(styles.logoStyles, styles.logoClosedStyles)}
+                            onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}
                         />
                     )}
                     <Menu
-                        defaultSelectedKeys={['1']}
+                        defaultSelectedKeys={undefined}
                         selectedKeys={[activeItemKey]}
                         mode='vertical'
                         items={menuItems}
