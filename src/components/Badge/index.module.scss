@@ -1,0 +1,9 @@
+@import '../../styles/index.scss';
+
+.badge {
+    max-height: 16px;
+    text-align: left;
+    span {
+        @include Footnote-str($character-light-primary-85);
+    }
+}
