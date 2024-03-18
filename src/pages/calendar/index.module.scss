@@ -76,7 +76,7 @@
                 div[class*='ant-picker-cell-inner ant-picker-calendar-date'] {
                     &:before {
                         border: none;
-                        border-top: 1px solid #1890ff;
+                        border-top: 1px solid $blue-light-6;
                     }
                     background: $neutral-gray-1;
                 }
