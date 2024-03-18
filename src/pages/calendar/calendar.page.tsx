@@ -341,7 +341,6 @@ export const CalendarPage = () => {
                         onClick={() => {
                             dispatch(clearErrors());
                             setIsSaveDataErrorModalOpen(false);
-                            handleSetTrainingListModal();
                         }}
                     >
                         Закрыть
@@ -353,10 +352,8 @@ export const CalendarPage = () => {
                 setIsModalOpened={setIsTrainingListModalOpened}
                 isModalOpen={isTrainingListModalOpened}
                 getContainer={
-                    windowWidth > 480
-                        ? calendarCell
-                            ? calendarCell
-                            : document.body
+                    isTrainingListModalOpened && windowWidth > 480
+                        ? (calendarCell ? calendarCell : document.body)
                         : document.body
                 }
                 modalClassname={styles.modalWrapper}

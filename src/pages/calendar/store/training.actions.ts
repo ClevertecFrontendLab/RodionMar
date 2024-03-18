@@ -35,7 +35,7 @@ export const fetchTrainingsCatalog = createAsyncThunk(
 );
 
 export const createTraining = createAsyncThunk(
-    'calendar/careteTrainings',
+    'calendar/createTrainings',
     async (data: TCreateTraining, { rejectWithValue }) => {
         try {
             const response = await $api.post(`/training`, data);
