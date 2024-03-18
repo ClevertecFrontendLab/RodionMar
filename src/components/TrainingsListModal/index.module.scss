@@ -1,0 +1,185 @@
+@import '../../styles/index.scss';
+
+.modalWrapper {
+    overflow: visible;
+
+    button[class*='ant-modal-close'] {
+        padding-top: 10px;
+        padding-right: 12px;
+    }
+
+    span[class*='ant-modal-close-x'] {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    div[class*='ant-modal-body'] {
+        padding: 0;
+    }
+
+    div[class*='ant-modal-footer'] {
+        padding-top: 0;
+    }
+
+    ul {
+        li {
+            padding: 0 12px;
+        }
+    }
+
+    div[class*='ant-card-body'] {
+        padding: 0;
+        box-sizing: content-box;
+        padding-bottom: 0;
+    }
+
+    .cardMeta {
+        text-align: left;
+        padding: 16px 12px 0;
+
+        div[class*='ant-card-meta-title'] {
+            @include Body-strong($character-light-title-85);
+            margin-bottom: 4px;
+        }
+
+        div[class*='ant-card-meta-description'] {
+            @include Body-regular($character-light-secondary-45);
+        }
+    }
+
+    .modal {
+        max-width: 264px;
+        top: 0;
+    }
+
+    .buttonContainer {
+        display: flex;
+    }
+
+    .pageHeader {
+        padding: 12px 12px 0;
+
+        div {
+            justify-content: start;
+            margin-right: 0;
+
+            span {
+                flex-grow: 1;
+
+                div {
+                    width: 100%;
+                }
+
+                div[class*='ant-space-item'] {
+                    width: 100%;
+                }
+            }
+        }
+
+        span[class*='ant-select-selection-placeholder'],
+        span[class*='ant-select-selection-item'] {
+            text-align: left;
+        }
+    }
+
+    .selectPlaceholder {
+        @include Body-regular($character-light-title-85);
+    }
+
+    .itemsContainer {
+        width: 100%;
+        text-align: left;
+        padding: 16px 0;
+        box-sizing: border-box;
+        max-height: 200px;
+        overflow: auto;
+
+        .badgeButton {
+            padding: 0;
+            height: 100%;
+        }
+
+        .itemContainer {
+            div {
+                display: flex;
+                align-items: center;
+                padding: 0 12px;
+            }
+
+            svg {
+                fill: $primary-light-6;
+            }
+
+            &:hover {
+                background: $neutral-gray-3;
+            }
+        }
+
+        .disabledRow {
+            .disabledText {
+                span {
+                    @include Body-regular($character-light-disable-25);
+                }
+            }
+            svg {
+                fill: $character-light-disable-25;
+            }
+        }
+    }
+
+    .badgesContainer {
+        margin-top: 14px;
+    }
+
+    .exercisesContainer {
+        .exerciseContainer {
+            div {
+                .exercise {
+                    @include Body-regular($character-light-secondary-45);
+                }
+            }
+        }
+    }
+
+    .empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 0;
+        margin: 0;
+    }
+}
+
+.drawerTitle {
+    gap: 12px;
+}
+
+.drawerTitle {
+    @include H4-medium($character-light-title-85);
+}
+
+@media screen and (max-width: 481px) {
+    div[class*='ant-modal-wrap'] {
+        z-index: 2;
+    }
+
+    .modalWrapper {
+        width: 100%;
+        height: 0;
+        left: 0 !important;
+        bottom: auto !important;
+        overflow: visible !important;
+        position: absolute !important;
+
+        div[class*='ant-space-item'] {
+            width: 100%;
+        }
+
+        .modal {
+            min-width: 100%;
+            padding: 0 24px;
+            z-index: 6;
+        }
+    }
+}
