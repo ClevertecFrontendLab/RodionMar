@@ -1,0 +1,319 @@
+@import '../../styles/index.scss';
+
+.mainLayout {
+    display: flex;
+    position: relative;
+    height: 100%;
+    div[class*='ant-modal-wrap'] {
+        overflow: visible;
+    }
+    .contentWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        padding-bottom: 49px;
+        background: url('../../../main-screen--light.png') center / cover no-repeat;
+
+        .contentStyles {
+            background: $primary-light-1;
+            padding: 0 24px;
+            box-sizing: content-box;
+            flex-grow: 1;
+            min-height: 100%;
+            margin-bottom: 93px;
+        }
+
+        .headWrapper {
+            padding: 16px 0 0;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .breadcrumbs {
+            li {
+                @include Body-regular($character-light-title-85);
+            }
+
+            width: 100%;
+            box-sizing: border-box;
+
+            .separator {
+                color: $character-light-secondary-45;
+            }
+        }
+
+        .calendar {
+            background: transparent;
+
+            & > div[class*='ant-picker-calendar-header'] {
+                display: flex;
+                gap: 8px;
+
+                & > div {
+                    margin: 0;
+                }
+            }
+
+            div[class*='ant-picker-calendar-date-content'] {
+                height: auto;
+                overflow-y: visible;
+            }
+
+            div[class*='ant-modal-root'] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 8;
+                background: none;
+
+                & > div {
+                    position: relative;
+                }
+            }
+
+            td[class*='ant-picker-cell-today'] {
+                div[class*='ant-picker-cell-inner ant-picker-calendar-date'] {
+                    &:before {
+                        border: none;
+                        border-top: 1px solid $blue-light-6;
+                    }
+                    background: $neutral-gray-1;
+                }
+            }
+
+            tbody {
+                background: $primary-light-1;
+
+                td[class*='ant-picker-cell-selected'] {
+                    background: $primary-light-1;
+                    position: relative;
+
+                    & + div {
+                        background: $primary-light-1;
+                    }
+
+                    &:hover {
+                        background: $primary-light-1;
+
+                        & + div {
+                            background: $primary-light-1;
+                        }
+                    }
+                }
+
+                .dayWithTraining {
+                    background: $primary-light-1;
+                }
+
+                .day {
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                td[class*='ant-picker-cell-end'] {
+                    @include Body-regular($character-light-disable-25);
+                }
+
+                td[class*='ant-picker-cell-in-view'] {
+                    @include Body-regular($character-light-title-85);
+                }
+
+                td {
+                    box-sizing: border-box;
+                    background: $primary-light-1;
+                    transition: background 0.3s;
+
+                    &:nth-of-type(5),
+                    &:nth-of-type(6),
+                    &:nth-of-type(7),
+                    &:last-of-type {
+                        div[class*='ant-modal-root'] {
+                            left: 100%;
+                            transform: translateX(-100%);
+                        }
+                    }
+
+                    &:hover {
+                        background: $neutral-gray-3;
+
+                        & + div {
+                            background: $neutral-gray-3;
+                        }
+                    }
+
+                    & > div {
+                        background: $neutral-gray-1;
+                    }
+
+                    & > div {
+                        min-height: 143px;
+                    }
+                }
+            }
+
+            div[class*='ant-picker-panel'] {
+                background: transparent;
+            }
+        }
+    }
+}
+
+.settingButtonStyles {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    border: none;
+    background: none;
+    transition: all 0.2s;
+    padding: 7px 15px;
+    box-sizing: border-box;
+
+    &:hover,
+    &:focus,
+    &:active {
+        outline: none;
+        border: none;
+        background-color: $character-light-table-header;
+    }
+}
+
+.settingTextStyles {
+    @include Body-regular($character-light-title-85);
+}
+
+@media screen and (max-width: 835px) {
+    .mainLayout {
+        .contentWrapper {
+            .contentStyles {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .isSidebarOpenedStyles {
+        display: block;
+    }
+
+    .settingIconStyles {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .mainLayout {
+        height: 100vh;
+        .contentWrapper {
+            height: auto;
+            .contentStyles {
+                background: $primary-light-1;
+                padding: 0 24px 23px;
+                min-height: auto;
+                margin-bottom: 0;
+                box-sizing: content-box;
+                flex-grow: 0;
+            }
+
+            .headWrapper {
+                gap: 0;
+                margin-bottom: 23px;
+            }
+
+            .calendar {
+                background: $neutral-gray-1;
+
+                div[class*='ant-picker-calendar-header'] {
+                    justify-content: end;
+
+                    & > div:nth-of-type(n) {
+                        width: auto;
+                        display: flex;
+                    }
+
+                    label[class*='ant-radio-button-wrapper'] {
+                        width: auto;
+                    }
+                }
+
+                table {
+                    border-collapse: separate;
+                    height: 196px;
+                    padding: 8px;
+                }
+
+                th {
+                    @include Body-medium($character-light-title-85);
+                }
+
+                tbody {
+                    background: $neutral-gray-1;
+                    position: relative;
+
+                    div[class*='ant-picker-calendar-date-value'] {
+                        @include Body-medium($character-light-title-85);
+                    }
+
+                    td[class*='ant-picker-cell-selected'] {
+                        background: $primary-light-1;
+
+                        & > div {
+                            background: $primary-light-1;
+                        }
+                    }
+
+                    td[class*='ant-picker-cell-today'] {
+                        border: 1px solid $primary-light-6;
+                    }
+
+                    td {
+                        background: $neutral-gray-1;
+                        box-sizing: content-box;
+                        padding: 0;
+
+                        &:hover {
+                            & + div {
+                                background: $neutral-gray-3;
+                            }
+                        }
+
+                        & + div {
+                            background: $neutral-gray-1;
+                        }
+
+                        & > div {
+                            min-height: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .isSidebarOpenedStyles {
+        display: block;
+    }
+
+    .settingIconStyles {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .mainLayout {
+        .contentWrapper {
+            .settingButtonStyles {
+                padding: 9px;
+            }
+
+            .settingTextStyles {
+                display: none;
+            }
+
+            .settingIconStyles {
+                display: block;
+            }
+        }
+    }
+}

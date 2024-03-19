@@ -4,10 +4,10 @@ import { clearErrors, fetchSignIn } from './store/auth.slice';
 import { fetchCheckEmail } from './store/auth.actions';
 import { setLoading } from '@components/LottieLoader/loading.slice';
 
-import { TAuth } from '@shared/auth.type';
-import { TCheckEmail } from '@shared/check-email.type';
+import { TAuth } from '@shared/types/auth.type';
+import { TCheckEmail } from '@shared/types/check-email.type';
 import { TSignInResponse } from './types/signInResponse.type';
-import { TCheckEmailResponse } from '@shared/check-email-response.type';
+import { TCheckEmailResponse } from '@shared/types/check-email-response.type';
 
 import { SignInComponent } from '@components/SignIn';
 import { useEffect } from 'react';
@@ -28,7 +28,6 @@ export const SignInPage = () => {
 
     const handleResponseSignIn = (response: TSignInResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
-            console.log(response.payload);
             window.localStorage.setItem('token', response.payload.accessToken);
             history.push(AppRouteEnum.BASIC_MAIN);
             return true;
@@ -88,11 +87,11 @@ export const SignInPage = () => {
     };
 
     useEffect(() => {
-        if (isLoading) dispatch(setLoading(false));
         if (location && location.length > 0 && location[2]?.location?.search) {
+            if (isLoading) dispatch(setLoading(false));
             const token = location[2].location?.search.slice(13);
             localStorage.setItem('token', token);
-            history.push(AppRouteEnum.MAIN);
+            history.push(AppRouteEnum.BASIC_MAIN);
         }
     }, [dispatch, isLoading, location]);
 

@@ -6,6 +6,7 @@ export enum AppRouteEnum {
     RESULT = '/result/*',
     MAIN = '/main/*',
     FEEDBACKS = '/feedbacks',
+    CALENDAR = '/calendar',
     REGISTRATION = '/auth/registration',
     CONFIRM_EMAIL = '/auth/confirm-email',
     CHANGE_PASSWORD = '/auth/change-password',

@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Button, Checkbox, Input, Menu, MenuProps, Space, Typography, Form, Image } from 'antd';
 import { GooglePlusOutlined } from '@ant-design/icons';
 
-import { TAuth } from '@shared/auth.type';
-import { TCheckEmail } from '@shared/check-email.type';
+import { TAuth } from '@shared/types/auth.type';
+import { TCheckEmail } from '@shared/types/check-email.type';
 
 import styles from './index.module.scss';
 

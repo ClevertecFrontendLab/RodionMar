@@ -1,19 +1,18 @@
 import { $api } from '../../../api/api';
 import { AxiosError } from 'axios';
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { TAuth } from '@shared/auth.type';
-import { TCheckEmail } from '@shared/check-email.type';
-import { TConfirmEmail } from '@shared/confirm-email.type';
-import { TChangePassword } from '@shared/change-password.type';
+import { TAuth } from '@shared/types/auth.type';
+import { TCheckEmail } from '@shared/types/check-email.type';
+import { TConfirmEmail } from '@shared/types/confirm-email.type';
+import { TChangePassword } from '@shared/types/change-password.type';
+import { AuthEndpointEnum } from '../constants/auth-endpoints.enum';
+import { AuthThunkPrefix } from '../constants/auth-thunk-prefixes .enum';
 
 export const fetchSignIn = createAsyncThunk(
-    'auth/fetchSignIn',
+    AuthThunkPrefix.FETCH_SIGN_IN,
     async (data: TAuth, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/auth/login`, data);
-            console.log(response.data);
+            const response = await $api.post(AuthEndpointEnum.AUTH_LOGIN, data);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -24,10 +23,10 @@ export const fetchSignIn = createAsyncThunk(
 );
 
 export const fetchSignUp = createAsyncThunk(
-    'auth/fetchSignUp',
+    AuthThunkPrefix.FETCH_SIGN_UP,
     async (data: TAuth, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/auth/registration`, data);
+            const response = await $api.post(AuthEndpointEnum.AUTH_REGISTRATION, data);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -38,10 +37,10 @@ export const fetchSignUp = createAsyncThunk(
 );
 
 export const fetchCheckEmail = createAsyncThunk(
-    'auth/fetchCheckEmail',
+    AuthThunkPrefix.FETCH_CHECK_EMAIL,
     async (data: TCheckEmail, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/auth/check-email`, data);
+            const response = await $api.post(AuthEndpointEnum.AUTH_CHECK_EMAIL, data);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -55,10 +54,10 @@ export const fetchCheckEmail = createAsyncThunk(
 );
 
 export const fetchConfirmEmail = createAsyncThunk(
-    'auth/fetchConfirmEmail',
+    AuthThunkPrefix.FETCH_CONFIRM_EMAIL,
     async (data: TConfirmEmail, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/auth/confirm-email`, data, {
+            const response = await $api.post(AuthEndpointEnum.AUTH_CONFIRM_EMAIL, data, {
                 withCredentials: true,
             });
             return response.data;
@@ -71,10 +70,10 @@ export const fetchConfirmEmail = createAsyncThunk(
 );
 
 export const fetchChangePassword = createAsyncThunk(
-    'auth/fetchChangePassword',
+    AuthThunkPrefix.FETCH_CHANGE_PASSWORD,
     async (data: TChangePassword, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/auth/change-password`, data, {
+            const response = await $api.post(AuthEndpointEnum.AUTH_CHANGE_PASSWORD, data, {
                 withCredentials: true,
             });
             return response.data;
@@ -87,10 +86,10 @@ export const fetchChangePassword = createAsyncThunk(
 );
 
 export const fetchGoogleAuth = createAsyncThunk(
-    'auth/fetchGoogleAuth',
+    AuthThunkPrefix.FETCH_GOOGLE_AUTH,
     async (_, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/auth/google`);
+            const response = await $api.post(AuthEndpointEnum.AUTH_GOOGLE);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {

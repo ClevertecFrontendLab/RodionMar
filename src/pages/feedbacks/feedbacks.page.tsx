@@ -16,7 +16,7 @@ import { FeedbackCard } from '@components/FeedbackCard';
 import { FeedbackModal } from '@components/FeedbackModal';
 import { NoFeedbacks } from '@components/NoFeedbacks';
 
-import { TCreateFeedback } from '@shared/create-feedback.type';
+import { TCreateFeedback } from '@shared/types/create-feedback.type';
 import { TCreateFeedbackResponse } from './types/createFeedbackResponse.type';
 
 import { Layout, Row, Col, Space, Breadcrumb, Button } from 'antd';
@@ -32,15 +32,16 @@ import styles from './index.module.scss';
 import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
 import { ResultModal } from '@components/ResultModal';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { PageEnum } from '@constants/pages.enum';
 
 const items = [
     {
         path: AppRouteEnum.BASIC_MAIN,
-        breadcrumbName: 'Главная',
+        breadcrumbName: PageEnum.MAIN,
     },
     {
         path: AppRouteEnum.FEEDBACKS,
-        breadcrumbName: 'Отзывы пользователей',
+        breadcrumbName: PageEnum.FEEDBACKS,
     },
 ];
 
@@ -68,14 +69,10 @@ export const FeedbacksPage = () => {
         ? feedbacksCopy
         : feedbacksCopy.slice(Math.max(feedbacksCopy.length - 4, 0));
 
-    const handleShowAllFeedbacks = () => {
-        setShowAllFeedbacks(!showAllFeedbacks);
-    };
+    const handleShowAllFeedbacks = () => setShowAllFeedbacks(!showAllFeedbacks);
 
     useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
+        const handleResize = () => setWindowWidth(window.innerWidth);
 
         if (fetchErrors && fetchErrors !== 403) {
             setIsServerErrorModalOpen(true);
@@ -85,9 +82,8 @@ export const FeedbacksPage = () => {
 
         dispatch(fetchFeedbacks());
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+        return () => window.removeEventListener('resize', handleResize);
+
     }, [dispatch, fetchErrors]);
 
     const location = useLocation();
@@ -119,6 +115,16 @@ export const FeedbacksPage = () => {
 
         handleResponseCreateFeedback(response, setIsSuccessModalOpen, setIsErrorModalOpen);
     };
+
+    const setFeedbackHandler = () => {
+        setIsErrorModalOpen(false);
+        setIsFeedbackModalOpen(true);
+    }
+
+    const serverErrorModalButtonHandler = () => {
+        setIsServerErrorModalOpen(false);
+        history.push('/main');
+    }
 
     return (
         <Layout className={styles.mainLayout}>
@@ -240,10 +246,7 @@ export const FeedbacksPage = () => {
                                 size='large'
                                 htmlType='button'
                                 className={cn(styles.button, styles.errorButton)}
-                                onClick={() => {
-                                    setIsErrorModalOpen(false);
-                                    setIsFeedbackModalOpen(true);
-                                }}
+                                onClick={setFeedbackHandler}
                                 data-test-id='write-review-not-saved-modal'
                                 block
                             >
@@ -276,10 +279,7 @@ export const FeedbacksPage = () => {
                         size='large'
                         htmlType='button'
                         className={styles.button}
-                        onClick={() => {
-                            setIsServerErrorModalOpen(false);
-                            history.push('/main');
-                        }}
+                        onClick={serverErrorModalButtonHandler}
                     >
                         Назад
                     </Button>

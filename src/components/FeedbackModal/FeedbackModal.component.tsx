@@ -4,7 +4,7 @@ import { Button, Modal, Form, Input, Rate } from 'antd';
 
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 
-import { TCreateFeedback } from '@shared/create-feedback.type';
+import { TCreateFeedback } from '@shared/types/create-feedback.type';
 
 import styles from './index.module.scss';
 

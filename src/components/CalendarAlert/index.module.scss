@@ -1,0 +1,66 @@
+@import '../../styles/index.scss';
+
+.modalContainer {
+    width: 100%;
+}
+
+.modalWrapper {
+    width: 100vw;
+    height: 100vh;
+    top: 0 !important;
+    bottom: auto !important;
+    right: auto !important;
+    left: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #799cd480;
+    backdrop-filter: blur(3px);
+    z-index: 9;
+    padding: 0 16px;
+
+    div[class*='ant-modal-body'] {
+        padding: 0;
+    }
+    span[class*='ant-modal-close-x'] {
+        display: none;
+    }
+    div[class*='ant-modal-body'] {
+        padding: 0;
+    }
+    div[class*='ant-modal-footer'] {
+        padding-top: 0;
+    }
+    .modal {
+        max-width: 384px;
+        padding: 0 16px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .alert {
+        background: $character-light-primary-inverse;
+        border-bottom: 0;
+        min-width: 100% !important;
+        div {
+            div {
+                &:first-of-type {
+                    @include H6-regular($character-light-title-85);
+                    margin-bottom: 8px;
+                    padding-right: 24px;
+                }
+                &:last-of-type {
+                    @include Body-regular($character-light-secondary-45);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .modalWrapper {
+        .modal {
+            padding: 0 28px;
+        }
+    }
+}

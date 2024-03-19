@@ -9,6 +9,7 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 import auth from '@pages/auth/store/auth.slice';
 import feedback from '@pages/feedbacks/store/feedback.slice';
 import loading from '@components/LottieLoader/loading.slice';
+import training from '@pages/calendar/store/training.slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
@@ -21,6 +22,7 @@ export const store = configureStore({
         auth,
         feedback,
         loading,
+        training,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });

@@ -2,7 +2,7 @@ import { Button, Input, Form, Space, Typography } from 'antd';
 
 import styles from './index.module.scss';
 
-import { TChangePassword } from '@shared/change-password.type';
+import { TChangePassword } from '@shared/types/change-password.type';
 
 const { Title } = Typography;
 

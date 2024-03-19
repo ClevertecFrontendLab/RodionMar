@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { TCreateFeedback } from '@shared/create-feedback.type';
+import { TCreateFeedback } from '@shared/types/create-feedback.type';
 
 export const fetchCreateFeedback = createAsyncThunk(
     'feedbacks/fetchCreateFeedback',

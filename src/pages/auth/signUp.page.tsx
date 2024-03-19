@@ -1,7 +1,7 @@
 import { SignUpComponent } from '@components/SignUp';
 import { clearErrors } from './store/auth.slice';
-import { TAuth } from '@shared/auth.type';
-import { TSignUpResponse } from '@shared/sign-up-response.type copy';
+import { TAuth } from '@shared/types/auth.type';
+import { TSignUpResponse } from '@shared/types/sign-up-response.type copy';
 import { fetchSignUp } from './store/auth.actions';
 import { useAppDispatch } from '@hooks/index';
 import { history } from '@redux/configure-store';

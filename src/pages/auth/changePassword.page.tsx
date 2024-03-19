@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { ChangePasswordComponent } from '@components/ChangePassword';
 
-import { TChangePassword } from '@shared/change-password.type';
+import { TChangePassword } from '@shared/types/change-password.type';
 import { useEffect } from 'react';
 import { TChangePasswordResponse } from './types/changePasswordResponse.type';
 import { AppRouteEnum } from '@constants/app-routes.enum';

@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import VerificationInput from 'react-verification-input';
 
-import { TConfirmEmail } from '@shared/confirm-email.type';
+import { TConfirmEmail } from '@shared/types/confirm-email.type';
 
 import styles from './index.module.scss';
 

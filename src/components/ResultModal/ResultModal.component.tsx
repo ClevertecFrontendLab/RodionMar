@@ -9,6 +9,7 @@ type TResultModalProps = {
     subTitle: React.ReactNode | null;
     button: React.ReactNode;
     resultClassName?: string;
+    dataTestId?: string;
 };
 
 export const ResultModal = ({
@@ -18,6 +19,7 @@ export const ResultModal = ({
     subTitle,
     button,
     resultClassName,
+    dataTestId,
 }: TResultModalProps) => {
     return (
         <Modal
@@ -27,6 +29,7 @@ export const ResultModal = ({
             wrapClassName={styles.modalWrapper}
             width={540}
             footer={null}
+            data-test-id={dataTestId}
         >
             <Result
                 className={resultClassName}
