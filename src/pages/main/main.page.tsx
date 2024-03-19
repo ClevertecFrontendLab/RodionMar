@@ -39,7 +39,7 @@ const MainPage = () => {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-    
+
     }, []);
 
     const handleResponseFeedbacks = (response: TGetResponse) => {
@@ -101,6 +101,11 @@ const MainPage = () => {
         },
         { title: 'Заполнить профиль', buttonText: 'Профиль', buttonIcon: 'profile' },
     ];
+
+    const serverErrorModalButtonHandler = () => {
+        dispatch(clearErrors());
+        setIsServerErrorModalOpen(false);
+    }
 
     return (
         <Layout className={styles.mainLayout}>
@@ -169,10 +174,7 @@ const MainPage = () => {
                         size='large'
                         htmlType='button'
                         className={styles.button}
-                        onClick={() => {
-                            dispatch(clearErrors());
-                            setIsServerErrorModalOpen(false);
-                        }}
+                        onClick={serverErrorModalButtonHandler}
                     >
                         Назад
                     </Button>

@@ -126,6 +126,60 @@ export const TrainingListModal = ({
         handleSelectOptions();
     }, [trainingsCatalog, listOfTrainings, handleSelectOptions]);
 
+    const createTrainingHandler = () => {
+        handleSetStep(2);
+        setRequestTrainingObject(null);
+        handleSelectOptions();
+        setSelectedOption(null);
+    };
+
+    const addExerciseHandler = () => {
+        setIsDrawerOpened(true);
+        setDrawerType(DrawerNameEnum.CREATE);
+    };
+
+    const saveHandler = () => {
+        requestTrainingObject &&
+            requestTrainingObject.name === selectedOption
+            ? handleCreateTraining(requestTrainingObject)
+            : null;
+        updateTraining && updateTraining.name === selectedOption
+            ? handleUpdateTraining(updateTraining)
+            : null;
+    };
+
+    const updateTrainingHandler = (training: TTrainingResponse) => {
+        if (training.isImplementation) {
+            setSelectedOption(training.name);
+            setUpdateTraining(training);
+            setDrawerType(DrawerNameEnum.VIEW);
+            setIsDrawerOpened(true);
+            handleSelectOptions(null, false);
+            return;
+        } else {
+            const newSelectedOption = training.name;
+            setUpdateTraining(training);
+            setSelectedOption(newSelectedOption);
+            const shouldHandleSelectOptions =
+                !!isPastDate(date);
+            handleSetStep(2);
+            handleSelectOptions(
+                shouldHandleSelectOptions
+                    ? {
+                        value: newSelectedOption,
+                        label: newSelectedOption,
+                    }
+                    : null,
+                !shouldHandleSelectOptions,
+            );
+        }
+    }
+
+    const updateExerciseHandler = () => {
+        setIsDrawerOpened(true);
+        setDrawerType(DrawerNameEnum.UPDATE);
+    }
+
     return (
         <>
             <Modal
@@ -160,12 +214,7 @@ export const TrainingListModal = ({
                                 disabled={
                                     listOfTrainings.length >= 5 ? true : false || isPastDate(date)
                                 }
-                                onClick={() => {
-                                    handleSetStep(2);
-                                    setRequestTrainingObject(null);
-                                    handleSelectOptions();
-                                    setSelectedOption(null);
-                                }}
+                                onClick={createTrainingHandler}
                             >
                                 Создать тренировку
                             </Button>
@@ -178,10 +227,7 @@ export const TrainingListModal = ({
                                     className={styles.button}
                                     block
                                     disabled={!selectedOption}
-                                    onClick={() => {
-                                        setIsDrawerOpened(true);
-                                        setDrawerType(DrawerNameEnum.CREATE);
-                                    }}
+                                    onClick={addExerciseHandler}
                                 >
                                     Добавить упражнения
                                 </Button>
@@ -199,15 +245,7 @@ export const TrainingListModal = ({
                                                 updateTraining.name === selectedOption)
                                         )
                                     }
-                                    onClick={() => {
-                                        requestTrainingObject &&
-                                        requestTrainingObject.name === selectedOption
-                                            ? handleCreateTraining(requestTrainingObject)
-                                            : null;
-                                        updateTraining && updateTraining.name === selectedOption
-                                            ? handleUpdateTraining(updateTraining)
-                                            : null;
-                                    }}
+                                    onClick={saveHandler}
                                 >
                                     {isPastDate(date) ? 'Сохранить изменения' : 'Сохранить'}
                                 </Button>
@@ -263,32 +301,7 @@ export const TrainingListModal = ({
                                     <Button
                                         type='text'
                                         className={styles.badgeButton}
-                                        onClick={() => {
-                                            if (training.isImplementation) {
-                                                setSelectedOption(training.name);
-                                                setUpdateTraining(training);
-                                                setDrawerType(DrawerNameEnum.VIEW);
-                                                setIsDrawerOpened(true);
-                                                handleSelectOptions(null, false);
-                                                return;
-                                            } else {
-                                                const newSelectedOption = training.name;
-                                                setUpdateTraining(training);
-                                                setSelectedOption(newSelectedOption);
-                                                const shouldHandleSelectOptions =
-                                                    !!isPastDate(date);
-                                                handleSetStep(2);
-                                                handleSelectOptions(
-                                                    shouldHandleSelectOptions
-                                                        ? {
-                                                              value: newSelectedOption,
-                                                              label: newSelectedOption,
-                                                          }
-                                                        : null,
-                                                    !shouldHandleSelectOptions,
-                                                );
-                                            }
-                                        }}
+                                        onClick={() => updateTrainingHandler(training)}
                                         data-test-id={`modal-update-training-edit-button${index}`}
                                         disabled={training.isImplementation}
                                         block
@@ -332,8 +345,8 @@ export const TrainingListModal = ({
                             className={cn(styles.itemsContainer, styles.exercisesContainer)}
                         >
                             {updateTraining &&
-                            selectedOption === updateTraining.name &&
-                            updateTraining.exercises.length > 0 ? (
+                                selectedOption === updateTraining.name &&
+                                updateTraining.exercises.length > 0 ? (
                                 updateTraining.exercises.map((exercise, id) => (
                                     <Row
                                         key={id}
@@ -342,10 +355,7 @@ export const TrainingListModal = ({
                                             styles.exerciseContainer,
                                         )}
                                         justify='space-between'
-                                        onClick={() => {
-                                            setIsDrawerOpened(true);
-                                            setDrawerType(DrawerNameEnum.UPDATE);
-                                        }}
+                                        onClick={updateExerciseHandler}
                                         data-test-id={`modal-update-training-edit-button${id}`}
                                     >
                                         <Col>
@@ -357,8 +367,8 @@ export const TrainingListModal = ({
                                     </Row>
                                 ))
                             ) : requestTrainingObject &&
-                              requestTrainingObject.name === selectedOption &&
-                              requestTrainingObject?.exercises.length > 0 ? (
+                                requestTrainingObject.name === selectedOption &&
+                                requestTrainingObject?.exercises.length > 0 ? (
                                 requestTrainingObject.exercises.map((exercise, id) => (
                                     <Row
                                         key={id}
@@ -367,10 +377,7 @@ export const TrainingListModal = ({
                                             styles.exerciseContainer,
                                         )}
                                         justify='space-between'
-                                        onClick={() => {
-                                            setIsDrawerOpened(true);
-                                            setDrawerType(DrawerNameEnum.UPDATE);
-                                        }}
+                                        onClick={updateExerciseHandler}
                                         data-test-id={`modal-update-training-edit-button${id}`}
                                     >
                                         <Col>
@@ -419,8 +426,8 @@ export const TrainingListModal = ({
                                                 {drawerType === DrawerNameEnum.CREATE
                                                     ? 'Добавление упражнений'
                                                     : drawerType === DrawerNameEnum.UPDATE
-                                                    ? 'Редактирование'
-                                                    : 'Просмотр упражнений'}
+                                                        ? 'Редактирование'
+                                                        : 'Просмотр упражнений'}
                                             </Text>
                                         </Col>
                                     </Row>

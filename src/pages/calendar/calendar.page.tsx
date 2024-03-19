@@ -168,6 +168,17 @@ export const CalendarPage = () => {
         return listData;
     };
 
+    const cellClickHandler = (date: Moment, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        onSelect(date);
+        handleSetTrainingListModal();
+        event.stopPropagation();
+    };
+
+    const mobileCellClickHandler = (date: Moment) => {
+        onSelect(date);
+        selectedMonth === date.month() ? handleSetTrainingListModal() : null;
+    }
+
     const dateFullCellRender = (date: Moment) => {
         const listData = getListData(date);
         const dayOfMonth = date.date();
@@ -177,11 +188,7 @@ export const CalendarPage = () => {
         return windowWidth > 481 ? (
             <div
                 className='ant-picker-cell-inner ant-picker-calendar-date'
-                onClick={(e) => {
-                    onSelect(date);
-                    handleSetTrainingListModal();
-                    e.stopPropagation();
-                }}
+                onClick={event => cellClickHandler(date, event)}
             >
                 <div className='ant-picker-calendar-date-value'>{dayOfMonth}</div>
                 <div className={'ant-picker-calendar-date-content'}>
@@ -197,10 +204,7 @@ export const CalendarPage = () => {
         ) : (
             <div
                 className={cn(styles.day, hasTraining ? styles.dayWithTraining : null)}
-                onClick={() => {
-                    onSelect(date);
-                    selectedMonth === date.month() ? handleSetTrainingListModal() : null;
-                }}
+                onClick={() => mobileCellClickHandler(date)}
             >
                 {dayOfMonth}
             </div>
@@ -241,6 +245,22 @@ export const CalendarPage = () => {
         handleResponseTraining(reponseData);
     };
 
+    const serverErrorModalCloseHandler = () => {
+        dispatch(clearErrors());
+        setIsServerErrorModalOpen(false);
+    };
+
+    const serverErrorModalButtonHandler = () => {
+        dispatch(clearErrors());
+        handleTrainingsCatalog();
+        setIsServerErrorModalOpen(false);
+    }
+
+    const saveDataErrorModalHandler = () => {
+        dispatch(clearErrors());
+        setIsSaveDataErrorModalOpen(false);
+    };
+
     return (
         <Layout className={styles.mainLayout}>
             {fetchPending !== undefined && fetchPending === true && (
@@ -260,9 +280,7 @@ export const CalendarPage = () => {
                                 <Breadcrumb className={styles.breadcrumbs}>
                                     <Breadcrumb.Item>
                                         <a
-                                            onClick={() => {
-                                                history.push(AppRouteEnum.BASIC_MAIN);
-                                            }}
+                                            onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}
                                         >
                                             Главная
                                         </a>
@@ -303,10 +321,7 @@ export const CalendarPage = () => {
                 message='При открытии данных произошла ошибка'
                 description='Попробуйте ещё раз.'
                 icon={<CloseCircleOutlined />}
-                onCloseHandler={() => {
-                    dispatch(clearErrors());
-                    setIsServerErrorModalOpen(false);
-                }}
+                onCloseHandler={serverErrorModalCloseHandler}
                 button={
                     <Button
                         data-test-id='modal-error-user-training-button'
@@ -314,11 +329,7 @@ export const CalendarPage = () => {
                         size='large'
                         htmlType='button'
                         className={styles.button}
-                        onClick={() => {
-                            dispatch(clearErrors());
-                            handleTrainingsCatalog();
-                            setIsServerErrorModalOpen(false);
-                        }}
+                        onClick={serverErrorModalButtonHandler}
                     >
                         Главная
                     </Button>
@@ -331,10 +342,7 @@ export const CalendarPage = () => {
                 description='Придётся попробовать ещё раз'
                 icon={<CloseCircleOutlined />}
                 closable={false}
-                onCloseHandler={() => {
-                    dispatch(clearErrors());
-                    setIsSaveDataErrorModalOpen(false);
-                }}
+                onCloseHandler={saveDataErrorModalHandler}
                 button={
                     <Button
                         data-test-id='modal-error-user-training-button'
@@ -342,10 +350,7 @@ export const CalendarPage = () => {
                         size='large'
                         htmlType='button'
                         className={styles.button}
-                        onClick={() => {
-                            dispatch(clearErrors());
-                            setIsSaveDataErrorModalOpen(false);
-                        }}
+                        onClick={saveDataErrorModalHandler}
                     >
                         Закрыть
                     </Button>

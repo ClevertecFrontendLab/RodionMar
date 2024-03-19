@@ -116,6 +116,16 @@ export const FeedbacksPage = () => {
         handleResponseCreateFeedback(response, setIsSuccessModalOpen, setIsErrorModalOpen);
     };
 
+    const setFeedbackHandler = () => {
+        setIsErrorModalOpen(false);
+        setIsFeedbackModalOpen(true);
+    }
+
+    const serverErrorModalButtonHandler = () => {
+        setIsServerErrorModalOpen(false);
+        history.push('/main');
+    }
+
     return (
         <Layout className={styles.mainLayout}>
             {fetchPending !== undefined && fetchPending === true && (
@@ -236,10 +246,7 @@ export const FeedbacksPage = () => {
                                 size='large'
                                 htmlType='button'
                                 className={cn(styles.button, styles.errorButton)}
-                                onClick={() => {
-                                    setIsErrorModalOpen(false);
-                                    setIsFeedbackModalOpen(true);
-                                }}
+                                onClick={setFeedbackHandler}
                                 data-test-id='write-review-not-saved-modal'
                                 block
                             >
@@ -272,10 +279,7 @@ export const FeedbacksPage = () => {
                         size='large'
                         htmlType='button'
                         className={styles.button}
-                        onClick={() => {
-                            setIsServerErrorModalOpen(false);
-                            history.push('/main');
-                        }}
+                        onClick={serverErrorModalButtonHandler}
                     >
                         Назад
                     </Button>

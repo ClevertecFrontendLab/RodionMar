@@ -47,6 +47,11 @@ export const SiderComponent = ({
         setIsSidebarOpened(!isSiderOpened);
     };
 
+    const handleClickTraining = () => {
+        setActiveItemKey('1');
+        if (handleTrainings) handleTrainings();
+    }
+
     const renderSwitcherButton = () => {
         if (windowWidth < 705) {
             return (
@@ -84,10 +89,7 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Календарь</Text> : null,
             key: '1',
             icon: <CalendarTwoTone className={styles.menuIconStyles} />,
-            onClick: () => {
-                setActiveItemKey('1');
-                if (handleTrainings) handleTrainings();
-            },
+            onClick: () => handleClickTraining(),
         },
         {
             label: isSiderOpened ? (
