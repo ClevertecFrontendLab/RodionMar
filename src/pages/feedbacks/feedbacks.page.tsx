@@ -69,14 +69,10 @@ export const FeedbacksPage = () => {
         ? feedbacksCopy
         : feedbacksCopy.slice(Math.max(feedbacksCopy.length - 4, 0));
 
-    const handleShowAllFeedbacks = () => {
-        setShowAllFeedbacks(!showAllFeedbacks);
-    };
+    const handleShowAllFeedbacks = () => setShowAllFeedbacks(!showAllFeedbacks);
 
     useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
+        const handleResize = () => setWindowWidth(window.innerWidth);
 
         if (fetchErrors && fetchErrors !== 403) {
             setIsServerErrorModalOpen(true);
@@ -86,9 +82,8 @@ export const FeedbacksPage = () => {
 
         dispatch(fetchFeedbacks());
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+        return () => window.removeEventListener('resize', handleResize);
+
     }, [dispatch, fetchErrors]);
 
     const location = useLocation();

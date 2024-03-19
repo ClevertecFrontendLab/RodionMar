@@ -10,7 +10,6 @@ import {
 
 import { TTrainingResponse } from '../../../shared/types/training-response.type';
 import { TTrainingCatalogItem } from '@shared/types/training-catalog-item.type';
-import { TTrainingRequest } from '@shared/types/training-request.type';
 
 type TCalendarError = {
     status?: number;
@@ -21,7 +20,6 @@ type TCalendarError = {
 type TInitialState = {
     trainings: TTrainingResponse[];
     trainingsCatalog: TTrainingCatalogItem[];
-    training: Partial<TTrainingRequest> | null;
     errors: TCalendarError | null;
     pending: boolean;
 };
@@ -29,7 +27,6 @@ type TInitialState = {
 const initialState = {
     trainings: [],
     trainingsCatalog: [],
-    training: null,
     errors: null,
     pending: false,
 } as TInitialState;
@@ -71,9 +68,8 @@ const calendarSlice = createSlice({
             .addCase(createTraining.pending, (state) => {
                 state.pending = true;
             })
-            .addCase(createTraining.fulfilled, (state, action) => {
+            .addCase(createTraining.fulfilled, (state) => {
                 state.pending = false;
-                state.training = action.payload as TTrainingRequest;
                 state.errors = null;
             })
             .addCase(createTraining.rejected, (state, action) => {
@@ -83,9 +79,8 @@ const calendarSlice = createSlice({
             .addCase(updateTraining.pending, (state) => {
                 state.pending = true;
             })
-            .addCase(updateTraining.fulfilled, (state, action) => {
+            .addCase(updateTraining.fulfilled, (state) => {
                 state.pending = false;
-                state.training = action.payload as TTrainingRequest;
                 state.errors = null;
             })
             .addCase(updateTraining.rejected, (state, action) => {

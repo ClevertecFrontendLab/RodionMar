@@ -1,7 +1,5 @@
 import { RootState } from '@redux/configure-store';
 
-export const TrainingSelector = (state: RootState) => state.training.training;
-
 export const TrainingsSelector = (state: RootState) => state.training.trainings;
 
 export const TrainingsCatalogSelector = (state: RootState) => state.training.trainingsCatalog;

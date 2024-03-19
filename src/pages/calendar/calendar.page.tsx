@@ -36,6 +36,7 @@ import { TTrainingName } from '@shared/types/training-name.type';
 import { TrainingListModal } from '@components/TrainingsListModal';
 import { TTrainingResponse } from '@shared/types/training-response.type';
 import { TTrainingRequest } from '@shared/types/training-request.type';
+import { DateFormatEnum } from './constants/date-formats.enum';
 
 export const CalendarPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(false);
@@ -47,11 +48,16 @@ export const CalendarPage = () => {
     const [isServerErrorModalOpen, setIsServerErrorModalOpen] = useState(false);
     const [isSaveDataErrorModalOpen, setIsSaveDataErrorModalOpen] = useState(false);
     const [mobileTrainingListCoordinate, setmobileTrainingListCoordinate] = useState<number>();
+    const [prevTrainings, setPrevTrainings] = useState<TTrainingResponse[]>([]);
     const [selectedMonth, setSelectedMonth] = useState(moment().startOf('month').month());
     const dispatch = useAppDispatch();
     const trainings = useAppSelector(TrainingsSelector);
     const trainingsCatalog = useAppSelector(TrainingsCatalogSelector);
     const fetchPending = useSelector(TrainingPendingSelector);
+
+    useEffect(() => {
+        setPrevTrainings(trainings);
+    }, [trainings]);
 
     const handleResponseTrainingsCatalog = useCallback(
         (response: TGetResponse) => {
@@ -76,17 +82,14 @@ export const CalendarPage = () => {
     }, [dispatch, handleResponseTrainingsCatalog]);
 
     useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
+        const handleResize = () => setWindowWidth(window.innerWidth);
 
         window.addEventListener('resize', handleResize);
 
         handleTrainingsCatalog();
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+        return () => window.removeEventListener('resize', handleResize);
+
     }, [handleTrainingsCatalog]);
 
     useEffect(() => {
@@ -94,9 +97,9 @@ export const CalendarPage = () => {
     }, [handleTrainingsCatalog]);
 
     const formattedDateForQuerySelector = selectedValue
-        ? selectedValue.format('YYYY-MM-DD')
+        ? selectedValue.format(DateFormatEnum.QUERY_SELECTOR)
         : undefined;
-    const formattedDateTitle = selectedValue ? selectedValue.format('YYYY.MM.DD') : '';
+    const formattedDateTitle = selectedValue ? selectedValue.format(DateFormatEnum.TITLE) : '';
 
     const calendarCell: HTMLElement | null = document.querySelector(
         `[title="${formattedDateForQuerySelector}"]`,
@@ -139,12 +142,13 @@ export const CalendarPage = () => {
     );
 
     useEffect(() => {
-        if (selectedValue && isTrainingListModalOpened) {
+        if (selectedValue && isTrainingListModalOpened && prevTrainings !== trainings) {
             onSelect(selectedValue);
             handleSetTrainingListModal();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [trainings]);
+    }, [trainings, prevTrainings, selectedValue, isTrainingListModalOpened, onSelect, handleSetTrainingListModal]);
+
+
 
     const onPanelChange = (newDate: Moment) => {
         const newMonth = newDate.month();
