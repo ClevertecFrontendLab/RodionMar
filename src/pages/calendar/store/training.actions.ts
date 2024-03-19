@@ -1,16 +1,17 @@
 import { $api } from '../../../api/api';
 import { AxiosError } from 'axios';
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TTrainingRequest } from '../../../shared/types/training-request.type';
 import { TCreateTraining } from '@shared/types/create-training.type';
 import { TTrainingResponse } from '@shared/types/training-response.type';
+import { TrainingEndpointEnum } from '../constants/training-endpoints.enum';
+import { TrainingThunkPrefix } from '../constants/training-thunk-prefixes .enum';
 
 export const fetchTrainings = createAsyncThunk(
-    'calendar/fetchTrainings',
+    TrainingThunkPrefix.FETCH_TRAININGS,
     async (_, { rejectWithValue }) => {
         try {
-            const response = await $api.get(`/training`);
+            const response = await $api.get(TrainingEndpointEnum.TRAININGS);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -21,10 +22,10 @@ export const fetchTrainings = createAsyncThunk(
 );
 
 export const fetchTrainingsCatalog = createAsyncThunk(
-    'calendar/fetchTrainingsCatalog',
+    TrainingThunkPrefix.FETCH_TRAININGS_CATALOG,
     async (_, { rejectWithValue }) => {
         try {
-            const response = await $api.get(`/catalogs/training-list`);
+            const response = await $api.get(TrainingEndpointEnum.FETCH_TRAININGS_CATALOG);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -35,10 +36,10 @@ export const fetchTrainingsCatalog = createAsyncThunk(
 );
 
 export const createTraining = createAsyncThunk(
-    'calendar/createTrainings',
+    TrainingThunkPrefix.CREATE_TRAINING,
     async (data: TCreateTraining, { rejectWithValue }) => {
         try {
-            const response = await $api.post(`/training`, data);
+            const response = await $api.post(TrainingEndpointEnum.TRAININGS, data);
             const responseData: TTrainingResponse = response.data;
             return responseData;
         } catch (error) {
@@ -50,10 +51,10 @@ export const createTraining = createAsyncThunk(
 );
 
 export const updateTraining = createAsyncThunk(
-    'calendar/updateTrainings',
+    TrainingThunkPrefix.UPDATE_TRAINING,
     async (data: TTrainingRequest, { rejectWithValue }) => {
         try {
-            const response = await $api.put(`/training/${data._id}`, data);
+            const response = await $api.put(`${TrainingEndpointEnum.TRAININGS}/${data._id}`, data);
             const responseData: TTrainingResponse = response.data;
             return responseData;
         } catch (error) {
@@ -65,10 +66,10 @@ export const updateTraining = createAsyncThunk(
 );
 
 export const deleteTraining = createAsyncThunk(
-    'calendar/deleteTraining',
+    TrainingThunkPrefix.DELETE_TRAINING,
     async (id: string, { rejectWithValue }) => {
         try {
-            const { data } = await $api.delete(`/training/${id}`);
+            const { data } = await $api.delete(`${TrainingEndpointEnum.TRAININGS}/${id}`);
             return data;
         } catch (error) {
             if (error instanceof AxiosError) {

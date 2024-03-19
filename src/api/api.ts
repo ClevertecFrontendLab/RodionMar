@@ -1,8 +1,10 @@
+import { APIRouteEnum } from '@constants/api-routes.enum';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 import axios from 'axios';
 
 // ===== main instance =====
 export const $api = axios.create({
-    baseURL: 'https://marathon-api.clevertec.ru',
+    baseURL: APIRouteEnum.BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -24,7 +26,7 @@ $api.interceptors.response.use(
     async (response) => response,
     (error) => {
         if (error.response.status === 403) {
-            window.location.replace('/auth');
+            window.location.replace(AppRouteEnum.BASIC_AUTH);
         }
         return Promise.reject(error);
     },
