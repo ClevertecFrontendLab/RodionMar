@@ -189,7 +189,6 @@ export const TrainingListModal = ({
                 getContainer={getContainer}
                 style={{
                     top: mobileTrainingListCoordinate,
-                    display: isModalOpen ? 'block' : 'none',
                 }}
                 footer={null}
                 onCancel={() => {
@@ -299,6 +298,7 @@ export const TrainingListModal = ({
                             >
                                 {listOfTrainings.map((training, index) => (
                                     <Button
+                                        key={training._id}
                                         type='text'
                                         className={styles.badgeButton}
                                         onClick={() => updateTrainingHandler(training)}
@@ -307,7 +307,6 @@ export const TrainingListModal = ({
                                         block
                                     >
                                         <Row
-                                            key={training._id}
                                             className={cn(
                                                 styles.itemContainer,
                                                 styles.badgeContainer,

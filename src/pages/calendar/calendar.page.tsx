@@ -106,9 +106,11 @@ export const CalendarPage = () => {
     );
     useEffect(() => {
         const calendarCellCoordinates = calendarCell?.getBoundingClientRect();
+        
         if (calendarCellCoordinates) {
+            console.log(calendarCellCoordinates?.height)
             setmobileTrainingListCoordinate(
-                calendarCellCoordinates?.y + calendarCellCoordinates?.height,
+                calendarCellCoordinates?.y - 8 + calendarCellCoordinates?.height,
             );
         }
     }, [calendarCell]);
@@ -147,8 +149,6 @@ export const CalendarPage = () => {
             handleSetTrainingListModal();
         }
     }, [trainings, prevTrainings, selectedValue, isTrainingListModalOpened, onSelect, handleSetTrainingListModal]);
-
-
 
     const onPanelChange = (newDate: Moment) => {
         const newMonth = newDate.month();
