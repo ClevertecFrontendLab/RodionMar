@@ -10,6 +10,8 @@ import { AuthPage } from '@pages/auth';
 import { ResultPage } from '@pages/results';
 import { FeedbacksPage } from '@pages/feedbacks';
 import { CalendarPage } from '@pages/calendar';
+import { ProfilePage } from '@pages/profile';
+import { NotFoundPage } from '@pages/not-found';
 const MainPage = React.lazy(() => import('./pages/main'));
 
 const isAllowed = () => {
@@ -38,6 +40,16 @@ const PublicRoute = ({ element: Element }: { element: React.FC }) => {
     return isAllowed() ? <Navigate to={AppRouteEnum.BASIC_MAIN} /> : <Element />;
 };
 
+const DefaultRoute = () => {
+    const token = window.localStorage.getItem('token');
+    console.log(token)
+    if (token) {
+        return <Navigate to={AppRouteEnum.NOT_FOUND} />;
+    } else {
+        return <Navigate to={AppRouteEnum.BASIC_AUTH} />;
+    }
+};
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -52,9 +64,11 @@ const AppRoutes = () => {
                 element={<PrivateRoute element={FeedbacksPage} />}
             />
             <Route path={AppRouteEnum.CALENDAR} element={<PrivateRoute element={CalendarPage} />} />
+            <Route path={AppRouteEnum.PROFILE} element={<PrivateRoute element={ProfilePage} />} />
+            <Route path={AppRouteEnum.NOT_FOUND} element={<PrivateRoute element={NotFoundPage} />} />
 
             {/* DEFAULT */}
-            <Route path='*' element={<Navigate to={AppRouteEnum.BASIC_AUTH} />} />
+            <Route path='*' element={<DefaultRoute />} />
         </Routes>
     );
 };
