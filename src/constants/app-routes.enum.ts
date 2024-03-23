@@ -7,6 +7,8 @@ export enum AppRouteEnum {
     MAIN = '/main/*',
     FEEDBACKS = '/feedbacks',
     CALENDAR = '/calendar',
+    PROFILE = '/profile',
+    SETTINGS = '/settings',
     REGISTRATION = '/auth/registration',
     CONFIRM_EMAIL = '/auth/confirm-email',
     CHANGE_PASSWORD = '/auth/change-password',
@@ -18,4 +20,5 @@ export enum AppRouteEnum {
     ERROR_CHECK_EMAIL = '/result/error-check-email',
     SUCCESS_CHANGE_PASSWORD = '/result/success-change-password',
     ERROR_CHANGE_PASSWORD = '/result/error-change-password',
+    NOT_FOUND = '/not-found'
 }

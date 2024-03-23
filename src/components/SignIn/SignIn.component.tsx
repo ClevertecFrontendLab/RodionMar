@@ -7,6 +7,7 @@ import { TAuth } from '@shared/types/auth.type';
 import { TCheckEmail } from '@shared/types/check-email.type';
 
 import styles from './index.module.scss';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 type MenuItem = Required<MenuProps>['items'][number];
 type TFinishValues = {
@@ -101,6 +102,11 @@ export const SignInComponent = ({
         handleRedirectToForgetPassword(data);
     };
 
+    const handleCheckboxChange = (e: CheckboxChangeEvent) => {
+        setIsCheckboxChecked(e.target.checked);
+        form.setFieldValue('remember', e.target.checked)
+    };
+
     return (
         <div className={styles.formWrapper}>
             <Image
@@ -155,8 +161,10 @@ export const SignInComponent = ({
                     <Form.Item name='remember' className={styles.fieldWrapper}>
                         <Checkbox
                             data-test-id='login-remember'
+                            // checked={isCheckboxChecked}
+                            // onClick={() => setIsCheckboxChecked(!isCheckboxChecked)}
                             checked={isCheckboxChecked}
-                            onClick={() => setIsCheckboxChecked(!isCheckboxChecked)}
+                            onChange={handleCheckboxChange}
                         >
                             Запомнить меня
                         </Checkbox>

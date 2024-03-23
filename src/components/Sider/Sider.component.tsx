@@ -52,6 +52,11 @@ export const SiderComponent = ({
         if (handleTrainings) handleTrainings();
     }
 
+    const handleClickProfile = () => {
+        setActiveItemKey('4');
+        history.push(AppRouteEnum.PROFILE, { fromServer: true });
+    };
+
     const renderSwitcherButton = () => {
         if (windowWidth < 705) {
             return (
@@ -89,7 +94,7 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Календарь</Text> : null,
             key: '1',
             icon: <CalendarTwoTone className={styles.menuIconStyles} />,
-            onClick: () => handleClickTraining(),
+            onClick: handleClickTraining,
         },
         {
             label: isSiderOpened ? (
@@ -109,6 +114,7 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Профиль</Text> : null,
             key: '4',
             icon: <IdcardOutlined className={styles.menuIconStyles} />,
+            onClick: handleClickProfile
         },
     ];
 

@@ -29,14 +29,14 @@ import {
     updateTraining,
 } from './store/training.actions';
 import { clearErrors } from './store/training.slice';
-import { CalendarAlert } from '@components/CalendarAlert';
+import { ModalAlert } from '@components/ModalAlert';
 import { TGetResponse } from '@shared/types/getResponse.type';
 import { BadgeComponent } from '@components/Badge';
 import { TTrainingName } from '@shared/types/training-name.type';
 import { TrainingListModal } from '@components/TrainingsListModal';
 import { TTrainingResponse } from '@shared/types/training-response.type';
 import { TTrainingRequest } from '@shared/types/training-request.type';
-import { DateFormatEnum } from './constants/date-formats.enum';
+import { DateFormatEnum } from '../../constants/date-formats.enum';
 
 export const CalendarPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(false);
@@ -108,7 +108,6 @@ export const CalendarPage = () => {
         const calendarCellCoordinates = calendarCell?.getBoundingClientRect();
         
         if (calendarCellCoordinates) {
-            console.log(calendarCellCoordinates?.height)
             setmobileTrainingListCoordinate(
                 calendarCellCoordinates?.y - 8 + calendarCellCoordinates?.height,
             );
@@ -314,7 +313,7 @@ export const CalendarPage = () => {
                     />
                 </Content>
             </Layout>
-            <CalendarAlert
+            <ModalAlert
                 dataTestId='modal-no-review'
                 isModalOpen={isServerErrorModalOpen}
                 type='info'
@@ -335,7 +334,7 @@ export const CalendarPage = () => {
                     </Button>
                 }
             />
-            <CalendarAlert
+            <ModalAlert
                 isModalOpen={isSaveDataErrorModalOpen}
                 type='error'
                 message='При сохранении данных произошла ошибка'

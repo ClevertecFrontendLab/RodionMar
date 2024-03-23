@@ -1,8 +1,9 @@
 import { Alert, Modal, Typography } from 'antd';
 import styles from './index.module.scss';
 import { CloseOutlined } from '@ant-design/icons';
+import cn from 'classnames';
 
-type TCalendarAlertProps = {
+type TModalAlertProps = {
     isModalOpen: boolean;
     type: 'success' | 'error' | 'info' | 'warning';
     message: React.ReactNode;
@@ -13,11 +14,12 @@ type TCalendarAlertProps = {
     icon: React.ReactNode;
     closable?: boolean;
     dataTestId?: string;
+    className?: string
 };
 
 const { Text } = Typography;
 
-export const CalendarAlert = ({
+export const ModalAlert = ({
     isModalOpen,
     type,
     message,
@@ -27,10 +29,11 @@ export const CalendarAlert = ({
     icon,
     closable = true,
     dataTestId,
-}: TCalendarAlertProps) => (
+    className
+}: TModalAlertProps) => (
     <Modal
         open={isModalOpen}
-        className={styles.modal}
+        className={cn(styles.modal, className)}
         wrapClassName={styles.modalWrapper}
         mask={false}
         footer={button}

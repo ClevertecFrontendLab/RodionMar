@@ -21,6 +21,8 @@ import { fetchTrainings } from '@pages/calendar/store/training.actions';
 import { TActionCard } from '@shared/types/action-card.type';
 import { ResultModal } from '@components/ResultModal';
 import { clearErrors } from '@pages/calendar/store/training.slice';
+import { fetchProfile } from '@pages/profile/store/profile.actions';
+import { ProfilePendingSelector } from '@pages/profile/store/profile.selector';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -32,6 +34,7 @@ const MainPage = () => {
     const dispatch = useAppDispatch();
     const fetchFeedbacksPending = useSelector(FeedbackPendingSelector);
     const fetchTrainingPending = useSelector(TrainingPendingSelector);
+    const fetchProfilePending = useSelector(ProfilePendingSelector);
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -39,8 +42,11 @@ const MainPage = () => {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-
     }, []);
+
+    useEffect(() => {
+        dispatch(fetchProfile());
+    }, [dispatch])
 
     const handleResponseFeedbacks = (response: TGetResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
@@ -90,6 +96,8 @@ const MainPage = () => {
         handleResponseTrainings(responseData);
     };
 
+    const handleProfile = () => history.push(AppRouteEnum.PROFILE, { fromServer: true });
+
     const cards: TActionCard[] = [
         { title: 'Расписать тренировки', buttonText: 'Тренировки', buttonIcon: 'heart' },
         {
@@ -99,7 +107,12 @@ const MainPage = () => {
             handleRedirect: handleTrainings,
             dataTestId: 'menu-button-calendar',
         },
-        { title: 'Заполнить профиль', buttonText: 'Профиль', buttonIcon: 'profile' },
+        { 
+            title: 'Заполнить профиль', 
+            buttonText: 'Профиль', 
+            buttonIcon: 'profile' ,
+            handleRedirect: handleProfile,
+        },
     ];
 
     const serverErrorModalButtonHandler = () => {
@@ -109,7 +122,7 @@ const MainPage = () => {
 
     return (
         <Layout className={styles.mainLayout}>
-            {(fetchFeedbacksPending || fetchTrainingPending) && (
+            {(fetchFeedbacksPending || fetchTrainingPending || fetchProfilePending) && (
                 <LottieLoader data-test-id='loader' />
             )}
             <SiderComponent

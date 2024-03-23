@@ -1,11 +1,10 @@
+import { APIRouteEnum } from '@constants/api-routes.enum';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import axios from 'axios';
 
-const BASE_URL = 'https://marathon-api.clevertec.ru'
-
 // ===== main instance =====
 export const $api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: APIRouteEnum.BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },

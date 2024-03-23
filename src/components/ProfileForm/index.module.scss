@@ -1,0 +1,164 @@
+@import '../../styles/index.scss';
+
+.form {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    gap: 24px;
+
+    .formText {
+        @include H5-medium($character-light-title-85);
+    }
+
+    .privatyText {
+        margin-top: 16px;
+    }
+
+    div[class*='ant-upload-list-item-info']>span>div[class="ant-upload-list-item-thumbnail"] {
+        visibility: hidden;
+    }
+
+    div[class="ant-upload-list-item-info"]>span>div[class="ant-upload-list-item-thumbnail"]:after {
+        content: "Загружаем";
+        visibility: visible;
+        display: block;
+        position: absolute;
+        padding: 1px;
+        top: 27px;
+        left: 50%;
+        transform: translateX(-50%);
+        @include Body-regular($character-light-title-85);
+        opacity: 1;
+    }
+
+
+    div[class*='ant-upload-list-item-progress'] {
+        bottom: 27px;
+    }
+
+
+    .uploadButtonText {
+        margin: 0;
+        @include Body-regular($character-light-secondary-45);
+        max-width: 70px;
+    }
+
+    .userInfo {
+        flex-flow: nowrap;
+        gap: 24px;
+    }
+
+    .userInfoFields {
+        gap: 16px;
+
+        .fieldWrapper {
+            margin-bottom: 0;
+        }
+    }
+
+    .privatyInfo {
+        .fieldWrapper {
+            margin-bottom: 46px;
+
+            div {
+                margin-bottom: 0;
+            }
+        }
+
+        .email {
+            margin-bottom: 16px;
+        }
+
+        .confirmPassword {
+            margin-bottom: 30px;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form {
+        .saveButton {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .form {
+        gap: 20px;
+
+        .uploadCol{
+            .fieldWrapper {
+                margin-bottom: 0;
+            }
+            
+        }
+
+        .uploadColWithoutImage {
+            .fieldWrapper {
+                &>div {
+                    display: grid;
+                    grid-template-columns: 1fr auto
+                }
+            }
+        }
+
+        div[class*='ant-upload-list-item'] {
+            margin-top: 0;
+        }
+
+        span[class*='ant-upload-span'] {
+            justify-content: space-between;
+        }
+
+        span[class*='ant-upload-list-item-name'] {
+            display: none;
+        }
+
+        .mobileUploadLabel {
+            @include Footnote-str($character-light-title-85);
+        }
+
+        .uploadButtonText {
+            margin: 0;
+            @include Body-regular($character-light-secondary-45);
+            max-width: 70px;
+        }
+
+        .userInfo {
+            flex-flow: nowrap;
+            gap: 16px;
+            flex-direction: column-reverse;
+        }
+
+        .userInfoFields {
+            gap: 16px;
+
+            .fieldWrapper {
+                margin-bottom: 0;
+            }
+        }
+
+        .privatyInfo {
+            .fieldWrapper {
+                margin-bottom: 46px;
+
+                div {
+                    margin-bottom: 0;
+                }
+            }
+
+            .email {
+                margin-bottom: 16px;
+            }
+
+            .confirmPassword {
+                margin-bottom: 30px;
+            }
+        }
+
+        .saveButton {
+            width: 100%;
+        }
+    }
+}

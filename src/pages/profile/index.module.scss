@@ -1,0 +1,146 @@
+@import '../../styles/index.scss';
+
+.mainLayout {
+    display: flex;
+    position: relative;
+    height: 100%;
+
+    .contentWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: url('../../../main-screen--light.png') center / cover no-repeat;
+
+        .contentStyles {
+            background: $neutral-gray-1;
+            margin: 24px;
+            box-sizing: content-box;
+            flex-grow: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+           
+            .componentsWrapper{
+                position: relative;
+                margin: 24px;
+                box-sizing: content-box;
+                height: 100%;
+            }
+
+            .alert {
+                max-width: 395px;
+                width: 100%;
+                position: absolute;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .pageHeader {
+            background: $primary-light-1;
+
+            .pageTitle {
+                @include H4-medium($character-light-title-85);
+                margin-bottom: 0;
+            }
+
+            div[class*='ant-page-header-heading-left'],
+            span[class*='ant-page-header-heading-extra'] {
+                margin: 0;
+            }
+        }
+    }
+}
+
+div[class*='ant-modal-root'] {
+    .saveChangeErrorModal {
+        max-width: 416px;
+        box-sizing: content-box;
+
+        div[class*='ant-alert-message'] {
+            padding-right: 0;
+        }
+    }
+}
+
+.settingButtonStyles {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    border: none;
+    background: none;
+    transition: all 0.2s;
+    padding: 7px 15px;
+    box-sizing: border-box;
+
+    &:hover,
+    &:focus,
+    &:active {
+        outline: none;
+        border: none;
+        background-color: $character-light-table-header;
+    }
+}
+
+.settingTextStyles {
+    @include Body-regular($character-light-title-85);
+}
+
+@media screen and (max-width: 835px) {
+    .mainLayout {
+        .contentWrapper {
+            .pageHeader {
+                div[class*='ant-page-header-heading'] {
+                    display: grid;
+                    grid-template-areas:
+                        "title  end"
+                        "start  button";
+                }
+
+                .pageTitle {
+                    width: 100%;
+                }
+
+                div[class*='ant-page-header-heading-left'] {
+                    grid-area: title;
+                }
+
+                span[class*='ant-page-header-heading-extra'] {
+                    grid-area: button;
+                }
+            }
+
+            .contentStyles {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .isSidebarOpenedStyles {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .mainLayout {
+        .contentWrapper {
+            .contentStyles {
+                margin: 24px 0 42px;
+                .componentsWrapper{
+                    margin: 16px 24px 13px;
+                }
+                .alert {
+                    position: absolute;
+                    bottom: 48px;
+                }
+            }
+
+            .settingTextStyles {
+                display: none;
+            }
+        }
+    }
+}

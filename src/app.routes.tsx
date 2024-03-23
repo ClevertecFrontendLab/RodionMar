@@ -42,7 +42,6 @@ const PublicRoute = ({ element: Element }: { element: React.FC }) => {
 
 const DefaultRoute = () => {
     const token = window.localStorage.getItem('token');
-    console.log(token)
     if (token) {
         return <Navigate to={AppRouteEnum.NOT_FOUND} />;
     } else {
