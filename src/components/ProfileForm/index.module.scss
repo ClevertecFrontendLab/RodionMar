@@ -14,12 +14,14 @@
         margin-top: 16px;
     }
 
-    div[class*='ant-upload-list-item-info']>span>div[class="ant-upload-list-item-thumbnail"] {
+    div[class*='ant-upload-list-item-info'] > span > div[class='ant-upload-list-item-thumbnail'] {
         visibility: hidden;
     }
 
-    div[class="ant-upload-list-item-info"]>span>div[class="ant-upload-list-item-thumbnail"]:after {
-        content: "Загружаем";
+    div[class='ant-upload-list-item-info']
+        > span
+        > div[class='ant-upload-list-item-thumbnail']:after {
+        content: 'Загружаем';
         visibility: visible;
         display: block;
         position: absolute;
@@ -31,11 +33,9 @@
         opacity: 1;
     }
 
-
     div[class*='ant-upload-list-item-progress'] {
         bottom: 27px;
     }
-
 
     .uploadButtonText {
         margin: 0;
@@ -87,18 +87,17 @@
     .form {
         gap: 20px;
 
-        .uploadCol{
+        .uploadCol {
             .fieldWrapper {
                 margin-bottom: 0;
             }
-            
         }
 
         .uploadColWithoutImage {
             .fieldWrapper {
-                &>div {
+                & > div {
                     display: grid;
-                    grid-template-columns: 1fr auto
+                    grid-template-columns: 1fr auto;
                 }
             }
         }

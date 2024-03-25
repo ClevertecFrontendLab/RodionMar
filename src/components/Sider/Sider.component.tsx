@@ -50,7 +50,7 @@ export const SiderComponent = ({
     const handleClickTraining = () => {
         setActiveItemKey('1');
         if (handleTrainings) handleTrainings();
-    }
+    };
 
     const handleClickProfile = () => {
         setActiveItemKey('4');
@@ -114,7 +114,7 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Профиль</Text> : null,
             key: '4',
             icon: <IdcardOutlined className={styles.menuIconStyles} />,
-            onClick: handleClickProfile
+            onClick: handleClickProfile,
         },
     ];
 

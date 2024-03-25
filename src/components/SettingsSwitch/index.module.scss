@@ -1,0 +1,62 @@
+@import '../../styles/index.scss';
+
+.switchTextCol {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+
+    & > span {
+        @include Body-strong($character-light-title-85);
+    }
+
+    svg {
+        fill: $character-light-secondary-45;
+    }
+}
+
+.disabledSwitchTextCol {
+    & > span {
+        @include Body-strong($character-light-disable-25);
+    }
+}
+
+.switchTextColIcon {
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+@media screen and (max-width: 500px) {
+    .switchTextCol {
+        align-items: start;
+
+        & > span {
+            max-width: 176px;
+        }
+
+        svg {
+            fill: $character-light-secondary-45;
+        }
+    }
+
+    .disabledSwitchTextCol {
+        & > span {
+            @include Body-strong($character-light-disable-25);
+        }
+    }
+
+    .switchTextColIcon {
+        cursor: pointer;
+    }
+}
+
+.settingTooltip {
+    div[class*='ant-tooltip-inner'] {
+        background-color: $neutral-gray-13;
+    }
+}
+
+.notTopRightTooltip {
+    div[class*='ant-tooltip-arrow'] {
+        left: 9px;
+    }
+}

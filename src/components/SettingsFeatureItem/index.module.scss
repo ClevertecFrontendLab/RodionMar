@@ -1,0 +1,10 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+    .title {
+        @include Body-regular($character-light-title-85);
+    }
+    .iconsCol {
+        margin-right: 16px;
+    }
+}

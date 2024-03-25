@@ -1,4 +1,4 @@
 export type TUploadImageResponse = {
-  name: string,
-  url: string
-}
+    name: string;
+    url: string;
+};

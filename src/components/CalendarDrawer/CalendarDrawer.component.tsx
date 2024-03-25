@@ -23,7 +23,7 @@ import { ExerciseEnum } from './exercise.enum';
 import moment from 'moment';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
-type TDrawerComponentProps = {
+type TCalendarDrawerComponentProps = {
     type: DrawerNameEnum;
     isOpened: boolean;
     setIsOpened: (value: boolean) => void;
@@ -41,7 +41,7 @@ type TFormValues = Record<string, string | number>;
 
 const { Text } = Typography;
 
-export const DrawerComponent = ({
+export const CalendarDrawerComponent = ({
     type,
     isOpened,
     setIsOpened,
@@ -53,7 +53,7 @@ export const DrawerComponent = ({
     setUpdateTraining,
     updateTraining,
     isPastDate,
-}: TDrawerComponentProps) => {
+}: TCalendarDrawerComponentProps) => {
     const [form] = Form.useForm();
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -274,18 +274,12 @@ export const DrawerComponent = ({
     };
 
     const changeCheckboxHandler = (event: CheckboxChangeEvent, index: number) => {
-        const checkedIndex =
-            typeof index === 'number'
-                ? index
-                : parseInt(index, 10);
-        const updatedSelectedExercises = event.target
-            .checked
+        const checkedIndex = typeof index === 'number' ? index : parseInt(index, 10);
+        const updatedSelectedExercises = event.target.checked
             ? [...selectedExercises, checkedIndex]
-            : selectedExercises.filter(
-                (i) => i !== checkedIndex,
-            );
+            : selectedExercises.filter((i) => i !== checkedIndex);
         setSelectedExercises(updatedSelectedExercises);
-    }
+    };
 
     return (
         <Drawer
@@ -378,7 +372,9 @@ export const DrawerComponent = ({
                                         type === DrawerNameEnum.UPDATE ? (
                                             <Checkbox
                                                 checked={selectedExercises.includes(index)}
-                                                onChange={(event) => changeCheckboxHandler(event, index)}
+                                                onChange={(event) =>
+                                                    changeCheckboxHandler(event, index)
+                                                }
                                                 data-test-id={`modal-drawer-right-checkbox-exercise${index}`}
                                             />
                                         ) : null
@@ -476,8 +472,8 @@ export const DrawerComponent = ({
                                                 const updatedSelectedExercises = e.target.checked
                                                     ? [...selectedExercises, checkedIndex]
                                                     : selectedExercises.filter(
-                                                        (i) => i !== checkedIndex,
-                                                    );
+                                                          (i) => i !== checkedIndex,
+                                                      );
                                                 setSelectedExercises(updatedSelectedExercises);
                                             }}
                                             data-test-id={`modal-drawer-right-checkbox-exercise0`}

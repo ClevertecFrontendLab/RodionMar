@@ -10,7 +10,7 @@ import { EditOutlined, PlusOutlined, ArrowLeftOutlined, CloseOutlined } from '@a
 import { useCallback, useEffect, useState } from 'react';
 import { TTrainingCatalogItem } from '@shared/types/training-catalog-item.type';
 import { TTrainingName } from '@shared/types/training-name.type';
-import { DrawerComponent } from '@components/Drawer';
+import { CalendarDrawerComponent } from '@components/CalendarDrawer';
 import { TTrainingRequest } from '@shared/types/training-request.type';
 import { DrawerNameEnum } from '@constants/drawer-name.type';
 import moment from 'moment';
@@ -139,8 +139,7 @@ export const TrainingListModal = ({
     };
 
     const saveHandler = () => {
-        requestTrainingObject &&
-            requestTrainingObject.name === selectedOption
+        requestTrainingObject && requestTrainingObject.name === selectedOption
             ? handleCreateTraining(requestTrainingObject)
             : null;
         updateTraining && updateTraining.name === selectedOption
@@ -160,25 +159,24 @@ export const TrainingListModal = ({
             const newSelectedOption = training.name;
             setUpdateTraining(training);
             setSelectedOption(newSelectedOption);
-            const shouldHandleSelectOptions =
-                !!isPastDate(date);
+            const shouldHandleSelectOptions = !!isPastDate(date);
             handleSetStep(2);
             handleSelectOptions(
                 shouldHandleSelectOptions
                     ? {
-                        value: newSelectedOption,
-                        label: newSelectedOption,
-                    }
+                          value: newSelectedOption,
+                          label: newSelectedOption,
+                      }
                     : null,
                 !shouldHandleSelectOptions,
             );
         }
-    }
+    };
 
     const updateExerciseHandler = () => {
         setIsDrawerOpened(true);
         setDrawerType(DrawerNameEnum.UPDATE);
-    }
+    };
 
     return (
         <>
@@ -344,8 +342,8 @@ export const TrainingListModal = ({
                             className={cn(styles.itemsContainer, styles.exercisesContainer)}
                         >
                             {updateTraining &&
-                                selectedOption === updateTraining.name &&
-                                updateTraining.exercises.length > 0 ? (
+                            selectedOption === updateTraining.name &&
+                            updateTraining.exercises.length > 0 ? (
                                 updateTraining.exercises.map((exercise, id) => (
                                     <Row
                                         key={id}
@@ -366,8 +364,8 @@ export const TrainingListModal = ({
                                     </Row>
                                 ))
                             ) : requestTrainingObject &&
-                                requestTrainingObject.name === selectedOption &&
-                                requestTrainingObject?.exercises.length > 0 ? (
+                              requestTrainingObject.name === selectedOption &&
+                              requestTrainingObject?.exercises.length > 0 ? (
                                 requestTrainingObject.exercises.map((exercise, id) => (
                                     <Row
                                         key={id}
@@ -403,7 +401,7 @@ export const TrainingListModal = ({
                 <>
                     {[DrawerNameEnum.CREATE, DrawerNameEnum.UPDATE, DrawerNameEnum.VIEW].map(
                         (mapedDrawerType, index) => (
-                            <DrawerComponent
+                            <CalendarDrawerComponent
                                 key={index}
                                 type={drawerType && mapedDrawerType}
                                 isOpened={drawerType === mapedDrawerType && isDrawerOpened}
@@ -425,8 +423,8 @@ export const TrainingListModal = ({
                                                 {drawerType === DrawerNameEnum.CREATE
                                                     ? 'Добавление упражнений'
                                                     : drawerType === DrawerNameEnum.UPDATE
-                                                        ? 'Редактирование'
-                                                        : 'Просмотр упражнений'}
+                                                    ? 'Редактирование'
+                                                    : 'Просмотр упражнений'}
                                             </Text>
                                         </Col>
                                     </Row>

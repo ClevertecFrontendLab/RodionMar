@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '@redux/configure-store';
+import { useAppDispatch, history } from '@redux/configure-store';
 
 import { SiderComponent } from '@components/Sider';
 import { LottieLoader } from '@components/LottieLoader';
@@ -21,6 +21,9 @@ import { clearErrors } from './store/profile.slice';
 import { TProfileRequest } from '@shared/types/profile-request.type';
 import { TGetResponse } from '@shared/types/getResponse.type';
 import { updateProfile } from './store/profile.actions';
+import { fetchTariffList } from '@pages/settings/store/settings.actions';
+import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
+import { AppRouteEnum } from '@constants/app-routes.enum';
 
 const { Title } = Typography;
 
@@ -31,6 +34,7 @@ export const ProfilePage = () => {
     const [isAlertOpened, setIsAlertOpened] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const fetchPending = useSelector(ProfilePendingSelector);
+    const fetchTariffListPending = useSelector(SettingsPendingSelector);
     const fetchProfile = useSelector(ProfileSelector);
     const dispatch = useAppDispatch();
 
@@ -58,15 +62,15 @@ export const ProfilePage = () => {
 
     const handleResponseSaveChanges = (response: Pick<TGetResponse, 'meta'>) => {
         if (response.meta.requestStatus === 'fulfilled') {
-            setIsAlertOpened(true)
+            setIsAlertOpened(true);
         } else {
-            setIsSaveChangesErrorModalOpened(true)
+            setIsSaveChangesErrorModalOpened(true);
         }
     };
 
     const handleSaveChanges = async (data: TProfileRequest) => {
         const response = await dispatch(updateProfile(data));
-        
+
         const responseData = {
             meta: response.meta,
         };
@@ -74,9 +78,15 @@ export const ProfilePage = () => {
         handleResponseSaveChanges(responseData);
     };
 
+    const handleClickSettingsButton = async () => {
+        const response = await dispatch(fetchTariffList());
+        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
+    };
+
     return (
         <Layout className={styles.mainLayout}>
-            {fetchPending !== undefined && fetchPending === true && (
+            {((fetchPending !== undefined && fetchPending === true) ||
+                (fetchTariffListPending !== undefined && fetchTariffListPending === true)) && (
                 <LottieLoader data-test-id='loader' />
             )}
             <SiderComponent
@@ -95,6 +105,7 @@ export const ProfilePage = () => {
                             type='text'
                             icon={<SettingOutlined className={styles.settingIconStyles} />}
                             size='large'
+                            onClick={handleClickSettingsButton}
                         >
                             <Text className={styles.settingTextStyles}>Настройки</Text>
                         </Button>
@@ -108,15 +119,18 @@ export const ProfilePage = () => {
                             handleSaveChanges={handleSaveChanges}
                             windowWidth={windowWidth}
                         />
-                        {
-                            isAlertOpened ? (
-                                <Alert className={styles.alert} message="Данные профиля успешно обновлены" type="success" onClose={alertCloseHandler} showIcon closable />
-                            ) : null
-                        }
+                        {isAlertOpened ? (
+                            <Alert
+                                className={styles.alert}
+                                message='Данные профиля успешно обновлены'
+                                type='success'
+                                onClose={alertCloseHandler}
+                                showIcon
+                                closable
+                            />
+                        ) : null}
                     </Row>
-
                 </Content>
-
             </Layout>
             <ModalAlert
                 isModalOpen={isErrorModalOpened}
@@ -162,4 +176,3 @@ export const ProfilePage = () => {
         </Layout>
     );
 };
-

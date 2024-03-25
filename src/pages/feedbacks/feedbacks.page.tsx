@@ -83,7 +83,6 @@ export const FeedbacksPage = () => {
         dispatch(fetchFeedbacks());
 
         return () => window.removeEventListener('resize', handleResize);
-
     }, [dispatch, fetchErrors]);
 
     const location = useLocation();
@@ -119,12 +118,12 @@ export const FeedbacksPage = () => {
     const setFeedbackHandler = () => {
         setIsErrorModalOpen(false);
         setIsFeedbackModalOpen(true);
-    }
+    };
 
     const serverErrorModalButtonHandler = () => {
         setIsServerErrorModalOpen(false);
         history.push('/main');
-    }
+    };
 
     return (
         <Layout className={styles.mainLayout}>
@@ -219,7 +218,7 @@ export const FeedbacksPage = () => {
                 title='Отзыв успешно опубликован'
                 subTitle={null}
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Button
                         type='primary'
                         size='large'
@@ -238,7 +237,7 @@ export const FeedbacksPage = () => {
                 title='Данные не сохранились'
                 subTitle='Что-то пошло не так. Попробуйте ещё раз.'
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Row className={styles.errorButtons} gutter={8}>
                         <Col span={12}>
                             <Button
@@ -273,7 +272,7 @@ export const FeedbacksPage = () => {
                 title='Что-то пошло не так'
                 subTitle='Произошла ошибка, попробуйте ещё раз.'
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Button
                         type='primary'
                         size='large'

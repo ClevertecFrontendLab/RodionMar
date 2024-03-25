@@ -8,6 +8,7 @@ import { AppRouteEnum } from '@constants/app-routes.enum';
 type THeaderProps = {
     isSiderOpened: boolean;
     windowWidth: number;
+    handleClickSettingsButton: () => void;
 };
 
 const { Header } = Layout;
@@ -20,7 +21,11 @@ const items = [
     },
 ];
 
-export const HeaderComponent = ({ isSiderOpened, windowWidth }: THeaderProps) => (
+export const HeaderComponent = ({
+    isSiderOpened,
+    windowWidth,
+    handleClickSettingsButton,
+}: THeaderProps) => (
     <Header className={styles.headerStyles}>
         <Row>
             <Col>
@@ -48,6 +53,7 @@ export const HeaderComponent = ({ isSiderOpened, windowWidth }: THeaderProps) =>
                     className={styles.settingButtonStyles}
                     type='text'
                     icon={<SettingOutlined className={styles.settingIconStyles} />}
+                    onClick={handleClickSettingsButton}
                 >
                     <Text className={styles.settingTextStyles}>Настройки</Text>
                 </Button>

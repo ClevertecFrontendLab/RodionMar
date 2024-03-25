@@ -14,7 +14,7 @@ type TModalAlertProps = {
     icon: React.ReactNode;
     closable?: boolean;
     dataTestId?: string;
-    className?: string
+    className?: string;
 };
 
 const { Text } = Typography;
@@ -29,7 +29,7 @@ export const ModalAlert = ({
     icon,
     closable = true,
     dataTestId,
-    className
+    className,
 }: TModalAlertProps) => (
     <Modal
         open={isModalOpen}

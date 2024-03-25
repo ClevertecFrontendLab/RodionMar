@@ -15,7 +15,6 @@ import { DateFormatEnum } from '@constants/date-formats.enum';
 import { TProfileRequest } from '@shared/types/profile-request.type';
 import moment from 'moment';
 
-
 type TFinishValues = {
     confirmPassword?: string;
     birthday?: string;
@@ -23,30 +22,30 @@ type TFinishValues = {
     firstName?: string;
     lastName?: string;
     password: string;
-    imgSrc?: { file: UploadFile }
+    imgSrc?: { file: UploadFile };
 };
 
 enum FileStatusRnum {
     UPLOADING = 'uploading',
     REMOVED = 'removed',
     DONE = 'done',
-    ERROR = 'error'
+    ERROR = 'error',
 }
 
 const { Text } = Typography;
 
-const IMAGES_URL = 'https://training-api.clevertec.ru'
+const IMAGES_URL = 'https://training-api.clevertec.ru';
 
 export const ProfileFormComponent = ({
     profile,
     setIsErrorModalOpened,
     handleSaveChanges,
-    windowWidth
+    windowWidth,
 }: {
-    profile: TProfileResponse | null,
-    setIsErrorModalOpened: (value: boolean) => void,
-    handleSaveChanges: (value: TProfileRequest) => void,
-    windowWidth: number
+    profile: TProfileResponse | null;
+    setIsErrorModalOpened: (value: boolean) => void;
+    handleSaveChanges: (value: TProfileRequest) => void;
+    windowWidth: number;
 }) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -63,7 +62,7 @@ export const ProfileFormComponent = ({
                     status: FileStatusRnum.DONE,
                     url: profile.imgSrc,
                 },
-            ])
+            ]);
         }
     }, [profile, setFileList]);
 
@@ -87,10 +86,14 @@ export const ProfileFormComponent = ({
             firstName: values.firstName,
             lastName: values.lastName,
             password: values.password,
-            imgSrc: values.imgSrc && typeof values.imgSrc !== 'string' ? IMAGES_URL + (values.imgSrc.file.response ? values.imgSrc.file.response.url : '') : values.imgSrc
-        }
+            imgSrc:
+                values.imgSrc && typeof values.imgSrc !== 'string'
+                    ? IMAGES_URL +
+                      (values.imgSrc.file.response ? values.imgSrc.file.response.url : '')
+                    : values.imgSrc,
+        };
 
-        handleSaveChanges(finishValues)
+        handleSaveChanges(finishValues);
     };
 
     const handleValidate = () => {
@@ -119,7 +122,7 @@ export const ProfileFormComponent = ({
                     {
                         uid: '-1',
                         name: 'image.png',
-                        status: FileStatusRnum.ERROR
+                        status: FileStatusRnum.ERROR,
                     },
                 ]);
                 setIsButtonDisabled(true);
@@ -132,20 +135,15 @@ export const ProfileFormComponent = ({
     const uploadButton = (
         <div>
             <PlusOutlined />
-            <div className={styles.uploadButtonText}>
-                {uploadButtonText}
-            </div>
+            <div className={styles.uploadButtonText}>{uploadButtonText}</div>
         </div>
     );
 
-    const mobileUploadButton = (
-        <Button icon={<UploadOutlined />}>Загрузить</Button>
-    );
-
+    const mobileUploadButton = <Button icon={<UploadOutlined />}>Загрузить</Button>;
 
     const showUploadList = {
         showRemoveIcon: true,
-        showPreviewIcon: windowWidth > 360 ? true : false
+        showPreviewIcon: windowWidth > 360 ? true : false,
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,25 +159,45 @@ export const ProfileFormComponent = ({
             className={styles.form}
             onFinish={onFinish}
             size='large'
-
         >
             <Text className={styles.formText}>Личная информация</Text>
             <Row className={styles.userInfo}>
-                <Col className={cn(styles.uploadCol, fileList.length === 0 ? styles.uploadColWithoutImage : '')}>
-                    <Form.Item name='imgSrc' labelCol={{ offset: 0 }} label={windowWidth < 361 && fileList.length === 0 ? <Text className={styles.mobileUploadLabel}>Загрузить фото профиля:</Text> : null} initialValue={profile ? profile.imgSrc : null} className={styles.fieldWrapper}>
+                <Col
+                    className={cn(
+                        styles.uploadCol,
+                        fileList.length === 0 ? styles.uploadColWithoutImage : '',
+                    )}
+                >
+                    <Form.Item
+                        name='imgSrc'
+                        labelCol={{ offset: 0 }}
+                        label={
+                            windowWidth < 361 && fileList.length === 0 ? (
+                                <Text className={styles.mobileUploadLabel}>
+                                    Загрузить фото профиля:
+                                </Text>
+                            ) : null
+                        }
+                        initialValue={profile ? profile.imgSrc : null}
+                        className={styles.fieldWrapper}
+                    >
                         <Upload
-                            name="file"
+                            name='file'
                             headers={{
-                                Authorization: `Bearer ${localStorage.getItem('token')}`
+                                Authorization: `Bearer ${localStorage.getItem('token')}`,
                             }}
                             action={`${APIRouteEnum.BASE_URL}${ProfileEndpointEnum.UPLOAD_IMAGE}`}
-                            listType={windowWidth > 360 ? "picture-card" : 'picture'}
+                            listType={windowWidth > 360 ? 'picture-card' : 'picture'}
                             showUploadList={showUploadList}
                             onChange={handleChange}
                             maxCount={1}
                             fileList={fileList}
                         >
-                            {fileList.length > 0 ? null : windowWidth > 360 ? uploadButton : mobileUploadButton}
+                            {fileList.length > 0
+                                ? null
+                                : windowWidth > 360
+                                ? uploadButton
+                                : mobileUploadButton}
                         </Upload>
                     </Form.Item>
                 </Col>
@@ -187,34 +205,50 @@ export const ProfileFormComponent = ({
                 <Col>
                     <Row className={styles.userInfoFields}>
                         <Col span={24}>
-                            <Form.Item name='firstName' initialValue={profile ? profile.firstName : null} className={styles.fieldWrapper}>
-                                <Input
-                                    placeholder='Имя'
-                                    className={styles.field}
-                                />
+                            <Form.Item
+                                name='firstName'
+                                initialValue={profile ? profile.firstName : null}
+                                className={styles.fieldWrapper}
+                            >
+                                <Input placeholder='Имя' className={styles.field} />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
-                            <Form.Item name='lastName' initialValue={profile ? profile.lastName : null} className={styles.fieldWrapper}>
-                                <Input
-                                    placeholder='Фамилия'
-                                    className={styles.field}
-                                />
+                            <Form.Item
+                                name='lastName'
+                                initialValue={profile ? profile.lastName : null}
+                                className={styles.fieldWrapper}
+                            >
+                                <Input placeholder='Фамилия' className={styles.field} />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
-                            <Form.Item name='birthday' initialValue={profile ? moment(profile.birthday) : null} className={styles.fieldWrapper}>
-                                <DatePicker placeholder='Дата рождения' style={{ width: '100%' }} format={DateFormatEnum.DATE_PICKER} />
+                            <Form.Item
+                                name='birthday'
+                                initialValue={profile ? moment(profile.birthday) : null}
+                                className={styles.fieldWrapper}
+                            >
+                                <DatePicker
+                                    placeholder='Дата рождения'
+                                    style={{ width: '100%' }}
+                                    format={DateFormatEnum.DATE_PICKER}
+                                />
                             </Form.Item>
                         </Col>
                     </Row>
                 </Col>
             </Row>
 
-            <Text className={cn(styles.formText, styles.privatyText)}>Приватность и авторизация</Text>
+            <Text className={cn(styles.formText, styles.privatyText)}>
+                Приватность и авторизация
+            </Text>
             <Row className={cn(styles.fieldsWrapper, styles.privatyInfo)}>
                 <Col span={24} className={cn(styles.fieldWrapper, styles.email)}>
-                    <Form.Item name='email' initialValue={profile ? profile.email : null} rules={emailRules}>
+                    <Form.Item
+                        name='email'
+                        initialValue={profile ? profile.email : null}
+                        rules={emailRules}
+                    >
                         <Input
                             addonBefore={<Text className={styles.fieldAddon}>e-mail:</Text>}
                             className={styles.field}
@@ -231,14 +265,13 @@ export const ProfileFormComponent = ({
                         <Input.Password
                             placeholder='Пароль'
                             className={styles.field}
-                            onChange={handlePasswordChange} 
+                            onChange={handlePasswordChange}
                         />
                     </Form.Item>
                 </Col>
                 <Col span={24} className={cn(styles.fieldWrapper, styles.confirmPassword)}>
                     <Form.Item
                         name='confirmPassword'
-
                         rules={[
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
@@ -250,10 +283,7 @@ export const ProfileFormComponent = ({
                             }),
                         ]}
                     >
-                        <Input.Password
-                            placeholder='Повторите пароль'
-                            className={styles.field}
-                        />
+                        <Input.Password placeholder='Повторите пароль' className={styles.field} />
                     </Form.Item>
                 </Col>
             </Row>

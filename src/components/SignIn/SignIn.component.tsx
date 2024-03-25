@@ -104,7 +104,7 @@ export const SignInComponent = ({
 
     const handleCheckboxChange = (e: CheckboxChangeEvent) => {
         setIsCheckboxChecked(e.target.checked);
-        form.setFieldValue('remember', e.target.checked)
+        form.setFieldValue('remember', e.target.checked);
     };
 
     return (

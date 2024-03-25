@@ -20,5 +20,5 @@ export enum AppRouteEnum {
     ERROR_CHECK_EMAIL = '/result/error-check-email',
     SUCCESS_CHANGE_PASSWORD = '/result/success-change-password',
     ERROR_CHANGE_PASSWORD = '/result/error-change-password',
-    NOT_FOUND = '/not-found'
+    NOT_FOUND = '/not-found',
 }

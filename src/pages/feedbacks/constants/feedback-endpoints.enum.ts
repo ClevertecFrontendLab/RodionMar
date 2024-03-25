@@ -1,3 +1,3 @@
 export enum FeedbackEndpointEnum {
-  FEEDBACKS = '/feedback',
+    FEEDBACKS = '/feedback',
 }

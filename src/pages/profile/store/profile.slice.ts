@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-    fetchProfile,
-    updateProfile,
-} from './profile.actions';
+import { fetchProfile, updateProfile } from './profile.actions';
 import { TProfileResponse } from '@shared/types/profile-response.type';
-
 
 type TProfileError = {
     status?: number;
@@ -58,7 +54,7 @@ const profileSlice = createSlice({
             .addCase(updateProfile.rejected, (state, action) => {
                 state.pending = false;
                 state.errors = action.payload as { message: string };
-            })
+            });
     },
 });
 

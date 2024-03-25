@@ -23,6 +23,8 @@ import { ResultModal } from '@components/ResultModal';
 import { clearErrors } from '@pages/calendar/store/training.slice';
 import { fetchProfile } from '@pages/profile/store/profile.actions';
 import { ProfilePendingSelector } from '@pages/profile/store/profile.selector';
+import { fetchTariffList } from '@pages/settings/store/settings.actions';
+import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -35,6 +37,7 @@ const MainPage = () => {
     const fetchFeedbacksPending = useSelector(FeedbackPendingSelector);
     const fetchTrainingPending = useSelector(TrainingPendingSelector);
     const fetchProfilePending = useSelector(ProfilePendingSelector);
+    const fetchTariffListPending = useSelector(SettingsPendingSelector);
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -46,7 +49,7 @@ const MainPage = () => {
 
     useEffect(() => {
         dispatch(fetchProfile());
-    }, [dispatch])
+    }, [dispatch]);
 
     const handleResponseFeedbacks = (response: TGetResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
@@ -107,10 +110,10 @@ const MainPage = () => {
             handleRedirect: handleTrainings,
             dataTestId: 'menu-button-calendar',
         },
-        { 
-            title: 'Заполнить профиль', 
-            buttonText: 'Профиль', 
-            buttonIcon: 'profile' ,
+        {
+            title: 'Заполнить профиль',
+            buttonText: 'Профиль',
+            buttonIcon: 'profile',
             handleRedirect: handleProfile,
         },
     ];
@@ -118,13 +121,19 @@ const MainPage = () => {
     const serverErrorModalButtonHandler = () => {
         dispatch(clearErrors());
         setIsServerErrorModalOpen(false);
-    }
+    };
+
+    const handleClickSettingsButton = async () => {
+        const response = await dispatch(fetchTariffList());
+        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
+    };
 
     return (
         <Layout className={styles.mainLayout}>
-            {(fetchFeedbacksPending || fetchTrainingPending || fetchProfilePending) && (
-                <LottieLoader data-test-id='loader' />
-            )}
+            {(fetchFeedbacksPending ||
+                fetchTrainingPending ||
+                fetchProfilePending ||
+                fetchTariffListPending) && <LottieLoader data-test-id='loader' />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -132,7 +141,11 @@ const MainPage = () => {
                 handleTrainings={handleTrainings}
             />
             <Layout className={styles.contentWrapper}>
-                <HeaderComponent isSiderOpened={isSiderOpened} windowWidth={windowWidth} />
+                <HeaderComponent
+                    isSiderOpened={isSiderOpened}
+                    windowWidth={windowWidth}
+                    handleClickSettingsButton={handleClickSettingsButton}
+                />
                 <Content className={styles.contentStyles}>
                     <Space.Compact className={styles.containerStyles} direction='vertical'>
                         <Row>
@@ -181,7 +194,7 @@ const MainPage = () => {
                 title='Что-то пошло не так'
                 subTitle='Произошла ошибка, попробуйте ещё раз.'
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Button
                         type='primary'
                         size='large'

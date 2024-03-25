@@ -89,7 +89,6 @@ export const CalendarPage = () => {
         handleTrainingsCatalog();
 
         return () => window.removeEventListener('resize', handleResize);
-
     }, [handleTrainingsCatalog]);
 
     useEffect(() => {
@@ -106,7 +105,7 @@ export const CalendarPage = () => {
     );
     useEffect(() => {
         const calendarCellCoordinates = calendarCell?.getBoundingClientRect();
-        
+
         if (calendarCellCoordinates) {
             setmobileTrainingListCoordinate(
                 calendarCellCoordinates?.y - 8 + calendarCellCoordinates?.height,
@@ -147,7 +146,14 @@ export const CalendarPage = () => {
             onSelect(selectedValue);
             handleSetTrainingListModal();
         }
-    }, [trainings, prevTrainings, selectedValue, isTrainingListModalOpened, onSelect, handleSetTrainingListModal]);
+    }, [
+        trainings,
+        prevTrainings,
+        selectedValue,
+        isTrainingListModalOpened,
+        onSelect,
+        handleSetTrainingListModal,
+    ]);
 
     const onPanelChange = (newDate: Moment) => {
         const newMonth = newDate.month();
@@ -167,7 +173,10 @@ export const CalendarPage = () => {
         return listData;
     };
 
-    const cellClickHandler = (date: Moment, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const cellClickHandler = (
+        date: Moment,
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    ) => {
         onSelect(date);
         handleSetTrainingListModal();
         event.stopPropagation();
@@ -176,7 +185,7 @@ export const CalendarPage = () => {
     const mobileCellClickHandler = (date: Moment) => {
         onSelect(date);
         selectedMonth === date.month() ? handleSetTrainingListModal() : null;
-    }
+    };
 
     const dateFullCellRender = (date: Moment) => {
         const listData = getListData(date);
@@ -187,7 +196,7 @@ export const CalendarPage = () => {
         return windowWidth > 481 ? (
             <div
                 className='ant-picker-cell-inner ant-picker-calendar-date'
-                onClick={event => cellClickHandler(date, event)}
+                onClick={(event) => cellClickHandler(date, event)}
             >
                 <div className='ant-picker-calendar-date-value'>{dayOfMonth}</div>
                 <div className={'ant-picker-calendar-date-content'}>
@@ -253,7 +262,7 @@ export const CalendarPage = () => {
         dispatch(clearErrors());
         handleTrainingsCatalog();
         setIsServerErrorModalOpen(false);
-    }
+    };
 
     const saveDataErrorModalHandler = () => {
         dispatch(clearErrors());
@@ -278,9 +287,7 @@ export const CalendarPage = () => {
                             <Col>
                                 <Breadcrumb className={styles.breadcrumbs}>
                                     <Breadcrumb.Item>
-                                        <a
-                                            onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}
-                                        >
+                                        <a onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}>
                                             Главная
                                         </a>
                                     </Breadcrumb.Item>
@@ -361,7 +368,9 @@ export const CalendarPage = () => {
                 isModalOpen={isTrainingListModalOpened}
                 getContainer={
                     isTrainingListModalOpened && windowWidth > 480
-                        ? (calendarCell ? calendarCell : document.body)
+                        ? calendarCell
+                            ? calendarCell
+                            : document.body
                         : document.body
                 }
                 modalClassname={styles.modalWrapper}

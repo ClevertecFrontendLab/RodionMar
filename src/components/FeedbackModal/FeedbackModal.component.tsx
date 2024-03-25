@@ -60,6 +60,8 @@ export const FeedbackModal = ({
             onOk={handleOk}
             onCancel={handleCancel}
             destroyOnClose={true}
+            mask={false}
+            zIndex={5}
             footer={[
                 <Button
                     type='primary'

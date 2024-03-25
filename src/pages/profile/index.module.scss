@@ -21,8 +21,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-           
-            .componentsWrapper{
+
+            .componentsWrapper {
                 position: relative;
                 margin: 24px;
                 box-sizing: content-box;
@@ -96,8 +96,8 @@ div[class*='ant-modal-root'] {
                 div[class*='ant-page-header-heading'] {
                     display: grid;
                     grid-template-areas:
-                        "title  end"
-                        "start  button";
+                        'title  end'
+                        'start  button';
                 }
 
                 .pageTitle {
@@ -129,7 +129,7 @@ div[class*='ant-modal-root'] {
         .contentWrapper {
             .contentStyles {
                 margin: 24px 0 42px;
-                .componentsWrapper{
+                .componentsWrapper {
                     margin: 16px 24px 13px;
                 }
                 .alert {

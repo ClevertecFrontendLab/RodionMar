@@ -11,7 +11,6 @@ import styles from './index.module.scss';
 import { useEffect, useState } from 'react';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 
-
 export const NotFoundPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -25,7 +24,7 @@ export const NotFoundPage = () => {
     }, []);
 
     const buttonHandler = () => {
-        history.push(AppRouteEnum.BASIC_MAIN, { fromServer: true })
+        history.push(AppRouteEnum.BASIC_MAIN, { fromServer: true });
     };
 
     return (
@@ -39,9 +38,9 @@ export const NotFoundPage = () => {
             <Layout className={styles.contentWrapper}>
                 <Content className={styles.contentStyles}>
                     <Result
-                        status="404"
-                        title="Такой страницы нет"
-                        subTitle="Извините, страница не найдена, возможно, она была удалена или перемещена."
+                        status='404'
+                        title='Такой страницы нет'
+                        subTitle='Извините, страница не найдена, возможно, она была удалена или перемещена.'
                         className={styles.result}
                         extra={
                             <Button
@@ -55,7 +54,6 @@ export const NotFoundPage = () => {
                             </Button>
                         }
                     />
-
                 </Content>
             </Layout>
         </Layout>

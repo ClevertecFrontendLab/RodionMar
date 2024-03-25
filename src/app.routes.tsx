@@ -12,6 +12,7 @@ import { FeedbacksPage } from '@pages/feedbacks';
 import { CalendarPage } from '@pages/calendar';
 import { ProfilePage } from '@pages/profile';
 import { NotFoundPage } from '@pages/not-found';
+import { SettingsPage } from '@pages/settings';
 const MainPage = React.lazy(() => import('./pages/main'));
 
 const isAllowed = () => {
@@ -64,7 +65,11 @@ const AppRoutes = () => {
             />
             <Route path={AppRouteEnum.CALENDAR} element={<PrivateRoute element={CalendarPage} />} />
             <Route path={AppRouteEnum.PROFILE} element={<PrivateRoute element={ProfilePage} />} />
-            <Route path={AppRouteEnum.NOT_FOUND} element={<PrivateRoute element={NotFoundPage} />} />
+            <Route path={AppRouteEnum.SETTINGS} element={<PrivateRoute element={SettingsPage} />} />
+            <Route
+                path={AppRouteEnum.NOT_FOUND}
+                element={<PrivateRoute element={NotFoundPage} />}
+            />
 
             {/* DEFAULT */}
             <Route path='*' element={<DefaultRoute />} />
