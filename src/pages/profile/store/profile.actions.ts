@@ -11,7 +11,6 @@ export const fetchProfile = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await $api.get(ProfileEndpointEnum.FETCH_PROFILE);
-            console.log(response);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -27,7 +26,6 @@ export const updateProfile = createAsyncThunk(
         try {
             const response = await $api.put(ProfileEndpointEnum.UPDATE_PROFILE, data);
             const responseData: TProfileResponse = response.data;
-            console.log(responseData);
             return responseData;
         } catch (error) {
             if (error instanceof AxiosError) {

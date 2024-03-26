@@ -6,6 +6,7 @@ import { GooglePlusOutlined } from '@ant-design/icons';
 import { TAuth } from '@shared/types/auth.type';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 type TFinishValues = {
@@ -109,7 +110,7 @@ export const SignUpComponent = ({
                         <Input
                             addonBefore={<Text className={styles.fieldAddon}>e-mail:</Text>}
                             className={styles.field}
-                            data-test-id='registration-email'
+                            data-test-id={DataTestEnum.REGISTRATION_EMAIL}
                         />
                     </Form.Item>
 
@@ -122,7 +123,7 @@ export const SignUpComponent = ({
                         <Input.Password
                             placeholder='Пароль'
                             className={styles.field}
-                            data-test-id='registration-password'
+                            data-test-id={DataTestEnum.REGISTRATION_PASSWORD}
                         />
                     </Form.Item>
                     <Form.Item
@@ -141,7 +142,7 @@ export const SignUpComponent = ({
                         <Input.Password
                             placeholder='Повторите пароль'
                             className={styles.field}
-                            data-test-id='registration-confirm-password'
+                            data-test-id={DataTestEnum.REGISTRATION_CONFIRM_PASSWORD}
                         />
                     </Form.Item>
                 </div>
@@ -154,7 +155,7 @@ export const SignUpComponent = ({
                             htmlType='submit'
                             className={styles.authButton}
                             disabled={isButtonDisabled}
-                            data-test-id='registration-submit-button'
+                            data-test-id={DataTestEnum.REGISTRATION_SUBMIT_BUTTON}
                         >
                             Войти
                         </Button>

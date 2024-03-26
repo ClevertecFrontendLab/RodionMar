@@ -1,6 +1,7 @@
 import { Button, Row, Typography, Col } from 'antd';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title, Paragraph } = Typography;
 
@@ -26,7 +27,7 @@ export const NoFeedbacks = ({ setIsFeedbackModalOpen }: TNoFeedbacksProps) => (
                 size='large'
                 className={styles.button}
                 onClick={() => setIsFeedbackModalOpen(true)}
-                data-test-id='write-review'
+                data-test-id={DataTestEnum.WRITE_REVIEW}
                 block
             >
                 Написать отзыв

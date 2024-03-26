@@ -22,6 +22,7 @@ import { DrawerNameEnum } from '@constants/drawer-name.type';
 import { ExerciseEnum } from './exercise.enum';
 import moment from 'moment';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type TCalendarDrawerComponentProps = {
     type: DrawerNameEnum;
@@ -283,7 +284,7 @@ export const CalendarDrawerComponent = ({
 
     return (
         <Drawer
-            data-test-id='modal-drawer-right'
+            data-test-id={DataTestEnum.MODAL_DRAWER_RIGHT}
             open={isOpened}
             title={
                 <>
@@ -314,7 +315,9 @@ export const CalendarDrawerComponent = ({
             )}
             width={408}
             placement={windowWidth > 480 ? 'right' : 'bottom'}
-            closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
+            closeIcon={
+                <CloseOutlined data-test-id={DataTestEnum.MODAL_DRAWER_RIGHT_BUTTON_CLOSE} />
+            }
             footer={
                 type !== DrawerNameEnum.VIEW ? (
                     <Row>
@@ -365,7 +368,7 @@ export const CalendarDrawerComponent = ({
                                 className={styles.inputFormItem}
                             >
                                 <Input
-                                    data-test-id={`modal-drawer-right-input-exercise${index}`}
+                                    data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_EXERCISE}${index}`}
                                     placeholder='Упражнение'
                                     size='small'
                                     addonAfter={
@@ -375,7 +378,7 @@ export const CalendarDrawerComponent = ({
                                                 onChange={(event) =>
                                                     changeCheckboxHandler(event, index)
                                                 }
-                                                data-test-id={`modal-drawer-right-checkbox-exercise${index}`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_CHECKBOX_EXERCISE}${index}`}
                                             />
                                         ) : null
                                     }
@@ -411,7 +414,7 @@ export const CalendarDrawerComponent = ({
                                                 addonBefore='+'
                                                 placeholder='1'
                                                 name={`approaches-${index}`}
-                                                data-test-id={`modal-drawer-right-input-approach${index}`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_APPROACH}${index}`}
                                             />
                                         </Form.Item>
                                     </Col>
@@ -429,7 +432,7 @@ export const CalendarDrawerComponent = ({
                                                     size='small'
                                                     placeholder='0'
                                                     name={`weight-${index}`}
-                                                    data-test-id={`modal-drawer-right-input-weight${index}`}
+                                                    data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_WEIGHT}${index}`}
                                                 />
                                             </Form.Item>
                                         </Col>
@@ -447,7 +450,7 @@ export const CalendarDrawerComponent = ({
                                                     size='small'
                                                     placeholder='1'
                                                     name={`replays-${index}`}
-                                                    data-test-id={`modal-drawer-right-input-quantity${index}`}
+                                                    data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_QUANTITY}${index}`}
                                                 />
                                             </Form.Item>
                                         </Col>
@@ -460,7 +463,7 @@ export const CalendarDrawerComponent = ({
                     <Space direction='vertical' className={styles.functionalWrapper}>
                         <Form.Item initialValue='' name={`name-0`} className={styles.inputFormItem}>
                             <Input
-                                data-test-id={`modal-drawer-right-input-exercise0`}
+                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_EXERCISE}0`}
                                 placeholder='Упражнение'
                                 size='small'
                                 addonAfter={
@@ -476,7 +479,7 @@ export const CalendarDrawerComponent = ({
                                                       );
                                                 setSelectedExercises(updatedSelectedExercises);
                                             }}
-                                            data-test-id={`modal-drawer-right-checkbox-exercise0`}
+                                            data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_CHECKBOX_EXERCISE}0`}
                                         />
                                     ) : null
                                 }
@@ -511,7 +514,7 @@ export const CalendarDrawerComponent = ({
                                             size='small'
                                             addonBefore='+'
                                             placeholder='1'
-                                            data-test-id={`modal-drawer-right-input-approach0`}
+                                            data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_APPROACH}0`}
                                         />
                                     </Form.Item>
                                 </Col>
@@ -528,7 +531,7 @@ export const CalendarDrawerComponent = ({
                                                 min={0}
                                                 size='small'
                                                 placeholder='0'
-                                                data-test-id={`modal-drawer-right-input-weight0`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_WEIGHT}0`}
                                             />
                                         </Form.Item>
                                     </Col>
@@ -545,7 +548,7 @@ export const CalendarDrawerComponent = ({
                                                 min={1}
                                                 size='small'
                                                 placeholder='1'
-                                                data-test-id={`modal-drawer-right-input-quantity0`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_QUANTITY}0`}
                                             />
                                         </Form.Item>
                                     </Col>

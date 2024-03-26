@@ -2,6 +2,7 @@ import { Alert, Modal, Typography } from 'antd';
 import styles from './index.module.scss';
 import { CloseOutlined } from '@ant-design/icons';
 import cn from 'classnames';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type TModalAlertProps = {
     isModalOpen: boolean;
@@ -44,13 +45,19 @@ export const ModalAlert = ({
         <Alert
             className={styles.alert}
             type={type}
-            message={<Text data-test-id='modal-error-user-training-title'>{message}</Text>}
+            message={
+                <Text data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_TITLE}>{message}</Text>
+            }
             description={
-                <Text data-test-id='modal-error-user-training-subtitle'>{description}</Text>
+                <Text data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_SUBTITLE}>
+                    {description}
+                </Text>
             }
             icon={icon}
             showIcon
-            closeIcon={<CloseOutlined data-test-id='modal-error-user-training-button-close' />}
+            closeIcon={
+                <CloseOutlined data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_BUTTON_CLOSE} />
+            }
             closable={closable}
             onClose={onCloseHandler}
         />

@@ -7,6 +7,7 @@ import { TTarifListPeriod } from '@shared/types/tarif-list-period.type';
 import { SettingsFeatureItem } from '@components/SettingsFeatureItem';
 import { ProfileSelector } from '@pages/profile/store/profile.selector';
 import { useSelector } from 'react-redux';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type TSettingsDrawerComponentProps = {
     isOpened: boolean;
@@ -97,6 +98,7 @@ export const SettingsDrawerComponent = ({
             placement={windowWidth > 480 ? 'right' : 'bottom'}
             closeIcon={<CloseOutlined />}
             zIndex={9}
+            data-test-id={DataTestEnum.TARIFF_SIDER}
             footer={
                 profile?.tariff ? null : (
                     <Button
@@ -107,6 +109,7 @@ export const SettingsDrawerComponent = ({
                         block
                         onClick={handleChooseAndPayButton}
                         disabled={isChooseAndPayButtonDisabled}
+                        data-test-id={DataTestEnum.TARIFF_SUBMIT}
                     >
                         Выбрать и оплатить
                     </Button>
@@ -142,7 +145,10 @@ export const SettingsDrawerComponent = ({
                                 </Col>
                             </Row>
                             <Form.Item name='tarif-costs' className={styles.formItem}>
-                                <Row justify='space-between'>
+                                <Row
+                                    justify='space-between'
+                                    data-test-id={DataTestEnum.TARIFF_COST}
+                                >
                                     <Col>
                                         <Space
                                             direction='vertical'
@@ -172,7 +178,10 @@ export const SettingsDrawerComponent = ({
                                                                 span={24}
                                                                 className={styles.costCol}
                                                             >
-                                                                {`${period.cost} $`}
+                                                                {period.cost
+                                                                    .toString()
+                                                                    .replace('.', ',')}{' '}
+                                                                $
                                                             </Col>
                                                         </Row>
                                                     ))}
@@ -195,6 +204,7 @@ export const SettingsDrawerComponent = ({
                                                                                     period.days,
                                                                                 )
                                                                             }
+                                                                            data-test-id={`tariff-${period.cost}`}
                                                                         />
                                                                     </Col>
                                                                 </Row>

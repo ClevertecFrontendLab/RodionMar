@@ -8,6 +8,7 @@ import styles from './index.module.scss';
 import { useLocation } from 'react-router-dom';
 import { Button, Result } from 'antd';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const ErrorChangePasswordPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -60,7 +61,7 @@ export const ErrorChangePasswordPage = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={handleRepeatChangePassword}
-                    data-test-id='change-retry-button'
+                    data-test-id={DataTestEnum.CHANGE_RETRY_BUTTON}
                     block
                 >
                     Повторить

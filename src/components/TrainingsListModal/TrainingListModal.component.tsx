@@ -14,6 +14,7 @@ import { CalendarDrawerComponent } from '@components/CalendarDrawer';
 import { TTrainingRequest } from '@shared/types/training-request.type';
 import { DrawerNameEnum } from '@constants/drawer-name.type';
 import moment from 'moment';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Text } = Typography;
 
@@ -193,10 +194,16 @@ export const TrainingListModal = ({
                     setIsModalOpened(false);
                     handleSetStep(1);
                 }}
-                closeIcon={<CloseOutlined data-test-id='modal-create-training-button-close' />}
+                closeIcon={
+                    <CloseOutlined data-test-id={DataTestEnum.MODAL_CREATE_TRAINING_BUTTON_CLOSE} />
+                }
                 closable={closable}
                 mask={false}
-                data-test-id={step === 1 ? 'modal-create-training' : 'modal-create-exercise'}
+                data-test-id={
+                    step === 1
+                        ? DataTestEnum.MODAL_CREATE_TRAINING
+                        : DataTestEnum.MODAL_CREATE_EXERCISE
+                }
                 destroyOnClose
             >
                 <Card
@@ -265,7 +272,9 @@ export const TrainingListModal = ({
                                 setSelectOptions([]);
                             }}
                             backIcon={
-                                <ArrowLeftOutlined data-test-id='modal-exercise-training-button-close' />
+                                <ArrowLeftOutlined
+                                    data-test-id={DataTestEnum.MODAL_EXERCISE_TRAINING_BUTTON_CLOSE}
+                                />
                             }
                             extra={
                                 <Select
@@ -282,7 +291,7 @@ export const TrainingListModal = ({
                                         if (isDrawerOpened) setIsDrawerOpened(false);
                                     }}
                                     defaultValue={selectedOption}
-                                    data-test-id='modal-create-exercise-select'
+                                    data-test-id={DataTestEnum.MODAL_CREATE_EXERCISE_SELECT}
                                 />
                             }
                             className={styles.pageHeader}
@@ -300,7 +309,7 @@ export const TrainingListModal = ({
                                         type='text'
                                         className={styles.badgeButton}
                                         onClick={() => updateTrainingHandler(training)}
-                                        data-test-id={`modal-update-training-edit-button${index}`}
+                                        data-test-id={`${DataTestEnum.MODAL_UPDATE_TRAINING_EDIT_BUTTON}${index}`}
                                         disabled={training.isImplementation}
                                         block
                                     >
@@ -353,7 +362,7 @@ export const TrainingListModal = ({
                                         )}
                                         justify='space-between'
                                         onClick={updateExerciseHandler}
-                                        data-test-id={`modal-update-training-edit-button${id}`}
+                                        data-test-id={`${DataTestEnum.MODAL_UPDATE_TRAINING_EDIT_BUTTON}${id}`}
                                     >
                                         <Col>
                                             <Text className={styles.exercise}>{exercise.name}</Text>
@@ -375,7 +384,7 @@ export const TrainingListModal = ({
                                         )}
                                         justify='space-between'
                                         onClick={updateExerciseHandler}
-                                        data-test-id={`modal-update-training-edit-button${id}`}
+                                        data-test-id={`${DataTestEnum.MODAL_UPDATE_TRAINING_EDIT_BUTTON}${id}`}
                                     >
                                         <Col>
                                             <Text className={styles.exercise}>{exercise.name}</Text>

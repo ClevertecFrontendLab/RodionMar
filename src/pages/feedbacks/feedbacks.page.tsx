@@ -33,6 +33,7 @@ import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
 import { ResultModal } from '@components/ResultModal';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { PageEnum } from '@constants/pages.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const items = [
     {
@@ -127,9 +128,7 @@ export const FeedbacksPage = () => {
 
     return (
         <Layout className={styles.mainLayout}>
-            {fetchPending !== undefined && fetchPending === true && (
-                <LottieLoader data-test-id='loader' />
-            )}
+            {fetchPending !== undefined && fetchPending === true && <LottieLoader />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -186,7 +185,7 @@ export const FeedbacksPage = () => {
                                 size='large'
                                 className={cn(styles.button, styles.primaryButton)}
                                 onClick={() => setIsFeedbackModalOpen(true)}
-                                data-test-id='write-review'
+                                data-test-id={DataTestEnum.WRITE_REVIEW}
                                 block
                             >
                                 Написать отзыв
@@ -198,7 +197,7 @@ export const FeedbacksPage = () => {
                                 size='large'
                                 onClick={handleShowAllFeedbacks}
                                 className={cn(styles.button, styles.textButton)}
-                                data-test-id='all-reviews-button'
+                                data-test-id={DataTestEnum.ALL_REVIEWS_BUTTON}
                                 block
                             >
                                 {showAllFeedbacks ? 'Свернуть все отзывы' : 'Развернуть все отзывы'}
@@ -246,7 +245,7 @@ export const FeedbacksPage = () => {
                                 htmlType='button'
                                 className={cn(styles.button, styles.errorButton)}
                                 onClick={setFeedbackHandler}
-                                data-test-id='write-review-not-saved-modal'
+                                data-test-id={DataTestEnum.WRITE_REVIEW_NOT_SAVED_MODAL}
                                 block
                             >
                                 Написать отзыв

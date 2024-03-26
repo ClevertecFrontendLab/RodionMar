@@ -24,6 +24,7 @@ import { updateProfile } from './store/profile.actions';
 import { fetchTariffList } from '@pages/settings/store/settings.actions';
 import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title } = Typography;
 
@@ -37,6 +38,12 @@ export const ProfilePage = () => {
     const fetchTariffListPending = useSelector(SettingsPendingSelector);
     const fetchProfile = useSelector(ProfileSelector);
     const dispatch = useAppDispatch();
+
+    const handleClickSettingsButton = async () => {
+        const response = await dispatch(fetchTariffList());
+
+        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
+    };
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -78,16 +85,11 @@ export const ProfilePage = () => {
         handleResponseSaveChanges(responseData);
     };
 
-    const handleClickSettingsButton = async () => {
-        const response = await dispatch(fetchTariffList());
-        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
-    };
-
     return (
         <Layout className={styles.mainLayout}>
             {((fetchPending !== undefined && fetchPending === true) ||
                 (fetchTariffListPending !== undefined && fetchTariffListPending === true)) && (
-                <LottieLoader data-test-id='loader' />
+                <LottieLoader />
             )}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
@@ -106,6 +108,7 @@ export const ProfilePage = () => {
                             icon={<SettingOutlined className={styles.settingIconStyles} />}
                             size='large'
                             onClick={handleClickSettingsButton}
+                            data-test-id={DataTestEnum.HEADER_SETTINGS}
                         >
                             <Text className={styles.settingTextStyles}>Настройки</Text>
                         </Button>
@@ -125,6 +128,7 @@ export const ProfilePage = () => {
                                 message='Данные профиля успешно обновлены'
                                 type='success'
                                 onClose={alertCloseHandler}
+                                data-test-id={DataTestEnum.ALERT}
                                 showIcon
                                 closable
                             />
@@ -136,7 +140,7 @@ export const ProfilePage = () => {
                 isModalOpen={isErrorModalOpened}
                 type='error'
                 message='Файл слишком большой'
-                description='ПВыберите файл размером [......] МБ.'
+                description='ПВыберите файл размером до 5 МБ.'
                 icon={<CloseCircleOutlined />}
                 closable={false}
                 onCloseHandler={errorModalCloseHandler}
@@ -147,6 +151,7 @@ export const ProfilePage = () => {
                         htmlType='button'
                         className={styles.button}
                         onClick={errorModalCloseHandler}
+                        data-test-id={DataTestEnum.BIG_FILE_ERROR_CLOSE}
                     >
                         Закрыть
                     </Button>

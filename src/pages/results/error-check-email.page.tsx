@@ -12,6 +12,7 @@ import cn from 'classnames';
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { TCheckEmailResponse } from '@shared/types/check-email-response.type';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const ErrorCheckEmail = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -69,7 +70,7 @@ export const ErrorCheckEmail = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={handleRepeatCheckEmail}
-                    data-test-id='check-back-button'
+                    data-test-id={DataTestEnum.CHECK_BACK_BUTTON}
                 >
                     Назад
                 </Button>

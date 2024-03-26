@@ -8,6 +8,7 @@ import { TCheckEmail } from '@shared/types/check-email.type';
 
 import styles from './index.module.scss';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 type TFinishValues = {
@@ -67,10 +68,10 @@ export const SignInComponent = ({
     ];
 
     const onFinish = (values: TFinishValues) => {
-        if (window.localStorage.getItem('profile')) {
-            window.localStorage.removeItem('profile');
+        if (localStorage.getItem('profile')) {
+            localStorage.removeItem('profile');
         }
-        window.localStorage.setItem('profile', JSON.stringify(values));
+        localStorage.setItem('profile', JSON.stringify(values));
 
         const formValues = {
             email: values.email,
@@ -140,7 +141,7 @@ export const SignInComponent = ({
                         <Input
                             addonBefore={<Text className={styles.fieldAddon}>e-mail:</Text>}
                             className={styles.field}
-                            data-test-id='login-email'
+                            data-test-id={DataTestEnum.LOGIN_EMAIL}
                         />
                     </Form.Item>
 
@@ -152,7 +153,7 @@ export const SignInComponent = ({
                         <Input.Password
                             placeholder='Пароль'
                             className={styles.field}
-                            data-test-id='login-password'
+                            data-test-id={DataTestEnum.LOGIN_PASSWORD}
                         />
                     </Form.Item>
                 </div>
@@ -160,9 +161,7 @@ export const SignInComponent = ({
                 <Space.Compact direction='horizontal' className={styles.spaceContainer}>
                     <Form.Item name='remember' className={styles.fieldWrapper}>
                         <Checkbox
-                            data-test-id='login-remember'
-                            // checked={isCheckboxChecked}
-                            // onClick={() => setIsCheckboxChecked(!isCheckboxChecked)}
+                            data-test-id={DataTestEnum.LOGIN_REMEMBER}
                             checked={isCheckboxChecked}
                             onChange={handleCheckboxChange}
                         >
@@ -173,7 +172,7 @@ export const SignInComponent = ({
                         <Button
                             type='link'
                             onClick={handleClickForgetPassword}
-                            data-test-id='login-forgot-button'
+                            data-test-id={DataTestEnum.LOGIN_FORGOT_BUTTON}
                             className={styles.forgotButton}
                             disabled={isButtonDisabled}
                         >
@@ -189,7 +188,7 @@ export const SignInComponent = ({
                             size='large'
                             htmlType='submit'
                             className={styles.authButton}
-                            data-test-id='login-submit-button'
+                            data-test-id={DataTestEnum.LOGIN_SUBMIT_BUTTON}
                         >
                             Войти
                         </Button>

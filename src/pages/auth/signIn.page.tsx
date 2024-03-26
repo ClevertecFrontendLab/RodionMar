@@ -17,7 +17,7 @@ window.addEventListener('beforeunload', () => {
     const storedProfile = JSON.parse(window.localStorage.getItem('profile') || '{}');
 
     if (storedProfile.remember === false) {
-        window.localStorage.removeItem('token');
+        localStorage.removeItem('token');
     }
 });
 
@@ -28,7 +28,7 @@ export const SignInPage = () => {
 
     const handleResponseSignIn = (response: TSignInResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
-            window.localStorage.setItem('token', response.payload.accessToken);
+            localStorage.setItem('token', response.payload.accessToken);
             history.push(AppRouteEnum.BASIC_MAIN);
             return true;
         } else {

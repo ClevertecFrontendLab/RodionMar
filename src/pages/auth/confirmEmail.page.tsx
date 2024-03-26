@@ -20,7 +20,7 @@ export const ConfirmEmailPage = () => {
         const isDirectAccess = !location.state || !location.state.fromServer;
 
         if (isDirectAccess) {
-            history.push('/auth');
+            history.push(AppRouteEnum.BASIC_AUTH);
         }
     }, [location.state]);
 

@@ -15,7 +15,7 @@ import cn from 'classnames';
 
 import { useEffect, useState } from 'react';
 import { PageEnum } from '@constants/pages.enum';
-import { CheckOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { clearErrors } from './store/settings.slice';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { ProfilePendingSelector, ProfileSelector } from '@pages/profile/store/profile.selector';
@@ -32,6 +32,7 @@ import { createTariff } from './store/settings.actions';
 import { TGetResponse } from '@shared/types/getResponse.type';
 import { ResultModal } from '@components/ResultModal';
 import { TooltipPlacement } from 'antd/es/tooltip';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title } = Typography;
 
@@ -51,18 +52,14 @@ export const SettingsPage = () => {
     const profile = useSelector(ProfileSelector);
     const tarifList = useSelector(TariffListSelector);
 
-    console.log(tarifList);
-
     useEffect(() => {
-        if (tarifList) {
+        if (tarifList.length) {
             setTarifTransferData({
                 _id: tarifList[0]._id,
                 periods: tarifList[0].periods,
             });
         }
     }, [tarifList, setTarifTransferData]);
-
-    console.log(tarifTransferData);
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -76,8 +73,6 @@ export const SettingsPage = () => {
         dispatch(clearErrors());
         history.back();
     };
-
-    console.log(profile);
 
     const switchChangeTrainingsHandler = (value: boolean) => {
         if (profile) {
@@ -153,6 +148,8 @@ export const SettingsPage = () => {
             onChange: switchChangeTrainingsHandler,
             placement: windowWidth > 480 ? 'bottomLeft' : 'topRight',
             overlayClassName: styles.openToCommonTrainings,
+            switchDataTestId: 'tariff-trainings',
+            iconDataTestId: 'tariff-trainings-icon',
         },
         {
             label: 'Уведомления',
@@ -161,6 +158,8 @@ export const SettingsPage = () => {
             onChange: switchChangeNotificationsHandler,
             placement: windowWidth > 480 ? 'bottomLeft' : 'topLeft',
             overlayClassName: styles.getNotifications,
+            switchDataTestId: 'tariff-notifications',
+            iconDataTestId: 'tariff-notifications-icon',
         },
         {
             label: 'Тёмная тема',
@@ -168,6 +167,8 @@ export const SettingsPage = () => {
             disabled: !profile?.tariff,
             placement: windowWidth > 480 ? 'bottomLeft' : 'topLeft',
             overlayClassName: styles.darkMode,
+            switchDataTestId: 'tariff-theme',
+            iconDataTestId: 'tariff-theme-icon',
         },
     ];
 
@@ -181,6 +182,8 @@ export const SettingsPage = () => {
             disabled={item.disabled}
             placement={item.placement as TooltipPlacement}
             overlayClassName={item.overlayClassName}
+            switchDataTestId={item.switchDataTestId}
+            iconDataTestId={item.iconDataTestId}
         />
     ));
 
@@ -197,7 +200,7 @@ export const SettingsPage = () => {
         <Layout className={styles.mainLayout}>
             {((fetchProfilePending !== undefined && fetchProfilePending === true) ||
                 (fetchSettingsPending !== undefined && fetchSettingsPending === true)) && (
-                <LottieLoader data-test-id='loader' />
+                <LottieLoader />
             )}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
@@ -210,6 +213,7 @@ export const SettingsPage = () => {
                     className={styles.pageHeader}
                     title={<Title className={styles.pageTitle}>{PageEnum.SETTINGS}</Title>}
                     onBack={onBackPageHeaderPHandler}
+                    backIcon={<ArrowLeftOutlined data-test-id={DataTestEnum.SETTINGS_BACK} />}
                 />
                 <Content className={styles.contentStyles}>
                     <div className={styles.componentsWrapper}>
@@ -239,55 +243,53 @@ export const SettingsPage = () => {
                                     </Text>
                                 </Card>
                             </Col>
-                            {tarifList.map((tarif) => (
-                                <Col key={tarif._id}>
-                                    <Card
-                                        className={styles.card}
-                                        title={`${tarif.name.toUpperCase()} tarif`}
-                                        extra={
-                                            <Button
-                                                className={styles.cardButton}
-                                                type='link'
-                                                size='small'
-                                                onClick={() =>
-                                                    handleClickButtonDetails(
-                                                        tarif._id,
-                                                        tarif.periods,
-                                                    )
-                                                }
-                                            >
-                                                Подробнее
-                                            </Button>
-                                        }
-                                        cover={
-                                            <img
-                                                alt={`${tarif.name} tarif`}
-                                                src={
-                                                    profile?.tariff &&
-                                                    tarif._id === profile?.tariff.tariffId
-                                                        ? '../../../pro-able.jpg'
-                                                        : '../../../pro-disable.jpg'
-                                                }
-                                            />
-                                        }
-                                    >
-                                        {profile?.tariff &&
-                                        tarif._id === profile?.tariff.tariffId ? (
-                                            <Text className={styles.cardExpiredText}>
-                                                {formatDate(profile.tariff.expired)}
-                                            </Text>
-                                        ) : (
-                                            <Button
-                                                className={styles.cardContentButton}
-                                                type='primary'
-                                                size='large'
-                                            >
-                                                Активировать
-                                            </Button>
-                                        )}
-                                    </Card>
-                                </Col>
-                            ))}
+                            <Col>
+                                <Card
+                                    data-test-id={DataTestEnum.PRO_TARIFF_CARD}
+                                    className={styles.card}
+                                    title='PRO tarif'
+                                    extra={
+                                        <Button
+                                            className={styles.cardButton}
+                                            type='link'
+                                            size='small'
+                                            onClick={() =>
+                                                handleClickButtonDetails(
+                                                    tarifList[0]._id,
+                                                    tarifList[0].periods,
+                                                )
+                                            }
+                                        >
+                                            Подробнее
+                                        </Button>
+                                    }
+                                    cover={
+                                        <img
+                                            alt='tarif'
+                                            src={
+                                                profile?.tariff
+                                                    ? '../../../pro-able.jpg'
+                                                    : '../../../pro-disable.jpg'
+                                            }
+                                        />
+                                    }
+                                >
+                                    {profile?.tariff ? (
+                                        <Text className={styles.cardExpiredText}>
+                                            {formatDate(profile.tariff.expired)}
+                                        </Text>
+                                    ) : (
+                                        <Button
+                                            className={styles.cardContentButton}
+                                            type='primary'
+                                            size='large'
+                                            data-test-id={DataTestEnum.ACTIVATE_TARIFF_BTN}
+                                        >
+                                            Активировать
+                                        </Button>
+                                    )}
+                                </Card>
+                            </Col>
                         </Row>
                         <Row className={styles.switchesWrapper}>{switches}</Row>
                         <Row className={styles.feedbackButtons}>
@@ -323,14 +325,15 @@ export const SettingsPage = () => {
                 isFeedbackModalOpen={isFeedbackModalOpen}
                 handleFeedback={handleFeedback}
             />
-
-            <SettingsDrawerComponent
-                isOpened={isDrawerOpened}
-                setIsOpened={setIsDrawerOpened}
-                chooseAndPayHandler={chooseAndPayHandler}
-                tarifTransferData={tarifTransferData}
-                formatDate={formatDate}
-            />
+            {tarifList ? (
+                <SettingsDrawerComponent
+                    isOpened={isDrawerOpened}
+                    setIsOpened={setIsDrawerOpened}
+                    chooseAndPayHandler={chooseAndPayHandler}
+                    tarifTransferData={tarifTransferData}
+                    formatDate={formatDate}
+                />
+            ) : null}
 
             <ResultModal
                 isModalOpen={isCheckEmailModalOpened}
@@ -350,6 +353,7 @@ export const SettingsPage = () => {
                     </Text>
                 }
                 onCancelHandler={onCancelResultModalHandler}
+                dataTestId={DataTestEnum.TARIFF_MODAL_SUCCESS}
                 closable
             />
         </Layout>

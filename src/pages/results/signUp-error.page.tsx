@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Result, Button } from 'antd';
 import { TSignUpResponse } from '@shared/types/sign-up-response.type copy';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const SignUpError = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -78,7 +79,7 @@ export const SignUpError = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={handleRepeatRegistration}
-                    data-test-id='registration-retry-button'
+                    data-test-id={DataTestEnum.REGISTRATION_RETRY_BUTTON}
                     block
                 >
                     Повторить

@@ -16,7 +16,7 @@ import { SettingsPage } from '@pages/settings';
 const MainPage = React.lazy(() => import('./pages/main'));
 
 const isAllowed = () => {
-    const token = window.localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
         return true;
     }
@@ -42,7 +42,7 @@ const PublicRoute = ({ element: Element }: { element: React.FC }) => {
 };
 
 const DefaultRoute = () => {
-    const token = window.localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
         return <Navigate to={AppRouteEnum.NOT_FOUND} />;
     } else {

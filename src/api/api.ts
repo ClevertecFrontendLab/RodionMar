@@ -25,7 +25,7 @@ $api.interceptors.request.use(
 $api.interceptors.response.use(
     async (response) => response,
     (error) => {
-        if (error.response.status === 403) {
+        if (error.response.status === 403 && window.location.pathname !== AppRouteEnum.PROFILE) {
             window.location.replace(AppRouteEnum.BASIC_AUTH);
         }
         return Promise.reject(error);

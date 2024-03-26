@@ -21,7 +21,7 @@ export const ConfirmEmailComponent = ({
 }) => {
     const [verificationValue, setVerificationValue] = useState('');
 
-    const confirmEmailData = window.localStorage.getItem('checkEmailData') || '';
+    const confirmEmailData = localStorage.getItem('checkEmailData') || '';
 
     const onCompleteHandler = (value: string) => {
         const data = {

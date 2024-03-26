@@ -19,6 +19,7 @@ import { logout } from '@pages/auth/store/auth.slice';
 
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -69,7 +70,7 @@ export const SiderComponent = ({
                     }
                     className={cn(styles.commonSwitcherStyles, styles.switcherMobileStyles)}
                     onClick={() => toggleSidebar()}
-                    data-test-id='sider-switch-mobile'
+                    data-test-id={DataTestEnum.SIDER_SWITCH_MOBILE}
                 />
             );
         } else if (windowWidth > 705) {
@@ -83,7 +84,7 @@ export const SiderComponent = ({
                     }
                     className={cn(styles.commonSwitcherStyles, styles.switcherStyles)}
                     onClick={() => toggleSidebar()}
-                    data-test-id='sider-switch'
+                    data-test-id={DataTestEnum.SIDER_SWITCH}
                 />
             );
         }
@@ -124,7 +125,7 @@ export const SiderComponent = ({
 
     const logoutHandler = () => {
         dispatch(logout());
-        window.localStorage.removeItem('token');
+        localStorage.removeItem('token');
         history.push(AppRouteEnum.BASIC);
     };
 

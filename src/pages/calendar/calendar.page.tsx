@@ -37,6 +37,8 @@ import { TrainingListModal } from '@components/TrainingsListModal';
 import { TTrainingResponse } from '@shared/types/training-response.type';
 import { TTrainingRequest } from '@shared/types/training-request.type';
 import { DateFormatEnum } from '../../constants/date-formats.enum';
+import { fetchTariffList } from '@pages/settings/store/settings.actions';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const CalendarPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(false);
@@ -269,11 +271,14 @@ export const CalendarPage = () => {
         setIsSaveDataErrorModalOpen(false);
     };
 
+    const handleClickSettingsButton = async () => {
+        const response = await dispatch(fetchTariffList());
+        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
+    };
+
     return (
         <Layout className={styles.mainLayout}>
-            {fetchPending !== undefined && fetchPending === true && (
-                <LottieLoader data-test-id='loader' />
-            )}
+            {fetchPending !== undefined && fetchPending === true && <LottieLoader />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -302,6 +307,7 @@ export const CalendarPage = () => {
                                     type='text'
                                     icon={<SettingOutlined className={styles.settingIconStyles} />}
                                     size='large'
+                                    onClick={handleClickSettingsButton}
                                 >
                                     <Text className={styles.settingTextStyles}>Настройки</Text>
                                 </Button>
@@ -321,7 +327,7 @@ export const CalendarPage = () => {
                 </Content>
             </Layout>
             <ModalAlert
-                dataTestId='modal-no-review'
+                dataTestId={DataTestEnum.MODAL_NO_REVIEW}
                 isModalOpen={isServerErrorModalOpen}
                 type='info'
                 message='При открытии данных произошла ошибка'
@@ -330,7 +336,7 @@ export const CalendarPage = () => {
                 onCloseHandler={serverErrorModalCloseHandler}
                 button={
                     <Button
-                        data-test-id='modal-error-user-training-button'
+                        data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_BUTTON}
                         type='primary'
                         size='large'
                         htmlType='button'
@@ -351,7 +357,7 @@ export const CalendarPage = () => {
                 onCloseHandler={saveDataErrorModalHandler}
                 button={
                     <Button
-                        data-test-id='modal-error-user-training-button'
+                        data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_BUTTON}
                         type='primary'
                         size='large'
                         htmlType='button'

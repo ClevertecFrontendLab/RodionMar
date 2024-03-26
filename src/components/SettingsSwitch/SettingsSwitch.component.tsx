@@ -14,6 +14,8 @@ export const SettingsSwitchComponent = ({
     disabled,
     overlayClassName,
     placement,
+    switchDataTestId,
+    iconDataTestId,
 }: {
     label: string;
     tooltip?: string;
@@ -22,6 +24,8 @@ export const SettingsSwitchComponent = ({
     disabled?: boolean;
     overlayClassName?: string;
     placement?: TooltipPlacement;
+    switchDataTestId: string;
+    iconDataTestId: string;
 }) => {
     return (
         <Row className={styles.switchWrapper} justify='space-between' align='middle' wrap={false}>
@@ -40,7 +44,10 @@ export const SettingsSwitchComponent = ({
                         title={tooltip}
                         arrowPointAtCenter
                     >
-                        <ExclamationCircleOutlined className={styles.switchTextColIcon} />
+                        <ExclamationCircleOutlined
+                            className={styles.switchTextColIcon}
+                            data-test-id={iconDataTestId}
+                        />
                     </Tooltip>
                 )}
             </Col>
@@ -50,6 +57,7 @@ export const SettingsSwitchComponent = ({
                     defaultChecked={defaultChecked}
                     onChange={onChange}
                     disabled={disabled}
+                    data-test-id={switchDataTestId}
                 />
             </Col>
         </Row>

@@ -25,6 +25,7 @@ import { fetchProfile } from '@pages/profile/store/profile.actions';
 import { ProfilePendingSelector } from '@pages/profile/store/profile.selector';
 import { fetchTariffList } from '@pages/settings/store/settings.actions';
 import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -102,7 +103,11 @@ const MainPage = () => {
     const handleProfile = () => history.push(AppRouteEnum.PROFILE, { fromServer: true });
 
     const cards: TActionCard[] = [
-        { title: 'Расписать тренировки', buttonText: 'Тренировки', buttonIcon: 'heart' },
+        {
+            title: 'Расписать тренировки',
+            buttonText: 'Тренировки',
+            buttonIcon: 'heart',
+        },
         {
             title: 'Назначить календарь',
             buttonText: 'Календарь',
@@ -115,6 +120,7 @@ const MainPage = () => {
             buttonText: 'Профиль',
             buttonIcon: 'profile',
             handleRedirect: handleProfile,
+            dataTestId: 'menu-button-profile',
         },
     ];
 
@@ -133,7 +139,7 @@ const MainPage = () => {
             {(fetchFeedbacksPending ||
                 fetchTrainingPending ||
                 fetchProfilePending ||
-                fetchTariffListPending) && <LottieLoader data-test-id='loader' />}
+                fetchTariffListPending) && <LottieLoader />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -188,7 +194,7 @@ const MainPage = () => {
                 <FooterComponent handleResponseFeedbacks={handleFeedbacks} />
             </Layout>
             <ResultModal
-                dataTestId='modal-no-review'
+                dataTestId={DataTestEnum.MODAL_NO_REVIEW}
                 isModalOpen={isServerErrorModalOpen}
                 status='500'
                 title='Что-то пошло не так'

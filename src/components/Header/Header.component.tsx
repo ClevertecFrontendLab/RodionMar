@@ -4,6 +4,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import { PageEnum } from '@constants/pages.enum';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type THeaderProps = {
     isSiderOpened: boolean;
@@ -54,6 +55,7 @@ export const HeaderComponent = ({
                     type='text'
                     icon={<SettingOutlined className={styles.settingIconStyles} />}
                     onClick={handleClickSettingsButton}
+                    data-test-id={DataTestEnum.HEADER_SETTINGS}
                 >
                     <Text className={styles.settingTextStyles}>Настройки</Text>
                 </Button>

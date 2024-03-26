@@ -3,6 +3,7 @@ import { Button, Input, Form, Space, Typography } from 'antd';
 import styles from './index.module.scss';
 
 import { TChangePassword } from '@shared/types/change-password.type';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title } = Typography;
 
@@ -53,7 +54,7 @@ export const ChangePasswordComponent = ({
                             <Input.Password
                                 placeholder='Пароль'
                                 className={styles.field}
-                                data-test-id='change-password'
+                                data-test-id={DataTestEnum.CHANGE_PASSWORD}
                             />
                         </Form.Item>
 
@@ -74,7 +75,7 @@ export const ChangePasswordComponent = ({
                             <Input.Password
                                 placeholder='Повторите пароль'
                                 className={styles.field}
-                                data-test-id='change-confirm-password'
+                                data-test-id={DataTestEnum.CHANGE_CONFIRM_PASSWORD}
                             />
                         </Form.Item>
                     </Space.Compact>
@@ -85,7 +86,7 @@ export const ChangePasswordComponent = ({
                             size='large'
                             htmlType='submit'
                             className={styles.button}
-                            data-test-id='change-submit-button'
+                            data-test-id={DataTestEnum.CHANGE_SUBMIT_BUTTON}
                             block
                         >
                             Сохранить

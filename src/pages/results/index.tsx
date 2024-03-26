@@ -11,9 +11,7 @@ export const ResultPage = () => {
         <div className={styles.wrapper}>
             <div className={styles.blur}>
                 <div className={styles.contentWrapper}>
-                    {fetchPending !== undefined && fetchPending === true && (
-                        <LottieLoader data-test-id='loader' />
-                    )}
+                    {fetchPending !== undefined && fetchPending === true && <LottieLoader />}
                     <ResultRoutes />
                 </div>
             </div>

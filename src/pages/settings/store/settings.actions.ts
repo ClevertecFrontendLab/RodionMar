@@ -10,7 +10,6 @@ export const fetchTariffList = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await $api.get(SettingsEndpointEnum.FETCH_TARIFF_LIST);
-            console.log('fetchTariffList', response);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {

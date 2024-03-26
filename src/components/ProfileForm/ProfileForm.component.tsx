@@ -14,6 +14,8 @@ import cn from 'classnames';
 import { DateFormatEnum } from '@constants/date-formats.enum';
 import { TProfileRequest } from '@shared/types/profile-request.type';
 import moment from 'moment';
+import React from 'react';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type TFinishValues = {
     confirmPassword?: string;
@@ -48,7 +50,7 @@ export const ProfileFormComponent = ({
     windowWidth: number;
 }) => {
     const [form] = Form.useForm();
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [uploadButtonText, setUploadButtonText] = useState<string>('Загрузить фото профиля');
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [passwordChanged, setPasswordChanged] = useState<boolean>(false);
@@ -92,11 +94,14 @@ export const ProfileFormComponent = ({
                       (values.imgSrc.file.response ? values.imgSrc.file.response.url : '')
                     : values.imgSrc,
         };
-
+        form.resetFields(['password', 'confirmPassword']);
+        setPasswordChanged(false);
         handleSaveChanges(finishValues);
+        setIsButtonDisabled(true);
     };
 
-    const handleValidate = () => {
+    const handleFieldaChange = () => {
+        setIsButtonDisabled(false);
         form.validateFields().catch(() => {
             const emailErrors = form.getFieldError('email');
             setIsButtonDisabled(!!emailErrors.length);
@@ -116,6 +121,7 @@ export const ProfileFormComponent = ({
             case FileStatusRnum.DONE:
                 setFileList(info.fileList);
                 setUploadButtonText('Загрузить фото профиля');
+                setIsButtonDisabled(false);
                 break;
             case FileStatusRnum.ERROR:
                 setFileList([
@@ -133,7 +139,7 @@ export const ProfileFormComponent = ({
     };
 
     const uploadButton = (
-        <div>
+        <div data-test-id={DataTestEnum.PROFILE_AVATAR}>
             <PlusOutlined />
             <div className={styles.uploadButtonText}>{uploadButtonText}</div>
         </div>
@@ -154,7 +160,7 @@ export const ProfileFormComponent = ({
         <Form
             name='file'
             form={form}
-            onValuesChange={handleValidate}
+            onValuesChange={handleFieldaChange}
             autoComplete='off'
             className={styles.form}
             onFinish={onFinish}
@@ -192,6 +198,11 @@ export const ProfileFormComponent = ({
                             onChange={handleChange}
                             maxCount={1}
                             fileList={fileList}
+                            itemRender={(originNode) => {
+                                return React.cloneElement(originNode, {
+                                    'data-test-id': 'profile-avatar',
+                                });
+                            }}
                         >
                             {fileList.length > 0
                                 ? null
@@ -210,7 +221,11 @@ export const ProfileFormComponent = ({
                                 initialValue={profile ? profile.firstName : null}
                                 className={styles.fieldWrapper}
                             >
-                                <Input placeholder='Имя' className={styles.field} />
+                                <Input
+                                    placeholder='Имя'
+                                    className={styles.field}
+                                    data-test-id={DataTestEnum.PROFILE_NAME}
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
@@ -219,19 +234,20 @@ export const ProfileFormComponent = ({
                                 initialValue={profile ? profile.lastName : null}
                                 className={styles.fieldWrapper}
                             >
-                                <Input placeholder='Фамилия' className={styles.field} />
+                                <Input
+                                    placeholder='Фамилия'
+                                    className={styles.field}
+                                    data-test-id={DataTestEnum.PROFILE_SURNAME}
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
-                            <Form.Item
-                                name='birthday'
-                                initialValue={profile ? moment(profile.birthday) : null}
-                                className={styles.fieldWrapper}
-                            >
+                            <Form.Item name='birthday' className={styles.fieldWrapper}>
                                 <DatePicker
                                     placeholder='Дата рождения'
                                     style={{ width: '100%' }}
                                     format={DateFormatEnum.DATE_PICKER}
+                                    data-test-id={DataTestEnum.PROFILE_BIRTHDAY}
                                 />
                             </Form.Item>
                         </Col>
@@ -252,7 +268,7 @@ export const ProfileFormComponent = ({
                         <Input
                             addonBefore={<Text className={styles.fieldAddon}>e-mail:</Text>}
                             className={styles.field}
-                            data-test-id='registration-email'
+                            data-test-id={DataTestEnum.PROFILE_EMAIL}
                         />
                     </Form.Item>
                 </Col>
@@ -266,6 +282,7 @@ export const ProfileFormComponent = ({
                             placeholder='Пароль'
                             className={styles.field}
                             onChange={handlePasswordChange}
+                            data-test-id={DataTestEnum.PROFILE_PASSWORD}
                         />
                     </Form.Item>
                 </Col>
@@ -283,7 +300,11 @@ export const ProfileFormComponent = ({
                             }),
                         ]}
                     >
-                        <Input.Password placeholder='Повторите пароль' className={styles.field} />
+                        <Input.Password
+                            placeholder='Повторите пароль'
+                            className={styles.field}
+                            data-test-id={DataTestEnum.PROFILE_REPEAT_PASSWORD}
+                        />
                     </Form.Item>
                 </Col>
             </Row>
@@ -294,6 +315,7 @@ export const ProfileFormComponent = ({
                     htmlType='submit'
                     className={styles.saveButton}
                     disabled={isButtonDisabled}
+                    data-test-id={DataTestEnum.PROFILE_SUBMIT}
                 >
                     Сохранить изменения
                 </Button>

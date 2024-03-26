@@ -7,6 +7,7 @@ import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { TCreateFeedback } from '@shared/types/create-feedback.type';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type TFeedbackModalProps = {
     setIsFeedbackModalOpen: (value: boolean) => void;
@@ -70,7 +71,7 @@ export const FeedbackModal = ({
                     className={styles.button}
                     disabled={isButtonDisabled}
                     onClick={() => onFinish(form.getFieldsValue())}
-                    data-test-id='new-review-submit-button'
+                    data-test-id={DataTestEnum.NEW_REVIEW_SUBMIT_BUTTON}
                 >
                     Опубликовать
                 </Button>,

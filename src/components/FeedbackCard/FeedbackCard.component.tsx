@@ -33,6 +33,9 @@ export const FeedbackCard = ({ fullName, imageSrc, message, rating, createdAt }:
                         src={imageSrc ? imageSrc : '../../../Avatar.svg'}
                         alt='avatar'
                         preview={false}
+                        width={42}
+                        height={42}
+                        className={styles.avatar}
                     />
                     <Text className={styles.fullname}>{fullName || 'Пользователь'}</Text>
                 </Col>
