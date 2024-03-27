@@ -57,11 +57,16 @@
 
 div[class*='ant-modal-root'] {
     .saveChangeErrorModal {
-        max-width: 416px;
-        box-sizing: content-box;
-
+        max-width: 448px;
+        padding: 16px;
         div[class*='ant-alert-message'] {
-            padding-right: 0;
+            padding: 0;
+        }
+        div[class*='ant-alert-with-description'] {
+            padding: 32px 32px 24px;
+        }
+        div[class*='ant-modal-footer'] {
+            padding: 0 32px 24px;
         }
     }
 }

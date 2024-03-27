@@ -17,7 +17,6 @@ import moment from 'moment';
 import React from 'react';
 import { DataTestEnum } from '@constants/data-tests.enum';
 import { emailRules } from './input-rules/email-rules';
-import { additionalPasswordRules } from './input-rules/additional-password-rules';
 
 type FinishValues = {
     email: string;
@@ -76,7 +75,9 @@ export const ProfileFormComponent = ({
     const passwordRules = [
         {
             required: passwordChanged,
-            ...additionalPasswordRules
+            min: 8,
+            pattern: /^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*\d).{8,}$/,
+            message: '',
         },
     ];
 
@@ -199,7 +200,7 @@ export const ProfileFormComponent = ({
                             fileList={fileList}
                             itemRender={(originNode) => {
                                 return React.cloneElement(originNode, {
-                                    'data-test-id': 'profile-avatar',
+                                    'data-test-id': DataTestEnum.PROFILE_AVATAR,
                                 });
                             }}
                         >

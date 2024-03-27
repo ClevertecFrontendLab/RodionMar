@@ -41,6 +41,7 @@ export const ModalAlert = ({
         closable={closable}
         zIndex={11}
         data-test-id={dataTestId}
+        width={'100%'}
     >
         <Alert
             className={styles.alert}
