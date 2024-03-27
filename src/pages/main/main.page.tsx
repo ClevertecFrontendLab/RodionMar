@@ -26,6 +26,7 @@ import { ProfilePendingSelector } from '@pages/profile/store/profile.selector';
 import { fetchTariffList } from '@pages/settings/store/settings.actions';
 import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
 import { DataTestEnum } from '@constants/data-tests.enum';
+import { ActionIcon } from '@constants/action-card.enum';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -106,19 +107,19 @@ const MainPage = () => {
         {
             title: 'Расписать тренировки',
             buttonText: 'Тренировки',
-            buttonIcon: 'heart',
+            buttonIcon: ActionIcon.HEART,
         },
         {
             title: 'Назначить календарь',
             buttonText: 'Календарь',
-            buttonIcon: 'calendar',
+            buttonIcon: ActionIcon.CALENDAR,
             handleRedirect: handleTrainings,
             dataTestId: 'menu-button-calendar',
         },
         {
             title: 'Заполнить профиль',
             buttonText: 'Профиль',
-            buttonIcon: 'profile',
+            buttonIcon: ActionIcon.PROFILE,
             handleRedirect: handleProfile,
             dataTestId: 'menu-button-profile',
         },

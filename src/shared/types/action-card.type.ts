@@ -1,7 +1,9 @@
+import { ActionIcon } from "@constants/action-card.enum";
+
 export type ActionCard = {
     title: string;
     buttonText: string;
-    buttonIcon: 'heart' | 'calendar' | 'profile';
+    buttonIcon: ActionIcon.HEART | ActionIcon.CALENDAR | ActionIcon.PROFILE;
     handleRedirect?: (() => Promise<void>) | (() => void);
     dataTestId?: string;
 };

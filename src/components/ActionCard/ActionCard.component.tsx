@@ -4,6 +4,7 @@ import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons'
 
 import styles from './index.module.scss';
 import { ActionCard } from '@shared/types/action-card.type';
+import { ActionIcon } from '@constants/action-card.enum';
 
 const { Text } = Typography;
 
@@ -16,11 +17,11 @@ export const ActionCardComponent = ({
 }: ActionCard) => {
     const renderButtonIcon = () => {
         switch (buttonIcon) {
-            case 'heart':
+            case ActionIcon.HEART:
                 return <HeartFilled className={styles.iconStyles} />;
-            case 'calendar':
+            case ActionIcon.CALENDAR:
                 return <CalendarTwoTone className={styles.iconStyles} />;
-            case 'profile':
+            case ActionIcon.PROFILE:
                 return <IdcardOutlined className={styles.iconStyles} />;
             default:
                 return null;

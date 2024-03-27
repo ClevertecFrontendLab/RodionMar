@@ -8,12 +8,12 @@ import styles from './index.module.scss';
 import { TrainingNameEnum } from '@constants/training-name.enum';
 
 const colors: Record<TrainingName, string> = {
-    Ноги: '#ff4d4f',
-    Силовая: '#FADB14',
-    Руки: '#13C2C2',
-    Грудь: '#52C41A',
-    Спина: '#FA8C16',
-    Кардио: '#EB2F96',
+    [TrainingNameEnum.LEGS]: '#ff4d4f',
+    [TrainingNameEnum.STRENGTH]: '#FADB14',
+    [TrainingNameEnum.ARMS]: '#13C2C2',
+    [TrainingNameEnum.CHEST]: '#52C41A',
+    [TrainingNameEnum.BACK]: '#FA8C16',
+    [TrainingNameEnum.CARDIO]: '#EB2F96',
 };
 
 type CustomBadgeProps = {
