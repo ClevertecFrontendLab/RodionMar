@@ -33,6 +33,8 @@ type SiderProps = {
 const { Sider } = Layout;
 const { Text } = Typography;
 
+const SIDER_BREAKPOINT = 705; 
+
 export const SiderComponent = ({
     isSiderOpened,
     setIsSidebarOpened,
@@ -58,7 +60,7 @@ export const SiderComponent = ({
     };
 
     const renderSwitcherButton = () => {
-        if (windowWidth < 705) {
+        if (windowWidth < SIDER_BREAKPOINT) {
             return (
                 <Button
                     icon={
@@ -72,7 +74,7 @@ export const SiderComponent = ({
                     data-test-id={DataTestEnum.SIDER_SWITCH_MOBILE}
                 />
             );
-        } else if (windowWidth > 705) {
+        } else if (windowWidth > SIDER_BREAKPOINT) {
             return (
                 <Button
                     icon={
@@ -128,7 +130,7 @@ export const SiderComponent = ({
         history.push(AppRouteEnum.BASIC);
     };
 
-    const sidebarWidth = windowWidth < 705 ? 106 : isSiderOpened ? 208 : 64;
+    const sidebarWidth = windowWidth < SIDER_BREAKPOINT ? 106 : isSiderOpened ? 208 : 64;
 
     return (
         <Sider
@@ -139,7 +141,7 @@ export const SiderComponent = ({
             }
             width={sidebarWidth}
             theme='light'
-            collapsedWidth={windowWidth > 705 ? 64 : 0}
+            collapsedWidth={windowWidth > SIDER_BREAKPOINT ? 64 : 0}
             collapsed={!isSiderOpened}
         >
             <div className={styles.layoutWrapperStyles}>
