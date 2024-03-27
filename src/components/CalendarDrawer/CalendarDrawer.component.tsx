@@ -18,14 +18,16 @@ import { TExercise } from '@shared/types/exersice.type';
 import cn from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { TTrainingRequest } from '@shared/types/training-request.type';
-import { DrawerNameEnum } from '@constants/drawer-name.type';
+import { DrawerName } from '@constants/drawer-names.enum';
 import { ExerciseEnum } from './exercise.enum';
 import moment from 'moment';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
+type DrawerType = DrawerName.CREATE | DrawerName.UPDATE | DrawerName.VIEW;
+
 type TCalendarDrawerComponentProps = {
-    type: DrawerNameEnum;
+    type: DrawerType;
     isOpened: boolean;
     setIsOpened: (value: boolean) => void;
     title: React.ReactNode;
@@ -150,7 +152,7 @@ export const CalendarDrawerComponent = ({
         const exerciseObjects = createExerciseObjects(formValues);
         const isPast = isPastDate(date);
 
-        if (exerciseObjects && type !== DrawerNameEnum.VIEW) {
+        if (exerciseObjects && type !== DrawerName.VIEW) {
             if (requestTrainingObject) {
                 const updatedExercises = requestTrainingObject.exercises.filter((_, index) => {
                     return (
@@ -319,9 +321,9 @@ export const CalendarDrawerComponent = ({
                 <CloseOutlined data-test-id={DataTestEnum.MODAL_DRAWER_RIGHT_BUTTON_CLOSE} />
             }
             footer={
-                type !== DrawerNameEnum.VIEW ? (
+                type !== DrawerName.VIEW ? (
                     <Row>
-                        <Col span={type === DrawerNameEnum.UPDATE ? 12 : 24}>
+                        <Col span={type === DrawerName.UPDATE ? 12 : 24}>
                             <Button
                                 type='link'
                                 size='large'
@@ -334,7 +336,7 @@ export const CalendarDrawerComponent = ({
                                 Добавить ещё
                             </Button>
                         </Col>
-                        {type === DrawerNameEnum.UPDATE ? (
+                        {type === DrawerName.UPDATE ? (
                             <Col span={12}>
                                 <Button
                                     type='text'
@@ -372,7 +374,7 @@ export const CalendarDrawerComponent = ({
                                     placeholder='Упражнение'
                                     size='small'
                                     addonAfter={
-                                        type === DrawerNameEnum.UPDATE ? (
+                                        type === DrawerName.UPDATE ? (
                                             <Checkbox
                                                 checked={selectedExercises.includes(index)}
                                                 onChange={(event) =>
@@ -467,7 +469,7 @@ export const CalendarDrawerComponent = ({
                                 placeholder='Упражнение'
                                 size='small'
                                 addonAfter={
-                                    type === DrawerNameEnum.UPDATE ? (
+                                    type === DrawerName.UPDATE ? (
                                         <Checkbox
                                             checked={!!selectedExercises.length}
                                             onChange={(e) => {

@@ -12,7 +12,7 @@ import { TTrainingCatalogItem } from '@shared/types/training-catalog-item.type';
 import { TTrainingName } from '@shared/types/training-name.type';
 import { CalendarDrawerComponent } from '@components/CalendarDrawer';
 import { TTrainingRequest } from '@shared/types/training-request.type';
-import { DrawerNameEnum } from '@constants/drawer-name.type';
+import { DrawerName } from '@constants/drawer-names.enum';
 import moment from 'moment';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
@@ -57,7 +57,7 @@ export const TrainingListModal = ({
     const [selectedOption, setSelectedOption] = useState<TTrainingName | null>(null);
     const [selectOptions, setSelectOptions] = useState<TSelectOption[]>([]);
     const [isDrawerOpened, setIsDrawerOpened] = useState(false);
-    const [drawerType, setDrawerType] = useState<DrawerNameEnum>(DrawerNameEnum.CREATE);
+    const [drawerType, setDrawerType] = useState<DrawerName>(DrawerName.CREATE);
     const [requestTrainingObject, setRequestTrainingObject] = useState<TTrainingRequest | null>(
         null,
     );
@@ -136,7 +136,7 @@ export const TrainingListModal = ({
 
     const addExerciseHandler = () => {
         setIsDrawerOpened(true);
-        setDrawerType(DrawerNameEnum.CREATE);
+        setDrawerType(DrawerName.CREATE);
     };
 
     const saveHandler = () => {
@@ -152,7 +152,7 @@ export const TrainingListModal = ({
         if (training.isImplementation) {
             setSelectedOption(training.name);
             setUpdateTraining(training);
-            setDrawerType(DrawerNameEnum.VIEW);
+            setDrawerType(DrawerName.VIEW);
             setIsDrawerOpened(true);
             handleSelectOptions(null, false);
             return;
@@ -176,7 +176,7 @@ export const TrainingListModal = ({
 
     const updateExerciseHandler = () => {
         setIsDrawerOpened(true);
-        setDrawerType(DrawerNameEnum.UPDATE);
+        setDrawerType(DrawerName.UPDATE);
     };
 
     return (
@@ -408,7 +408,7 @@ export const TrainingListModal = ({
             </Modal>
             {selectedOption ? (
                 <>
-                    {[DrawerNameEnum.CREATE, DrawerNameEnum.UPDATE, DrawerNameEnum.VIEW].map(
+                    {[DrawerName.CREATE, DrawerName.UPDATE, DrawerName.VIEW].map(
                         (mapedDrawerType, index) => (
                             <CalendarDrawerComponent
                                 key={index}
@@ -417,21 +417,21 @@ export const TrainingListModal = ({
                                 setIsOpened={setIsDrawerOpened}
                                 title={
                                     <Row
-                                        gutter={drawerType === DrawerNameEnum.VIEW ? 0 : 12}
+                                        gutter={drawerType === DrawerName.VIEW ? 0 : 12}
                                         align='middle'
                                     >
                                         <Col>
-                                            {drawerType === DrawerNameEnum.CREATE ? (
+                                            {drawerType === DrawerName.CREATE ? (
                                                 <PlusOutlined />
-                                            ) : drawerType === DrawerNameEnum.UPDATE ? (
+                                            ) : drawerType === DrawerName.UPDATE ? (
                                                 <EditOutlined />
                                             ) : null}
                                         </Col>
                                         <Col>
                                             <Text className={styles.drawerTitle}>
-                                                {drawerType === DrawerNameEnum.CREATE
+                                                {drawerType === DrawerName.CREATE
                                                     ? 'Добавление упражнений'
-                                                    : drawerType === DrawerNameEnum.UPDATE
+                                                    : drawerType === DrawerName.UPDATE
                                                     ? 'Редактирование'
                                                     : 'Просмотр упражнений'}
                                             </Text>
