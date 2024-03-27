@@ -3,17 +3,17 @@ import { Card, Button, Typography } from 'antd';
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 
 import styles from './index.module.scss';
-import { TActionCard } from '@shared/types/action-card.type';
+import { ActionCard } from '@shared/types/action-card.type';
 
 const { Text } = Typography;
 
-export const ActionCard = ({
+export const ActionCardComponent = ({
     title,
     buttonText,
     buttonIcon,
     handleRedirect,
     dataTestId,
-}: TActionCard) => {
+}: ActionCard) => {
     const renderButtonIcon = () => {
         switch (buttonIcon) {
             case 'heart':

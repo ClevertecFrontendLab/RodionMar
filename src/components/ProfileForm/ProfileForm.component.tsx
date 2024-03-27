@@ -38,17 +38,19 @@ const { Text } = Typography;
 
 const IMAGES_URL = 'https://training-api.clevertec.ru';
 
+type ProfileFormProps = {
+    profile: ProfileResponse | null;
+    setIsErrorModalOpened: (value: boolean) => void;
+    handleSaveChanges: (value: ProfileRequest) => void;
+    windowWidth: number;
+}
+
 export const ProfileFormComponent = ({
     profile,
     setIsErrorModalOpened,
     handleSaveChanges,
     windowWidth,
-}: {
-    profile: ProfileResponse | null;
-    setIsErrorModalOpened: (value: boolean) => void;
-    handleSaveChanges: (value: ProfileRequest) => void;
-    windowWidth: number;
-}) => {
+}: ProfileFormProps) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [uploadButtonText, setUploadButtonText] = useState<string>('Загрузить фото профиля');

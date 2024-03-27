@@ -1,18 +1,17 @@
 import { useLocation } from 'react-router-dom';
 
 import { fetchConfirmEmail } from '@pages/auth/store/auth.actions';
-import { AppDispatch, history } from '@redux/configure-store';
-import { useDispatch } from 'react-redux';
+import { history, useAppDispatch } from '@redux/configure-store';
 
 import { ConfirmEmailComponent } from '@components/ConfirmEmail';
 
-import { TConfirmEmail } from '@shared/types/confirm-email.type';
+import { ConfirmEmail } from '@shared/types/confirm-email.type';
 import { useEffect } from 'react';
-import { TConfirmEmailResponse } from './types/confirmEmailResponse.type';
+import { ConfirmEmailResponse } from './types/confirmEmailResponse.type';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ConfirmEmailPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const location = useLocation();
 
@@ -24,7 +23,7 @@ export const ConfirmEmailPage = () => {
         }
     }, [location.state]);
 
-    const handleResponse = (response: TConfirmEmailResponse) => {
+    const handleResponse = (response: ConfirmEmailResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             if (window.localStorage.getItem('status')) {
                 window.localStorage.removeItem('status');
@@ -45,10 +44,10 @@ export const ConfirmEmailPage = () => {
         }
     };
 
-    const handleConfirmEmail = async (data: TConfirmEmail) => {
+    const handleConfirmEmail = async (data: ConfirmEmail) => {
         const response = await dispatch(fetchConfirmEmail(data));
 
-        const responseData: TConfirmEmailResponse = {
+        const responseData: ConfirmEmailResponse = {
             meta: response.meta,
             payload: response.payload,
         };

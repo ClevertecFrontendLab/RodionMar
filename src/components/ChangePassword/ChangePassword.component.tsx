@@ -2,16 +2,18 @@ import { Button, Input, Form, Space, Typography } from 'antd';
 
 import styles from './index.module.scss';
 
-import { TChangePassword } from '@shared/types/change-password.type';
+import { ChangePassword } from '@shared/types/change-password.type';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title } = Typography;
 
+type ChangePasswordProps = {
+    handleChangePassword: (data: ChangePassword) => void;
+}
+
 export const ChangePasswordComponent = ({
     handleChangePassword,
-}: {
-    handleChangePassword: (data: TChangePassword) => void;
-}) => {
+}: ChangePasswordProps) => {
     const [form] = Form.useForm();
 
     const passwordRules = [
@@ -23,7 +25,7 @@ export const ChangePasswordComponent = ({
         },
     ];
 
-    const onFinish = (values: TChangePassword) => {
+    const onFinish = (values: ChangePassword) => {
         localStorage.setItem('changePasswordData', JSON.stringify(values));
 
         handleChangePassword(values);

@@ -18,8 +18,8 @@ import { CloseCircleOutlined, SettingOutlined } from '@ant-design/icons';
 import { ProfileFormComponent } from '@components/ProfileForm';
 import { ModalAlert } from '@components/ModalAlert';
 import { clearErrors } from './store/profile.slice';
-import { TProfileRequest } from '@shared/types/profile-request.type';
-import { TGetResponse } from '@shared/types/getResponse.type';
+import { ProfileRequest } from '@shared/types/profile-request.type';
+import { GetResponse } from '@shared/types/getResponse.type';
 import { updateProfile } from './store/profile.actions';
 import { fetchTariffList } from '@pages/settings/store/settings.actions';
 import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
@@ -67,7 +67,7 @@ export const ProfilePage = () => {
         setIsAlertOpened(false);
     };
 
-    const handleResponseSaveChanges = (response: Pick<TGetResponse, 'meta'>) => {
+    const handleResponseSaveChanges = (response: Pick<GetResponse, 'meta'>) => {
         if (response.meta.requestStatus === 'fulfilled') {
             setIsAlertOpened(true);
         } else {
@@ -75,7 +75,7 @@ export const ProfilePage = () => {
         }
     };
 
-    const handleSaveChanges = async (data: TProfileRequest) => {
+    const handleSaveChanges = async (data: ProfileRequest) => {
         const response = await dispatch(updateProfile(data));
 
         const responseData = {

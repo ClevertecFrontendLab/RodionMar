@@ -4,11 +4,11 @@ import { StarFilled, StarOutlined } from '@ant-design/icons';
 
 import styles from './index.module.scss';
 
-import { TGetFeedback } from '@shared/types/get-feedback.type';
+import { GetFeedback } from '@shared/types/get-feedback.type';
 
 const { Text } = Typography;
 
-export const FeedbackCard = ({ fullName, imageSrc, message, rating, createdAt }: TGetFeedback) => {
+export const FeedbackCard = ({ fullName, imageSrc, message, rating, createdAt }: GetFeedback) => {
     const date = new Date(createdAt);
     const day = date.getDate();
     const month = date.getMonth() + 1;

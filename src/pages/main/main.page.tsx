@@ -7,18 +7,18 @@ import { FeedbackPendingSelector } from '@pages/feedbacks/store/feedback.selecto
 import { Layout, Row, Col, Typography, Space, Button } from 'antd';
 
 import { HeaderComponent } from '@components/Header';
-import { ActionCard } from '@components/ActionCard';
+import { ActionCardComponent } from '@components/ActionCard';
 import { FooterComponent } from '@components/Footer';
 import { SiderComponent } from '@components/Sider';
 import { LottieLoader } from '@components/LottieLoader';
 
 import styles from './index.module.scss';
 
-import { TGetResponse } from '../../shared/types/getResponse.type';
+import { GetResponse } from '../../shared/types/getResponse.type';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { TrainingPendingSelector } from '@pages/calendar/store/training.selector';
 import { fetchTrainings } from '@pages/calendar/store/training.actions';
-import { TActionCard } from '@shared/types/action-card.type';
+import { ActionCard } from '@shared/types/action-card.type';
 import { ResultModal } from '@components/ResultModal';
 import { clearErrors } from '@pages/calendar/store/training.slice';
 import { fetchProfile } from '@pages/profile/store/profile.actions';
@@ -52,7 +52,7 @@ const MainPage = () => {
         dispatch(fetchProfile());
     }, [dispatch]);
 
-    const handleResponseFeedbacks = (response: TGetResponse) => {
+    const handleResponseFeedbacks = (response: GetResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             history.push(AppRouteEnum.FEEDBACKS, { fromServer: true });
             return true;
@@ -69,7 +69,7 @@ const MainPage = () => {
         }
     };
 
-    const handleResponseTrainings = (response: TGetResponse) => {
+    const handleResponseTrainings = (response: GetResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             history.push(AppRouteEnum.CALENDAR, { fromServer: true });
             return true;
@@ -81,7 +81,7 @@ const MainPage = () => {
     const handleFeedbacks = async () => {
         const response = await dispatch(fetchFeedbacks());
 
-        const responseData: TGetResponse = {
+        const responseData: GetResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -92,7 +92,7 @@ const MainPage = () => {
     const handleTrainings = async () => {
         const response = await dispatch(fetchTrainings());
 
-        const responseData: TGetResponse = {
+        const responseData: GetResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -102,7 +102,7 @@ const MainPage = () => {
 
     const handleProfile = () => history.push(AppRouteEnum.PROFILE, { fromServer: true });
 
-    const cards: TActionCard[] = [
+    const cards: ActionCard[] = [
         {
             title: 'Расписать тренировки',
             buttonText: 'Тренировки',
@@ -177,7 +177,7 @@ const MainPage = () => {
                             <Row className={styles.cardWrapperStyles}>
                                 {cards.map((card, index) => (
                                     <Col className={styles.card} key={index}>
-                                        <ActionCard
+                                        <ActionCardComponent
                                             key={index}
                                             title={card.title}
                                             buttonText={card.buttonText}

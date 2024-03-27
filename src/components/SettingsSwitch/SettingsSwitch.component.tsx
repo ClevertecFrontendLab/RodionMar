@@ -6,6 +6,18 @@ import { TooltipPlacement } from 'antd/es/tooltip';
 
 const { Text } = Typography;
 
+type SettingsSwitchProps = {
+    label: string;
+    tooltip?: string;
+    defaultChecked?: boolean;
+    onChange?: (value: boolean) => void;
+    disabled?: boolean;
+    overlayClassName?: string;
+    placement?: TooltipPlacement;
+    switchDataTestId: string;
+    iconDataTestId: string;
+}
+
 export const SettingsSwitchComponent = ({
     label,
     tooltip,
@@ -16,17 +28,7 @@ export const SettingsSwitchComponent = ({
     placement,
     switchDataTestId,
     iconDataTestId,
-}: {
-    label: string;
-    tooltip?: string;
-    defaultChecked?: boolean;
-    onChange?: (value: boolean) => void;
-    disabled?: boolean;
-    overlayClassName?: string;
-    placement?: TooltipPlacement;
-    switchDataTestId: string;
-    iconDataTestId: string;
-}) => {
+}: SettingsSwitchProps) => {
     return (
         <Row className={styles.switchWrapper} justify='space-between' align='middle' wrap={false}>
             <Col

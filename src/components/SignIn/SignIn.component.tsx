@@ -20,17 +20,19 @@ type FinishValues = {
 
 const { Link, Text } = Typography;
 
+type SignInProps = {
+    handleRedirectToSignUp: () => void;
+    handleRedirectToForgetPassword: (data: CheckEmail) => void;
+    handleSignIn: (data: Auth) => void;
+    handleGoogleAuth: () => void;
+}
+
 export const SignInComponent = ({
     handleRedirectToSignUp,
     handleRedirectToForgetPassword,
     handleSignIn,
     handleGoogleAuth,
-}: {
-    handleRedirectToSignUp: () => void;
-    handleRedirectToForgetPassword: (data: CheckEmail) => void;
-    handleSignIn: (data: Auth) => void;
-    handleGoogleAuth: () => void;
-}) => {
+}: SignInProps) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);

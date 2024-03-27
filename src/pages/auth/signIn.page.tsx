@@ -1,13 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { AppDispatch, RootState, history, useAppSelector } from '@redux/configure-store';
+import { RootState, history, useAppDispatch, useAppSelector } from '@redux/configure-store';
 import { clearErrors, fetchSignIn } from './store/auth.slice';
 import { fetchCheckEmail } from './store/auth.actions';
 import { setLoading } from '@components/LottieLoader/loading.slice';
 
-import { TAuth } from '@shared/types/auth.type';
-import { TCheckEmail } from '@shared/types/check-email.type';
-import { TSignInResponse } from './types/signInResponse.type';
-import { TCheckEmailResponse } from '@shared/types/check-email-response.type';
+import { Auth } from '@shared/types/auth.type';
+import { CheckEmail } from '@shared/types/check-email.type';
+import { SignInResponse } from './types/signInResponse.type';
+import { CheckEmailResponse } from '@shared/types/check-email-response.type';
 
 import { SignInComponent } from '@components/SignIn';
 import { useEffect } from 'react';
@@ -22,11 +21,11 @@ window.addEventListener('beforeunload', () => {
 });
 
 export const SignInPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const location = useAppSelector((state: RootState) => state.router.previousLocations);
     const isLoading = useAppSelector((state: RootState) => state.loading.isLoading);
 
-    const handleResponseSignIn = (response: TSignInResponse) => {
+    const handleResponseSignIn = (response: SignInResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             localStorage.setItem('token', response.payload.accessToken);
             history.push(AppRouteEnum.BASIC_MAIN);
@@ -36,7 +35,7 @@ export const SignInPage = () => {
         }
     };
 
-    const handleResponseCheckEmail = (response: TCheckEmailResponse) => {
+    const handleResponseCheckEmail = (response: CheckEmailResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             window.localStorage.setItem('checkEmailData', response.payload.email);
             history.push(AppRouteEnum.CONFIRM_EMAIL, { fromServer: true });
@@ -48,10 +47,10 @@ export const SignInPage = () => {
         }
     };
 
-    const handleSignIn = async (data: TAuth) => {
+    const handleSignIn = async (data: Auth) => {
         const response = await dispatch(fetchSignIn(data));
 
-        const responseData: TSignInResponse = {
+        const responseData: SignInResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -64,7 +63,7 @@ export const SignInPage = () => {
         history.push(AppRouteEnum.REGISTRATION);
     };
 
-    const handleRedirectToForgetPassword = async (data: TCheckEmail) => {
+    const handleRedirectToForgetPassword = async (data: CheckEmail) => {
         dispatch(clearErrors());
 
         if (window.localStorage.getItem('status')) {
@@ -73,7 +72,7 @@ export const SignInPage = () => {
 
         const response = await dispatch(fetchCheckEmail(data));
 
-        const responseData: TCheckEmailResponse = {
+        const responseData: CheckEmailResponse = {
             meta: response.meta,
             payload: response.payload,
         };

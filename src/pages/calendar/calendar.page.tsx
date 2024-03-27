@@ -30,12 +30,12 @@ import {
 } from './store/training.actions';
 import { clearErrors } from './store/training.slice';
 import { ModalAlert } from '@components/ModalAlert';
-import { TGetResponse } from '@shared/types/getResponse.type';
+import { GetResponse } from '@shared/types/getResponse.type';
 import { BadgeComponent } from '@components/Badge';
-import { TTrainingName } from '@shared/types/training-name.type';
+import { TrainingName } from '@shared/types/training-name.type';
 import { TrainingListModal } from '@components/TrainingsListModal';
-import { TTrainingResponse } from '@shared/types/training-response.type';
-import { TTrainingRequest } from '@shared/types/training-request.type';
+import { TrainingResponse } from '@shared/types/training-response.type';
+import { TrainingRequest } from '@shared/types/training-request.type';
 import { DateFormatEnum } from '../../constants/date-formats.enum';
 import { fetchTariffList } from '@pages/settings/store/settings.actions';
 import { DataTestEnum } from '@constants/data-tests.enum';
@@ -45,12 +45,12 @@ export const CalendarPage = () => {
     const [isTrainingListModalOpened, setIsTrainingListModalOpened] = useState(false);
     const [value, setValue] = useState<Moment>(moment);
     const [selectedValue, setSelectedValue] = useState<Moment>();
-    const [selectedCellTrainings, setSelectedCellTrainings] = useState<TTrainingResponse[]>([]);
+    const [selectedCellTrainings, setSelectedCellTrainings] = useState<TrainingResponse[]>([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isServerErrorModalOpen, setIsServerErrorModalOpen] = useState(false);
     const [isSaveDataErrorModalOpen, setIsSaveDataErrorModalOpen] = useState(false);
     const [mobileTrainingListCoordinate, setmobileTrainingListCoordinate] = useState<number>();
-    const [prevTrainings, setPrevTrainings] = useState<TTrainingResponse[]>([]);
+    const [prevTrainings, setPrevTrainings] = useState<TrainingResponse[]>([]);
     const [selectedMonth, setSelectedMonth] = useState(moment().startOf('month').month());
     const dispatch = useAppDispatch();
     const trainings = useAppSelector(TrainingsSelector);
@@ -62,7 +62,7 @@ export const CalendarPage = () => {
     }, [trainings]);
 
     const handleResponseTrainingsCatalog = useCallback(
-        (response: TGetResponse) => {
+        (response: GetResponse) => {
             if (response.meta.requestStatus === 'fulfilled') {
                 return true;
             } else {
@@ -75,7 +75,7 @@ export const CalendarPage = () => {
     const handleTrainingsCatalog = useCallback(async () => {
         const response = await dispatch(fetchTrainingsCatalog());
 
-        const responseData: TGetResponse = {
+        const responseData: GetResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -128,7 +128,7 @@ export const CalendarPage = () => {
 
     const onSelect = useCallback(
         (newValue: Moment) => {
-            const listData: TTrainingResponse[] = [];
+            const listData: TrainingResponse[] = [];
 
             trainings.forEach((training) => {
                 const trainingDate = moment(training.date);
@@ -163,7 +163,7 @@ export const CalendarPage = () => {
     };
 
     const getListData = (value: Moment) => {
-        const listData: { name: TTrainingName }[] = [];
+        const listData: { name: TrainingName }[] = [];
         trainings.forEach((training) => {
             const trainingDate = moment(training.date);
             if (value.isSame(trainingDate, 'day')) {
@@ -222,7 +222,7 @@ export const CalendarPage = () => {
     };
 
     const handleResponseTraining = (
-        response: Pick<TGetResponse, 'meta'> & { payload: TTrainingResponse | string },
+        response: Pick<GetResponse, 'meta'> & { payload: TrainingResponse | string },
     ) => {
         if (response.meta.requestStatus === 'fulfilled') {
             dispatch(fetchTrainings());
@@ -233,23 +233,23 @@ export const CalendarPage = () => {
         }
     };
 
-    const handleCreateTraining = async (data: TTrainingRequest) => {
+    const handleCreateTraining = async (data: TrainingRequest) => {
         const response = await dispatch(createTraining(data));
 
         const reponseData = {
             meta: response.meta,
-            payload: response.payload as TTrainingResponse | string,
+            payload: response.payload as TrainingResponse | string,
         };
 
         handleResponseTraining(reponseData);
     };
 
-    const handleUpdateTraining = async (data: TTrainingRequest) => {
+    const handleUpdateTraining = async (data: TrainingRequest) => {
         const response = await dispatch(updateTraining(data));
 
         const reponseData = {
             meta: response.meta,
-            payload: response.payload as TTrainingResponse | string,
+            payload: response.payload as TrainingResponse | string,
         };
 
         handleResponseTraining(reponseData);

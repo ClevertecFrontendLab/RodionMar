@@ -22,14 +22,14 @@ import { ProfilePendingSelector, ProfileSelector } from '@pages/profile/store/pr
 import { updateProfile } from '@pages/profile/store/profile.actions';
 import { SettingsPendingSelector, TariffListSelector } from './store/settings.selector';
 import { FeedbackModal } from '@components/FeedbackModal';
-import { TCreateFeedback } from '@shared/types/create-feedback.type';
+import { CreateFeedback } from '@shared/types/create-feedback.type';
 import { fetchCreateFeedback } from '@pages/feedbacks/store/feedback.actions';
 import { SettingsSwitchComponent } from '@components/SettingsSwitch';
-import { TTarifListPeriod } from '@shared/types/tarif-list-period.type';
+import { TarifListPeriod } from '@shared/types/tarif-list-period.type';
 import { SettingsDrawerComponent } from '@components/SettingsDrawer';
-import { TTarifRequest } from '@shared/types/tarif-request.type';
+import { TarifRequest } from '@shared/types/tarif-request.type';
 import { createTariff } from './store/settings.actions';
-import { TGetResponse } from '@shared/types/getResponse.type';
+import { GetResponse } from '@shared/types/getResponse.type';
 import { ResultModal } from '@components/ResultModal';
 import { TooltipPlacement } from 'antd/es/tooltip';
 import { DataTestEnum } from '@constants/data-tests.enum';
@@ -43,7 +43,7 @@ export const SettingsPage = () => {
     const [isDrawerOpened, setIsDrawerOpened] = useState(false);
     const [tarifTransferData, setTarifTransferData] = useState<{
         _id: string;
-        periods: TTarifListPeriod[];
+        periods: TarifListPeriod[];
     }>({ _id: '', periods: [] });
     const [isCheckEmailModalOpened, setIsCheckEmailModalOpened] = useState(false);
     const dispatch = useAppDispatch();
@@ -101,11 +101,11 @@ export const SettingsPage = () => {
         history.push(AppRouteEnum.FEEDBACKS, { fromServer: true });
     };
 
-    const handleFeedback = (data: TCreateFeedback) => {
+    const handleFeedback = (data: CreateFeedback) => {
         dispatch(fetchCreateFeedback(data));
     };
 
-    const handleClickButtonDetails = (_id?: string, periods?: TTarifListPeriod[]) => {
+    const handleClickButtonDetails = (_id?: string, periods?: TarifListPeriod[]) => {
         if (periods && _id) {
             setTarifTransferData({
                 _id: _id,
@@ -115,7 +115,7 @@ export const SettingsPage = () => {
         setIsDrawerOpened(!isDrawerOpened);
     };
 
-    const handleResponseCreateTariff = (response: Pick<TGetResponse, 'meta'>) => {
+    const handleResponseCreateTariff = (response: Pick<GetResponse, 'meta'>) => {
         if (response.meta.requestStatus === 'fulfilled') {
             setIsCheckEmailModalOpened(true);
         } else {
@@ -123,7 +123,7 @@ export const SettingsPage = () => {
         }
     };
 
-    const chooseAndPayHandler = async (data: TTarifRequest) => {
+    const chooseAndPayHandler = async (data: TarifRequest) => {
         const response = await dispatch(createTariff(data));
 
         const responseData = {

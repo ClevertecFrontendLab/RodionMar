@@ -17,13 +17,15 @@ type FinishValues = {
 
 const { Link, Text } = Typography;
 
-export const SignUpComponent = ({
-    handleSignUp,
-    handleRedirectToSignIn,
-}: {
+type SignUpProps = {
     handleRedirectToSignIn: () => void;
     handleSignUp: (data: Auth) => void;
-}) => {
+}
+
+export const SignUpComponent = ({
+    handleSignUp,
+    handleRedirectToSignIn
+}: SignUpProps) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 

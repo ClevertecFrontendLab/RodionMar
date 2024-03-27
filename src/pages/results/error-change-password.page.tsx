@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, history } from '@redux/configure-store';
+import { history, useAppDispatch } from '@redux/configure-store';
 import { fetchChangePassword } from '@pages/auth/store/auth.actions';
 
 import styles from './index.module.scss';
@@ -11,7 +10,7 @@ import { AppRouteEnum } from '@constants/app-routes.enum';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const ErrorChangePasswordPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     useEffect(() => {

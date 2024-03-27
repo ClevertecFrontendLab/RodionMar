@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     FeedbackErrorSelector,
     FeedbackPendingSelector,
     FeedbackSelector,
 } from './store/feedback.selector';
-import { useAppSelector, history, AppDispatch } from '@redux/configure-store';
+import { useAppSelector, history, useAppDispatch } from '@redux/configure-store';
 import { useLocation } from 'react-router-dom';
 
 import cn from 'classnames';
@@ -16,8 +16,8 @@ import { FeedbackCard } from '@components/FeedbackCard';
 import { FeedbackModal } from '@components/FeedbackModal';
 import { NoFeedbacks } from '@components/NoFeedbacks';
 
-import { TCreateFeedback } from '@shared/types/create-feedback.type';
-import { TCreateFeedbackResponse } from './types/createFeedbackResponse.type';
+import { CreateFeedback } from '@shared/types/create-feedback.type';
+import { CreateFeedbackResponse } from './types/createFeedbackResponse.type';
 
 import { Layout, Row, Col, Space, Breadcrumb, Button } from 'antd';
 
@@ -47,7 +47,7 @@ const items = [
 ];
 
 export const FeedbacksPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const [isSiderOpened, setIsSidebarOpened] = useState(true);
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -97,7 +97,7 @@ export const FeedbacksPage = () => {
     }, [location.state]);
 
     const handleResponseCreateFeedback = (
-        response: TCreateFeedbackResponse,
+        response: CreateFeedbackResponse,
         setIsSuccessModalOpen: (value: boolean) => void,
         setIsErrorModalOpen: (value: boolean) => void,
     ) => {
@@ -109,7 +109,7 @@ export const FeedbacksPage = () => {
         }
     };
 
-    const handleFeedback = async (data: TCreateFeedback) => {
+    const handleFeedback = async (data: CreateFeedback) => {
         const response = await dispatch(fetchCreateFeedback(data));
         dispatch(fetchFeedbacks());
 

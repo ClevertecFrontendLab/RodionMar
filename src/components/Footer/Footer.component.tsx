@@ -8,11 +8,13 @@ import { DataTestEnum } from '@constants/data-tests.enum';
 const { Footer } = Layout;
 const { Text } = Typography;
 
+type FooterProps = {
+    handleResponseFeedbacks: () => void;
+}
+
 export const FooterComponent = ({
     handleResponseFeedbacks,
-}: {
-    handleResponseFeedbacks: () => void;
-}) => (
+}: FooterProps) => (
     <Footer className={styles.footerStyles}>
         <Row className={styles.wrapperStyles}>
             <Col className={styles.buttonCol}>

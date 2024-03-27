@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { AppDispatch, history } from '@redux/configure-store';
+import { history, useAppDispatch } from '@redux/configure-store';
 
 import cn from 'classnames';
 
@@ -23,7 +22,7 @@ import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-type SidebarProps = {
+type SiderProps = {
     isSiderOpened: boolean;
     setIsSidebarOpened: (isSiderOpened: boolean) => void;
     windowWidth: number;
@@ -40,9 +39,9 @@ export const SiderComponent = ({
     windowWidth,
     activeMenuItemKey = '',
     handleTrainings,
-}: SidebarProps) => {
+}: SiderProps) => {
     const [activeItemKey, setActiveItemKey] = useState<string>('' || activeMenuItemKey);
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const toggleSidebar = () => {
         setIsSidebarOpened(!isSiderOpened);
