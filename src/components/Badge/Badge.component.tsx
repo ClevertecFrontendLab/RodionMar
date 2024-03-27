@@ -1,12 +1,13 @@
 import { Badge } from 'antd';
 
-import { TTrainingName } from '@shared/types/training-name.type';
+import { TrainingName } from '@shared/types/training-name.type';
 
 import cn from 'classnames';
 
 import styles from './index.module.scss';
+import { TrainingNameEnum } from '@constants/training-name.enum';
 
-const colors: Record<TTrainingName, string> = {
+const colors: Record<TrainingName, string> = {
     Ноги: '#ff4d4f',
     Силовая: '#FADB14',
     Руки: '#13C2C2',
@@ -15,19 +16,19 @@ const colors: Record<TTrainingName, string> = {
     Кардио: '#EB2F96',
 };
 
-type TCustomBadgeProps = {
-    name: TTrainingName;
+type CustomBadgeProps = {
+    name: TrainingName;
     className?: string;
 };
 
-export const BadgeComponent = ({ name, className }: TCustomBadgeProps) => {
+export const BadgeComponent = ({ name, className }: CustomBadgeProps) => {
     switch (name) {
-        case 'Ноги':
-        case 'Силовая':
-        case 'Руки':
-        case 'Грудь':
-        case 'Спина':
-        case 'Кардио':
+        case TrainingNameEnum.LEGS:
+        case TrainingNameEnum.STRENGTH:
+        case TrainingNameEnum.ARMS:
+        case TrainingNameEnum.CHEST:
+        case TrainingNameEnum.BACK:
+        case TrainingNameEnum.CARDIO:
             return (
                 <Badge className={cn(styles.badge, className)} color={colors[name]} text={name} />
             );

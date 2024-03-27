@@ -1,4 +1,4 @@
-export type TGetTraining = {
+export type GetTraining = {
     _id: string;
     name: string;
     date: string;

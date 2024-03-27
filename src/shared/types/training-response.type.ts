@@ -1,13 +1,13 @@
-import { TTrainingName } from '@shared/types/training-name.type';
-import { TExercise } from '@shared/types/exersice.type';
-import { TParameters } from '@pages/calendar/types/parameters.type';
+import { TrainingName } from '@shared/types/training-name.type';
+import { Exercise } from '@shared/types/exersice.type';
+import { TrainingParameters } from './training-parameters.type';
 
-export type TTrainingResponse = {
+export type TrainingResponse = {
     _id: string;
-    name: TTrainingName;
+    name: TrainingName;
     date: string;
     isImplementation: boolean;
     userId: string;
-    parameters: TParameters;
-    exercises: TExercise[];
+    parameters: TrainingParameters;
+    exercises: Exercise[];
 };

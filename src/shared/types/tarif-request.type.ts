@@ -1,4 +1,4 @@
-export type TTarifRequest = {
+export type TarifRequest = {
     tariffId: string;
     days: number;
 };

@@ -3,15 +3,15 @@ import { useState } from 'react';
 import { Button, Checkbox, Input, Menu, MenuProps, Space, Typography, Form, Image } from 'antd';
 import { GooglePlusOutlined } from '@ant-design/icons';
 
-import { TAuth } from '@shared/types/auth.type';
-import { TCheckEmail } from '@shared/types/check-email.type';
+import { Auth } from '@shared/types/auth.type';
+import { CheckEmail } from '@shared/types/check-email.type';
 
 import styles from './index.module.scss';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
-type TFinishValues = {
+type FinishValues = {
     email: string;
     forgotPassword: boolean | undefined;
     password: string;
@@ -27,8 +27,8 @@ export const SignInComponent = ({
     handleGoogleAuth,
 }: {
     handleRedirectToSignUp: () => void;
-    handleRedirectToForgetPassword: (data: TCheckEmail) => void;
-    handleSignIn: (data: TAuth) => void;
+    handleRedirectToForgetPassword: (data: CheckEmail) => void;
+    handleSignIn: (data: Auth) => void;
     handleGoogleAuth: () => void;
 }) => {
     const [form] = Form.useForm();
@@ -67,7 +67,7 @@ export const SignInComponent = ({
         },
     ];
 
-    const onFinish = (values: TFinishValues) => {
+    const onFinish = (values: FinishValues) => {
         if (localStorage.getItem('profile')) {
             localStorage.removeItem('profile');
         }

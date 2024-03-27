@@ -2,18 +2,18 @@ import { Button, Col, Drawer, Form, Radio, Row, Space, Typography } from 'antd';
 import styles from './index.module.scss';
 import { CheckCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { TTarifRequest } from '@shared/types/tarif-request.type';
-import { TTarifListPeriod } from '@shared/types/tarif-list-period.type';
+import { TarifRequest } from '@shared/types/tarif-request.type';
+import { TarifListPeriod } from '@shared/types/tarif-list-period.type';
 import { SettingsFeatureItem } from '@components/SettingsFeatureItem';
 import { ProfileSelector } from '@pages/profile/store/profile.selector';
 import { useSelector } from 'react-redux';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
-type TSettingsDrawerComponentProps = {
+type SettingsDrawerComponentProps = {
     isOpened: boolean;
     setIsOpened: (value: boolean) => void;
-    chooseAndPayHandler: (data: TTarifRequest) => void;
-    tarifTransferData: { _id: string; periods: TTarifListPeriod[] };
+    chooseAndPayHandler: (data: TarifRequest) => void;
+    tarifTransferData: { _id: string; periods: TarifListPeriod[] };
     formatDate: (dateString: string) => string;
 };
 
@@ -25,11 +25,11 @@ export const SettingsDrawerComponent = ({
     chooseAndPayHandler,
     tarifTransferData,
     formatDate,
-}: TSettingsDrawerComponentProps) => {
+}: SettingsDrawerComponentProps) => {
     const [form] = Form.useForm();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isChooseAndPayButtonDisabled, setIsChooseAndPayButtonDisabled] = useState(true);
-    const [days, setDays] = useState<TTarifRequest>();
+    const [days, setDays] = useState<TarifRequest>();
     const profile = useSelector(ProfileSelector);
 
     useEffect(() => {

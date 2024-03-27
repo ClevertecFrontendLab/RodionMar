@@ -1,4 +1,4 @@
-export type TCreateFeedbackResponse = {
+export type CreateFeedbackResponse = {
     meta: {
         requestStatus: string;
     };

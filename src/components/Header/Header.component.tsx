@@ -6,7 +6,7 @@ import { PageEnum } from '@constants/pages.enum';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
-type THeaderProps = {
+type HeaderProps = {
     isSiderOpened: boolean;
     windowWidth: number;
     handleClickSettingsButton: () => void;
@@ -26,7 +26,7 @@ export const HeaderComponent = ({
     isSiderOpened,
     windowWidth,
     handleClickSettingsButton,
-}: THeaderProps) => (
+}: HeaderProps) => (
     <Header className={styles.headerStyles}>
         <Row>
             <Col>

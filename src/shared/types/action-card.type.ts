@@ -1,4 +1,4 @@
-export type TActionCard = {
+export type ActionCard = {
     title: string;
     buttonText: string;
     buttonIcon: 'heart' | 'calendar' | 'profile';

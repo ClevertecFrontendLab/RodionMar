@@ -4,7 +4,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import cn from 'classnames';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
-type TModalAlertProps = {
+type ModalAlertProps = {
     isModalOpen: boolean;
     type: 'success' | 'error' | 'info' | 'warning';
     message: React.ReactNode;
@@ -31,7 +31,7 @@ export const ModalAlert = ({
     closable = true,
     dataTestId,
     className,
-}: TModalAlertProps) => (
+}: ModalAlertProps) => (
     <Modal
         open={isModalOpen}
         className={cn(styles.modal, className)}

@@ -5,35 +5,35 @@ import { BadgeComponent } from '@components/Badge';
 import cn from 'classnames';
 
 import styles from './index.module.scss';
-import { TTrainingResponse } from '@shared/types/training-response.type';
+import { TrainingResponse } from '@shared/types/training-response.type';
 import { EditOutlined, PlusOutlined, ArrowLeftOutlined, CloseOutlined } from '@ant-design/icons';
 import { useCallback, useEffect, useState } from 'react';
-import { TTrainingCatalogItem } from '@shared/types/training-catalog-item.type';
-import { TTrainingName } from '@shared/types/training-name.type';
+import { TrainingCatalogItem } from '@shared/types/training-catalog-item.type';
+import { TrainingName } from '@shared/types/training-name.type';
 import { CalendarDrawerComponent } from '@components/CalendarDrawer';
-import { TTrainingRequest } from '@shared/types/training-request.type';
+import { TrainingRequest } from '@shared/types/training-request.type';
 import { DrawerName } from '@constants/drawer-names.enum';
 import moment from 'moment';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Text } = Typography;
 
-type TTrainingListModalProps = {
+type TrainingListModalProps = {
     isModalOpen: boolean;
     setIsModalOpened: (value: boolean) => void;
     date: string;
-    listOfTrainings?: TTrainingResponse[];
+    listOfTrainings?: TrainingResponse[];
     getContainer: HTMLElement;
     modalClassname?: string;
-    trainingsCatalog: TTrainingCatalogItem[];
-    handleCreateTraining: (data: TTrainingRequest) => void;
-    handleUpdateTraining: (data: TTrainingRequest) => void;
+    trainingsCatalog: TrainingCatalogItem[];
+    handleCreateTraining: (data: TrainingRequest) => void;
+    handleUpdateTraining: (data: TrainingRequest) => void;
     mobileTrainingListCoordinate: number | undefined;
     transitionStep: 0 | null;
     isSaveDataErrorModalOpen: boolean;
 };
 
-type TSelectOption = {
+type SelectOption = {
     value: string;
     label: string;
 };
@@ -51,17 +51,17 @@ export const TrainingListModal = ({
     mobileTrainingListCoordinate,
     transitionStep,
     isSaveDataErrorModalOpen,
-}: TTrainingListModalProps) => {
+}: TrainingListModalProps) => {
     const [step, setStep] = useState<1 | 2>(1);
     const [closable, setClosable] = useState(true);
-    const [selectedOption, setSelectedOption] = useState<TTrainingName | null>(null);
-    const [selectOptions, setSelectOptions] = useState<TSelectOption[]>([]);
+    const [selectedOption, setSelectedOption] = useState<TrainingName | null>(null);
+    const [selectOptions, setSelectOptions] = useState<SelectOption[]>([]);
     const [isDrawerOpened, setIsDrawerOpened] = useState(false);
     const [drawerType, setDrawerType] = useState<DrawerName>(DrawerName.CREATE);
-    const [requestTrainingObject, setRequestTrainingObject] = useState<TTrainingRequest | null>(
+    const [requestTrainingObject, setRequestTrainingObject] = useState<TrainingRequest | null>(
         null,
     );
-    const [updateTraining, setUpdateTraining] = useState<TTrainingRequest | null>(null);
+    const [updateTraining, setUpdateTraining] = useState<TrainingRequest | null>(null);
 
     const isPastDate = (dateString: string): boolean => {
         const selectedDate = moment.utc(dateString, 'YYYY-MM-DD');
@@ -80,7 +80,7 @@ export const TrainingListModal = ({
     const handleSetClosable = (value: boolean) => {
         setClosable(value);
     };
-    const handleSetSelectedOption = (value: TTrainingName) => {
+    const handleSetSelectedOption = (value: TrainingName) => {
         setSelectedOption(value);
     };
 
@@ -97,8 +97,8 @@ export const TrainingListModal = ({
     }, [isModalOpen, transitionStep, isSaveDataErrorModalOpen]);
 
     const handleSelectOptions = useCallback(
-        (addOption: TSelectOption | null = null, isFuture = true) => {
-            let filteredOptions: TTrainingCatalogItem[] | TTrainingResponse[] = [];
+        (addOption: SelectOption | null = null, isFuture = true) => {
+            let filteredOptions: TrainingCatalogItem[] | TrainingResponse[] = [];
 
             if (isFuture) {
                 filteredOptions = trainingsCatalog.filter(
@@ -148,7 +148,7 @@ export const TrainingListModal = ({
             : null;
     };
 
-    const updateTrainingHandler = (training: TTrainingResponse) => {
+    const updateTrainingHandler = (training: TrainingResponse) => {
         if (training.isImplementation) {
             setSelectedOption(training.name);
             setUpdateTraining(training);

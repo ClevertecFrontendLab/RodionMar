@@ -4,22 +4,22 @@ import { Button, Modal, Form, Input, Rate } from 'antd';
 
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 
-import { TCreateFeedback } from '@shared/types/create-feedback.type';
+import { CreateFeedback } from '@shared/types/create-feedback.type';
 
 import styles from './index.module.scss';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
-type TFeedbackModalProps = {
+type FeedbackModalProps = {
     setIsFeedbackModalOpen: (value: boolean) => void;
     isFeedbackModalOpen: boolean;
-    handleFeedback: (data: TCreateFeedback) => void;
+    handleFeedback: (data: CreateFeedback) => void;
 };
 
 export const FeedbackModal = ({
     setIsFeedbackModalOpen,
     isFeedbackModalOpen,
     handleFeedback,
-}: TFeedbackModalProps) => {
+}: FeedbackModalProps) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
@@ -39,7 +39,7 @@ export const FeedbackModal = ({
 
     const rateRules = [{ required: true, message: '' }];
 
-    const onFinish = (values: TCreateFeedback) => {
+    const onFinish = (values: CreateFeedback) => {
         const formValues = {
             rating: values.rating,
             message: values.message || '',

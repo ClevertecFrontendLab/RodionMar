@@ -8,30 +8,30 @@ import {
     fetchChangePassword,
 } from './auth.actions';
 
-export type TAuthResponse = {
+export type AuthResponse = {
     accessToken: 'string';
 };
 
-type TEmailResponse = {
+type EmailResponse = {
     email: string;
     message: 'string';
 };
 
-type TChangePasswordResponse = {
+type ChangePasswordResponse = {
     message: 'string';
 };
 
-type TAuthError = {
+type AuthError = {
     status?: number;
     error?: string;
     message?: string;
 };
 
-type TInitialState = {
+type InitialState = {
     token?: string;
-    emailData?: TEmailResponse;
-    changePasswordData?: TChangePasswordResponse;
-    errors: TAuthError | null;
+    emailData?: EmailResponse;
+    changePasswordData?: ChangePasswordResponse;
+    errors: AuthError | null;
     pending: boolean;
 };
 
@@ -41,7 +41,7 @@ const initialState = {
     changePasswordData: {},
     errors: null,
     pending: false,
-} as TInitialState;
+} as InitialState;
 
 const authSlice = createSlice({
     name: 'auth',
@@ -101,7 +101,7 @@ const authSlice = createSlice({
             })
             .addCase(fetchConfirmEmail.rejected, (state, action) => {
                 state.pending = false;
-                state.errors = action.payload as TAuthError;
+                state.errors = action.payload as AuthError;
             })
             .addCase(fetchChangePassword.pending, (state) => {
                 state.pending = true;
@@ -113,7 +113,7 @@ const authSlice = createSlice({
             })
             .addCase(fetchChangePassword.rejected, (state, action) => {
                 state.pending = false;
-                state.errors = action.payload as TAuthError;
+                state.errors = action.payload as AuthError;
             });
     },
 });

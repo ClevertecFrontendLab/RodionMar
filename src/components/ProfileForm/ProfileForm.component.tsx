@@ -5,19 +5,19 @@ import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
-import { TProfileResponse } from '@shared/types/profile-response.type';
+import { ProfileResponse } from '@shared/types/profile-response.type';
 
 import styles from './index.module.scss';
 import { APIRouteEnum } from '@constants/api-routes.enum';
 import { ProfileEndpointEnum } from '@pages/profile/constants/profile-endpoints.enum';
 import cn from 'classnames';
 import { DateFormatEnum } from '@constants/date-formats.enum';
-import { TProfileRequest } from '@shared/types/profile-request.type';
+import { ProfileRequest } from '@shared/types/profile-request.type';
 import moment from 'moment';
 import React from 'react';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
-type TFinishValues = {
+type FinishValues = {
     confirmPassword?: string;
     birthday?: string;
     email: string;
@@ -44,9 +44,9 @@ export const ProfileFormComponent = ({
     handleSaveChanges,
     windowWidth,
 }: {
-    profile: TProfileResponse | null;
+    profile: ProfileResponse | null;
     setIsErrorModalOpened: (value: boolean) => void;
-    handleSaveChanges: (value: TProfileRequest) => void;
+    handleSaveChanges: (value: ProfileRequest) => void;
     windowWidth: number;
 }) => {
     const [form] = Form.useForm();
@@ -81,7 +81,7 @@ export const ProfileFormComponent = ({
         },
     ];
 
-    const onFinish = (values: TFinishValues) => {
+    const onFinish = (values: FinishValues) => {
         const finishValues = {
             birthday: moment.utc(values.birthday).toISOString(),
             email: values.email,

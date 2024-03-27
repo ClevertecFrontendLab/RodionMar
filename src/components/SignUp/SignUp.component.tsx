@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import { Button, Input, Menu, MenuProps, Typography, Form, Image } from 'antd';
 import { GooglePlusOutlined } from '@ant-design/icons';
 
-import { TAuth } from '@shared/types/auth.type';
+import { Auth } from '@shared/types/auth.type';
 
 import styles from './index.module.scss';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
-type TFinishValues = {
+type FinishValues = {
     email: string;
     confirmPassword: string;
     password: string;
@@ -22,7 +22,7 @@ export const SignUpComponent = ({
     handleRedirectToSignIn,
 }: {
     handleRedirectToSignIn: () => void;
-    handleSignUp: (data: TAuth) => void;
+    handleSignUp: (data: Auth) => void;
 }) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
@@ -55,7 +55,7 @@ export const SignUpComponent = ({
         },
     ];
 
-    const onFinish = (values: TFinishValues) => {
+    const onFinish = (values: FinishValues) => {
         sessionStorage.setItem('signUpData', JSON.stringify(values));
 
         const formValues = {

@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 
 import { CheckCircleFilled, CloseCircleOutlined } from '@ant-design/icons';
 
-type TSettingsFeatureItemProps = {
+type SettingsFeatureItemProps = {
     title: React.ReactNode;
     includeInFree: boolean;
     includeInPro: boolean;
@@ -15,7 +15,7 @@ export const SettingsFeatureItem = ({
     title,
     includeInFree,
     includeInPro,
-}: TSettingsFeatureItemProps) => (
+}: SettingsFeatureItemProps) => (
     <Row className={styles.wrapper} justify='space-between'>
         <Col>
             <Text className={styles.title}>{title}</Text>

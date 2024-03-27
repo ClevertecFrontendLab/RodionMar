@@ -1,4 +1,4 @@
-export type TExercise = {
+export type Exercise = {
     name: string;
     replays: number;
     weight: number;

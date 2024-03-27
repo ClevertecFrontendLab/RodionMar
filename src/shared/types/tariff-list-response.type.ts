@@ -1,7 +1,7 @@
-import { TTarifListPeriod } from './tarif-list-period.type';
+import { TarifListPeriod } from './tarif-list-period.type';
 
-export type TTariffListResponse = {
+export type TariffListResponse = {
     _id: string;
     name: string;
-    periods: TTarifListPeriod[];
+    periods: TarifListPeriod[];
 };

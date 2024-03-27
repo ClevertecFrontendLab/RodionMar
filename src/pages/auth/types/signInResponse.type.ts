@@ -1,4 +1,4 @@
-export type TSignInResponse = {
+export type SignInResponse = {
     meta: {
         requestStatus: string;
     };

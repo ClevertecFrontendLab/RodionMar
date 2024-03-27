@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import styles from './index.module.scss';
 
-type TResultModalProps = {
+type ResultModalProps = {
     isModalOpen: boolean;
     status: 'success' | 'error' | 'info' | 'warning' | '404' | '403' | '500';
     title: React.ReactNode;
@@ -26,7 +26,7 @@ export const ResultModal = ({
     dataTestId,
     closable,
     onCancelHandler,
-}: TResultModalProps) => {
+}: ResultModalProps) => {
     return (
         <Modal
             centered

@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchProfile, updateProfile } from './profile.actions';
-import { TProfileResponse } from '@shared/types/profile-response.type';
+import { ProfileResponse } from '@shared/types/profile-response.type';
 
-type TProfileError = {
+type ProfileError = {
     status?: number;
     error?: string;
     message?: string;
 };
 
-type TInitialState = {
-    profile: TProfileResponse | null;
-    errors: TProfileError | null;
+type InitialState = {
+    profile: ProfileResponse | null;
+    errors: ProfileError | null;
     pending: boolean;
 };
 
@@ -19,7 +19,7 @@ const initialState = {
     profile: null,
     errors: null,
     pending: false,
-} as TInitialState;
+} as InitialState;
 
 const profileSlice = createSlice({
     name: 'profile',
@@ -48,7 +48,7 @@ const profileSlice = createSlice({
             })
             .addCase(updateProfile.fulfilled, (state, action) => {
                 state.pending = false;
-                state.profile = action.payload as TProfileResponse;
+                state.profile = action.payload as ProfileResponse;
                 state.errors = null;
             })
             .addCase(updateProfile.rejected, (state, action) => {

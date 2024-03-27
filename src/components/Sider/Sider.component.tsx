@@ -23,7 +23,7 @@ import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-type TSidebarProps = {
+type SidebarProps = {
     isSiderOpened: boolean;
     setIsSidebarOpened: (isSiderOpened: boolean) => void;
     windowWidth: number;
@@ -40,7 +40,7 @@ export const SiderComponent = ({
     windowWidth,
     activeMenuItemKey = '',
     handleTrainings,
-}: TSidebarProps) => {
+}: SidebarProps) => {
     const [activeItemKey, setActiveItemKey] = useState<string>('' || activeMenuItemKey);
     const dispatch = useDispatch<AppDispatch>();
 

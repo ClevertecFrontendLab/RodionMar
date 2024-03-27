@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchTariffList, createTariff } from './settings.actions';
-import { TTariffListResponse } from '@shared/types/tariff-list-response.type';
+import { TariffListResponse } from '@shared/types/tariff-list-response.type';
 
-type TSettingsError = {
+type SettingsError = {
     status?: number;
     error?: string;
     message?: string;
 };
 
-type TInitialState = {
-    tariffList: TTariffListResponse[];
-    errors: TSettingsError | null;
+type InitialState = {
+    tariffList: TariffListResponse[];
+    errors: SettingsError | null;
     pending: boolean;
 };
 
@@ -19,7 +19,7 @@ const initialState = {
     tariffList: [],
     errors: null,
     pending: false,
-} as TInitialState;
+} as InitialState;
 
 const settingsSlice = createSlice({
     name: 'settings',

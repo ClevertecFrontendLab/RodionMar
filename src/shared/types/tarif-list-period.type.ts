@@ -1,4 +1,4 @@
-export type TTarifListPeriod = {
+export type TarifListPeriod = {
     text: string;
     cost: number;
     days: number;

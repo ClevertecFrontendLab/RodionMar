@@ -5,11 +5,11 @@ import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title, Paragraph } = Typography;
 
-type TNoFeedbacksProps = {
+type NoFeedbacksProps = {
     setIsFeedbackModalOpen: (value: boolean) => void;
 };
 
-export const NoFeedbacks = ({ setIsFeedbackModalOpen }: TNoFeedbacksProps) => (
+export const NoFeedbacks = ({ setIsFeedbackModalOpen }: NoFeedbacksProps) => (
     <Row className={styles.noFeedback} justify='center'>
         <Col className={styles.textSection} span={24}>
             <Title level={3} className={styles.title}>

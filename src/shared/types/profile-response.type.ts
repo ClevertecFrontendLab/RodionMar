@@ -1,6 +1,6 @@
-import { TProfileRequest } from './profile-request.type';
+import { ProfileRequest } from './profile-request.type';
 
-export type TProfileResponse = Omit<TProfileRequest, 'password'> & {
+export type ProfileResponse = Omit<ProfileRequest, 'password'> & {
     tariff: {
         tariffId: string;
         expired: string;

@@ -12,12 +12,12 @@ import {
 } from 'antd';
 import styles from './index.module.scss';
 import { BadgeComponent } from '@components/Badge';
-import { TTrainingName } from '@shared/types/training-name.type';
+import { TrainingName } from '@shared/types/training-name.type';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { TExercise } from '@shared/types/exersice.type';
+import { Exercise } from '@shared/types/exersice.type';
 import cn from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
-import { TTrainingRequest } from '@shared/types/training-request.type';
+import { TrainingRequest } from '@shared/types/training-request.type';
 import { DrawerName } from '@constants/drawer-names.enum';
 import { ExerciseEnum } from './exercise.enum';
 import moment from 'moment';
@@ -26,21 +26,21 @@ import { DataTestEnum } from '@constants/data-tests.enum';
 
 type DrawerType = DrawerName.CREATE | DrawerName.UPDATE | DrawerName.VIEW;
 
-type TCalendarDrawerComponentProps = {
+type CalendarDrawerComponentProps = {
     type: DrawerType;
     isOpened: boolean;
     setIsOpened: (value: boolean) => void;
     title: React.ReactNode;
-    selectedOption: TTrainingName;
+    selectedOption: TrainingName;
     date: string;
-    setRequestTrainingObject: (value: TTrainingRequest) => void;
-    requestTrainingObject: TTrainingRequest | null;
-    setUpdateTraining: (value: TTrainingRequest) => void;
-    updateTraining: TTrainingRequest | null;
+    setRequestTrainingObject: (value: TrainingRequest) => void;
+    requestTrainingObject: TrainingRequest | null;
+    setUpdateTraining: (value: TrainingRequest) => void;
+    updateTraining: TrainingRequest | null;
     isPastDate: (dateString: string) => boolean;
 };
 
-type TFormValues = Record<string, string | number>;
+type FormValues = Record<string, string | number>;
 
 const { Text } = Typography;
 
@@ -56,13 +56,13 @@ export const CalendarDrawerComponent = ({
     setUpdateTraining,
     updateTraining,
     isPastDate,
-}: TCalendarDrawerComponentProps) => {
+}: CalendarDrawerComponentProps) => {
     const [form] = Form.useForm();
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [formHeight, setFormHeight] = useState(0);
     const [selectedExercises, setSelectedExercises] = useState<number[]>([]);
-    const [exercises, setExercises] = useState<TExercise[]>([]);
+    const [exercises, setExercises] = useState<Exercise[]>([]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -88,8 +88,8 @@ export const CalendarDrawerComponent = ({
         }
     }, [isOpened]);
 
-    const createExerciseObjects = (formValues: TFormValues): TExercise[] => {
-        const updatedExercises: TExercise[] = [...exercises];
+    const createExerciseObjects = (formValues: FormValues): Exercise[] => {
+        const updatedExercises: Exercise[] = [...exercises];
 
         Object.entries(formValues).forEach(([key, value]) => {
             const [type, indexStr] = key.split('-');
@@ -212,7 +212,7 @@ export const CalendarDrawerComponent = ({
     };
 
     useEffect(() => {
-        const updatedExercises: TExercise[] = [];
+        const updatedExercises: Exercise[] = [];
 
         const trainingObject =
             updateTraining?.name === selectedOption ? updateTraining : requestTrainingObject;
@@ -252,7 +252,7 @@ export const CalendarDrawerComponent = ({
 
     const handleAddExercise = useCallback(() => {
         setExercises((prevExercises) => {
-            const newExercise: TExercise = {
+            const newExercise: Exercise = {
                 name: '',
                 approaches: 1,
                 weight: 0,

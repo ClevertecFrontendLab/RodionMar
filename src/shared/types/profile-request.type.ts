@@ -1,4 +1,4 @@
-export type TProfileRequest = {
+export type ProfileRequest = {
     email: string;
     password?: string;
     firstName?: string;
