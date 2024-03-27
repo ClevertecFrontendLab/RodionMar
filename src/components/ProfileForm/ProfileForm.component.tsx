@@ -16,7 +16,7 @@ import { ProfileRequest } from '@shared/types/profile-request.type';
 import moment from 'moment';
 import React from 'react';
 import { DataTestEnum } from '@constants/data-tests.enum';
-import { emailRules } from './input-rules/email-rules';
+import { emailRules } from './email-rules';
 
 type FinishValues = {
     email: string;
