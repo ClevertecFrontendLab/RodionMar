@@ -42,39 +42,33 @@ const PublicRoute = ({ element: Element }: { element: React.FC }) => {
 };
 
 const DefaultRoute = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        return <Navigate to={AppRouteEnum.NOT_FOUND} />;
-    } else {
-        return <Navigate to={AppRouteEnum.BASIC_AUTH} />;
-    }
+    return isAllowed() ? <Navigate to={AppRouteEnum.NOT_FOUND} /> : <Navigate to={AppRouteEnum.BASIC_AUTH} />
 };
 
-const AppRoutes = () => {
-    return (
-        <Routes>
-            {/* PUBLIC */}
-            <Route path={AppRouteEnum.AUTH} element={<PublicRoute element={AuthPage} />} />
-            <Route path={AppRouteEnum.RESULT} element={<PublicRoute element={ResultPage} />} />
+const AppRoutes = () => (
+    <Routes>
+        {/* PUBLIC */}
+        <Route path={AppRouteEnum.AUTH} element={<PublicRoute element={AuthPage} />} />
+        <Route path={AppRouteEnum.RESULT} element={<PublicRoute element={ResultPage} />} />
 
-            {/* PRIVATE */}
-            <Route path={AppRouteEnum.MAIN} element={<PrivateRouteMainPage element={MainPage} />} />
-            <Route
-                path={AppRouteEnum.FEEDBACKS}
-                element={<PrivateRoute element={FeedbacksPage} />}
-            />
-            <Route path={AppRouteEnum.CALENDAR} element={<PrivateRoute element={CalendarPage} />} />
-            <Route path={AppRouteEnum.PROFILE} element={<PrivateRoute element={ProfilePage} />} />
-            <Route path={AppRouteEnum.SETTINGS} element={<PrivateRoute element={SettingsPage} />} />
-            <Route
-                path={AppRouteEnum.NOT_FOUND}
-                element={<PrivateRoute element={NotFoundPage} />}
-            />
+        {/* PRIVATE */}
+        <Route path={AppRouteEnum.MAIN} element={<PrivateRouteMainPage element={MainPage} />} />
+        <Route
+            path={AppRouteEnum.FEEDBACKS}
+            element={<PrivateRoute element={FeedbacksPage} />}
+        />
+        <Route path={AppRouteEnum.CALENDAR} element={<PrivateRoute element={CalendarPage} />} />
+        <Route path={AppRouteEnum.PROFILE} element={<PrivateRoute element={ProfilePage} />} />
+        <Route path={AppRouteEnum.SETTINGS} element={<PrivateRoute element={SettingsPage} />} />
+        <Route
+            path={AppRouteEnum.NOT_FOUND}
+            element={<PrivateRoute element={NotFoundPage} />}
+        />
 
-            {/* DEFAULT */}
-            <Route path='*' element={<DefaultRoute />} />
-        </Routes>
-    );
-};
+        {/* DEFAULT */}
+        <Route path='*' element={<DefaultRoute />} />
+    </Routes>
+);
+
 
 export default AppRoutes;
