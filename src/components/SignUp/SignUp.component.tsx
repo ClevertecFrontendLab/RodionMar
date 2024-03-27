@@ -7,6 +7,8 @@ import { Auth } from '@shared/types/auth.type';
 
 import styles from './index.module.scss';
 import { DataTestEnum } from '@constants/data-tests.enum';
+import { emailRules } from './input-rules/email-rules';
+import { passwordRules } from './input-rules/password-rules';
 
 type MenuItem = Required<MenuProps>['items'][number];
 type FinishValues = {
@@ -38,19 +40,6 @@ export const SignUpComponent = ({ handleSignUp, handleRedirectToSignIn }: SignUp
         {
             label: <Link className={styles.menuLabel}>Регистрация</Link>,
             key: '2',
-        },
-    ];
-
-    const emailRules = [
-        { required: true, pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/, message: '' },
-    ];
-
-    const passwordRules = [
-        {
-            required: true,
-            min: 8,
-            pattern: /^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*\d).{8,}$/,
-            message: '',
         },
     ];
 

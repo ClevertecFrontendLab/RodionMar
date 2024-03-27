@@ -16,6 +16,8 @@ import { ProfileRequest } from '@shared/types/profile-request.type';
 import moment from 'moment';
 import React from 'react';
 import { DataTestEnum } from '@constants/data-tests.enum';
+import { emailRules } from './input-rules/email-rules';
+import { additionalPasswordRules } from './input-rules/additional-password-rules';
 
 type FinishValues = {
     email: string;
@@ -70,16 +72,11 @@ export const ProfileFormComponent = ({
         }
     }, [profile, setFileList]);
 
-    const emailRules = [
-        { required: true, pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/, message: '' },
-    ];
 
     const passwordRules = [
         {
             required: passwordChanged,
-            min: 8,
-            pattern: /^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*\d).{8,}$/,
-            message: '',
+            ...additionalPasswordRules
         },
     ];
 
