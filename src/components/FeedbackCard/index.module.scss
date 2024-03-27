@@ -27,6 +27,10 @@
         }
     }
 
+    .avatar {
+        border-radius: 50%;
+    }
+
     .messageCell {
         display: flex;
         flex-direction: column;

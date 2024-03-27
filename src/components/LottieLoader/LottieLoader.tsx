@@ -2,6 +2,7 @@ import loaderAnimation from './loader.json';
 import Lottie from 'react-lottie';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const LottieLoader = () => {
     const defaultOptions = {
@@ -14,7 +15,7 @@ export const LottieLoader = () => {
     };
 
     return (
-        <div className={styles.wrapper} data-test-id='loader'>
+        <div className={styles.wrapper} data-test-id={DataTestEnum.LOADER}>
             <Lottie options={defaultOptions} height={150} width={150} />
         </div>
     );

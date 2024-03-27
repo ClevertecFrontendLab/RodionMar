@@ -1,8 +1,9 @@
-import { TExercise } from './exersice.type';
+import { Exercise } from './exersice.type';
 
-export type TCreateTraining = {
+export type CreateTraining = {
     name: string;
     date: string;
+    exercises: Exercise[];
     isImplementation?: boolean;
     parameters?: {
         repeat: boolean;
@@ -10,5 +11,4 @@ export type TCreateTraining = {
         jointTraining: boolean;
         participants: string[];
     };
-    exercises: TExercise[];
 };

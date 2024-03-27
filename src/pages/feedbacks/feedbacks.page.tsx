@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     FeedbackErrorSelector,
     FeedbackPendingSelector,
     FeedbackSelector,
 } from './store/feedback.selector';
-import { useAppSelector, history, AppDispatch } from '@redux/configure-store';
+import { useAppSelector, history, useAppDispatch } from '@redux/configure-store';
 import { useLocation } from 'react-router-dom';
 
 import cn from 'classnames';
@@ -16,8 +16,8 @@ import { FeedbackCard } from '@components/FeedbackCard';
 import { FeedbackModal } from '@components/FeedbackModal';
 import { NoFeedbacks } from '@components/NoFeedbacks';
 
-import { TCreateFeedback } from '@shared/types/create-feedback.type';
-import { TCreateFeedbackResponse } from './types/createFeedbackResponse.type';
+import { CreateFeedback } from '@shared/types/create-feedback.type';
+import { CreateFeedbackResponse } from './types/createFeedbackResponse.type';
 
 import { Layout, Row, Col, Space, Breadcrumb, Button } from 'antd';
 
@@ -33,6 +33,7 @@ import { fetchCreateFeedback, fetchFeedbacks } from './store/feedback.actions';
 import { ResultModal } from '@components/ResultModal';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { PageEnum } from '@constants/pages.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const items = [
     {
@@ -46,7 +47,7 @@ const items = [
 ];
 
 export const FeedbacksPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const [isSiderOpened, setIsSidebarOpened] = useState(true);
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -83,7 +84,6 @@ export const FeedbacksPage = () => {
         dispatch(fetchFeedbacks());
 
         return () => window.removeEventListener('resize', handleResize);
-
     }, [dispatch, fetchErrors]);
 
     const location = useLocation();
@@ -97,7 +97,7 @@ export const FeedbacksPage = () => {
     }, [location.state]);
 
     const handleResponseCreateFeedback = (
-        response: TCreateFeedbackResponse,
+        response: CreateFeedbackResponse,
         setIsSuccessModalOpen: (value: boolean) => void,
         setIsErrorModalOpen: (value: boolean) => void,
     ) => {
@@ -109,7 +109,7 @@ export const FeedbacksPage = () => {
         }
     };
 
-    const handleFeedback = async (data: TCreateFeedback) => {
+    const handleFeedback = async (data: CreateFeedback) => {
         const response = await dispatch(fetchCreateFeedback(data));
         dispatch(fetchFeedbacks());
 
@@ -119,18 +119,16 @@ export const FeedbacksPage = () => {
     const setFeedbackHandler = () => {
         setIsErrorModalOpen(false);
         setIsFeedbackModalOpen(true);
-    }
+    };
 
     const serverErrorModalButtonHandler = () => {
         setIsServerErrorModalOpen(false);
         history.push('/main');
-    }
+    };
 
     return (
         <Layout className={styles.mainLayout}>
-            {fetchPending !== undefined && fetchPending === true && (
-                <LottieLoader data-test-id='loader' />
-            )}
+            {fetchPending !== undefined && fetchPending === true && <LottieLoader />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -187,7 +185,7 @@ export const FeedbacksPage = () => {
                                 size='large'
                                 className={cn(styles.button, styles.primaryButton)}
                                 onClick={() => setIsFeedbackModalOpen(true)}
-                                data-test-id='write-review'
+                                data-test-id={DataTestEnum.WRITE_REVIEW}
                                 block
                             >
                                 Написать отзыв
@@ -199,7 +197,7 @@ export const FeedbacksPage = () => {
                                 size='large'
                                 onClick={handleShowAllFeedbacks}
                                 className={cn(styles.button, styles.textButton)}
-                                data-test-id='all-reviews-button'
+                                data-test-id={DataTestEnum.ALL_REVIEWS_BUTTON}
                                 block
                             >
                                 {showAllFeedbacks ? 'Свернуть все отзывы' : 'Развернуть все отзывы'}
@@ -219,7 +217,7 @@ export const FeedbacksPage = () => {
                 title='Отзыв успешно опубликован'
                 subTitle={null}
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Button
                         type='primary'
                         size='large'
@@ -238,7 +236,7 @@ export const FeedbacksPage = () => {
                 title='Данные не сохранились'
                 subTitle='Что-то пошло не так. Попробуйте ещё раз.'
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Row className={styles.errorButtons} gutter={8}>
                         <Col span={12}>
                             <Button
@@ -247,7 +245,7 @@ export const FeedbacksPage = () => {
                                 htmlType='button'
                                 className={cn(styles.button, styles.errorButton)}
                                 onClick={setFeedbackHandler}
-                                data-test-id='write-review-not-saved-modal'
+                                data-test-id={DataTestEnum.WRITE_REVIEW_NOT_SAVED_MODAL}
                                 block
                             >
                                 Написать отзыв
@@ -273,7 +271,7 @@ export const FeedbacksPage = () => {
                 title='Что-то пошло не так'
                 subTitle='Произошла ошибка, попробуйте ещё раз.'
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Button
                         type='primary'
                         size='large'

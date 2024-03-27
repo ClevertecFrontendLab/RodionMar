@@ -8,19 +8,19 @@ import {
     deleteTraining,
 } from './training.actions';
 
-import { TTrainingResponse } from '../../../shared/types/training-response.type';
-import { TTrainingCatalogItem } from '@shared/types/training-catalog-item.type';
+import { TrainingResponse } from '../../../shared/types/training-response.type';
+import { TrainingCatalogItem } from '@shared/types/training-catalog-item.type';
 
-type TCalendarError = {
+type CalendarError = {
     status?: number;
     error?: string;
     message?: string;
 };
 
-type TInitialState = {
-    trainings: TTrainingResponse[];
-    trainingsCatalog: TTrainingCatalogItem[];
-    errors: TCalendarError | null;
+type InitialState = {
+    trainings: TrainingResponse[];
+    trainingsCatalog: TrainingCatalogItem[];
+    errors: CalendarError | null;
     pending: boolean;
 };
 
@@ -29,7 +29,7 @@ const initialState = {
     trainingsCatalog: [],
     errors: null,
     pending: false,
-} as TInitialState;
+} as InitialState;
 
 const calendarSlice = createSlice({
     name: 'training',
@@ -92,7 +92,7 @@ const calendarSlice = createSlice({
             })
             .addCase(deleteTraining.rejected, (state, action) => {
                 state.pending = false;
-                state.errors = action.payload as TCalendarError;
+                state.errors = action.payload as CalendarError;
             });
     },
 });

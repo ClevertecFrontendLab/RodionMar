@@ -29,26 +29,28 @@ import {
     updateTraining,
 } from './store/training.actions';
 import { clearErrors } from './store/training.slice';
-import { CalendarAlert } from '@components/CalendarAlert';
-import { TGetResponse } from '@shared/types/getResponse.type';
+import { ModalAlert } from '@components/ModalAlert';
+import { GetResponse } from '@shared/types/getResponse.type';
 import { BadgeComponent } from '@components/Badge';
-import { TTrainingName } from '@shared/types/training-name.type';
+import { TrainingName } from '@shared/types/training-name.type';
 import { TrainingListModal } from '@components/TrainingsListModal';
-import { TTrainingResponse } from '@shared/types/training-response.type';
-import { TTrainingRequest } from '@shared/types/training-request.type';
-import { DateFormatEnum } from './constants/date-formats.enum';
+import { TrainingResponse } from '@shared/types/training-response.type';
+import { TrainingRequest } from '@shared/types/training-request.type';
+import { DateFormatEnum } from '../../constants/date-formats.enum';
+import { fetchTariffList } from '@pages/settings/store/settings.actions';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const CalendarPage = () => {
     const [isSiderOpened, setIsSidebarOpened] = useState(false);
     const [isTrainingListModalOpened, setIsTrainingListModalOpened] = useState(false);
     const [value, setValue] = useState<Moment>(moment);
     const [selectedValue, setSelectedValue] = useState<Moment>();
-    const [selectedCellTrainings, setSelectedCellTrainings] = useState<TTrainingResponse[]>([]);
+    const [selectedCellTrainings, setSelectedCellTrainings] = useState<TrainingResponse[]>([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isServerErrorModalOpen, setIsServerErrorModalOpen] = useState(false);
     const [isSaveDataErrorModalOpen, setIsSaveDataErrorModalOpen] = useState(false);
     const [mobileTrainingListCoordinate, setmobileTrainingListCoordinate] = useState<number>();
-    const [prevTrainings, setPrevTrainings] = useState<TTrainingResponse[]>([]);
+    const [prevTrainings, setPrevTrainings] = useState<TrainingResponse[]>([]);
     const [selectedMonth, setSelectedMonth] = useState(moment().startOf('month').month());
     const dispatch = useAppDispatch();
     const trainings = useAppSelector(TrainingsSelector);
@@ -60,7 +62,7 @@ export const CalendarPage = () => {
     }, [trainings]);
 
     const handleResponseTrainingsCatalog = useCallback(
-        (response: TGetResponse) => {
+        (response: GetResponse) => {
             if (response.meta.requestStatus === 'fulfilled') {
                 return true;
             } else {
@@ -73,7 +75,7 @@ export const CalendarPage = () => {
     const handleTrainingsCatalog = useCallback(async () => {
         const response = await dispatch(fetchTrainingsCatalog());
 
-        const responseData: TGetResponse = {
+        const responseData: GetResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -89,7 +91,6 @@ export const CalendarPage = () => {
         handleTrainingsCatalog();
 
         return () => window.removeEventListener('resize', handleResize);
-
     }, [handleTrainingsCatalog]);
 
     useEffect(() => {
@@ -106,9 +107,8 @@ export const CalendarPage = () => {
     );
     useEffect(() => {
         const calendarCellCoordinates = calendarCell?.getBoundingClientRect();
-        
+
         if (calendarCellCoordinates) {
-            console.log(calendarCellCoordinates?.height)
             setmobileTrainingListCoordinate(
                 calendarCellCoordinates?.y - 8 + calendarCellCoordinates?.height,
             );
@@ -128,7 +128,7 @@ export const CalendarPage = () => {
 
     const onSelect = useCallback(
         (newValue: Moment) => {
-            const listData: TTrainingResponse[] = [];
+            const listData: TrainingResponse[] = [];
 
             trainings.forEach((training) => {
                 const trainingDate = moment(training.date);
@@ -148,7 +148,14 @@ export const CalendarPage = () => {
             onSelect(selectedValue);
             handleSetTrainingListModal();
         }
-    }, [trainings, prevTrainings, selectedValue, isTrainingListModalOpened, onSelect, handleSetTrainingListModal]);
+    }, [
+        trainings,
+        prevTrainings,
+        selectedValue,
+        isTrainingListModalOpened,
+        onSelect,
+        handleSetTrainingListModal,
+    ]);
 
     const onPanelChange = (newDate: Moment) => {
         const newMonth = newDate.month();
@@ -156,7 +163,7 @@ export const CalendarPage = () => {
     };
 
     const getListData = (value: Moment) => {
-        const listData: { name: TTrainingName }[] = [];
+        const listData: { name: TrainingName }[] = [];
         trainings.forEach((training) => {
             const trainingDate = moment(training.date);
             if (value.isSame(trainingDate, 'day')) {
@@ -168,7 +175,10 @@ export const CalendarPage = () => {
         return listData;
     };
 
-    const cellClickHandler = (date: Moment, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const cellClickHandler = (
+        date: Moment,
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    ) => {
         onSelect(date);
         handleSetTrainingListModal();
         event.stopPropagation();
@@ -177,7 +187,7 @@ export const CalendarPage = () => {
     const mobileCellClickHandler = (date: Moment) => {
         onSelect(date);
         selectedMonth === date.month() ? handleSetTrainingListModal() : null;
-    }
+    };
 
     const dateFullCellRender = (date: Moment) => {
         const listData = getListData(date);
@@ -188,7 +198,7 @@ export const CalendarPage = () => {
         return windowWidth > 481 ? (
             <div
                 className='ant-picker-cell-inner ant-picker-calendar-date'
-                onClick={event => cellClickHandler(date, event)}
+                onClick={(event) => cellClickHandler(date, event)}
             >
                 <div className='ant-picker-calendar-date-value'>{dayOfMonth}</div>
                 <div className={'ant-picker-calendar-date-content'}>
@@ -212,7 +222,7 @@ export const CalendarPage = () => {
     };
 
     const handleResponseTraining = (
-        response: Pick<TGetResponse, 'meta'> & { payload: TTrainingResponse | string },
+        response: Pick<GetResponse, 'meta'> & { payload: TrainingResponse | string },
     ) => {
         if (response.meta.requestStatus === 'fulfilled') {
             dispatch(fetchTrainings());
@@ -223,23 +233,23 @@ export const CalendarPage = () => {
         }
     };
 
-    const handleCreateTraining = async (data: TTrainingRequest) => {
+    const handleCreateTraining = async (data: TrainingRequest) => {
         const response = await dispatch(createTraining(data));
 
         const reponseData = {
             meta: response.meta,
-            payload: response.payload as TTrainingResponse | string,
+            payload: response.payload as TrainingResponse | string,
         };
 
         handleResponseTraining(reponseData);
     };
 
-    const handleUpdateTraining = async (data: TTrainingRequest) => {
+    const handleUpdateTraining = async (data: TrainingRequest) => {
         const response = await dispatch(updateTraining(data));
 
         const reponseData = {
             meta: response.meta,
-            payload: response.payload as TTrainingResponse | string,
+            payload: response.payload as TrainingResponse | string,
         };
 
         handleResponseTraining(reponseData);
@@ -254,18 +264,21 @@ export const CalendarPage = () => {
         dispatch(clearErrors());
         handleTrainingsCatalog();
         setIsServerErrorModalOpen(false);
-    }
+    };
 
     const saveDataErrorModalHandler = () => {
         dispatch(clearErrors());
         setIsSaveDataErrorModalOpen(false);
     };
 
+    const handleClickSettingsButton = async () => {
+        const response = await dispatch(fetchTariffList());
+        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
+    };
+
     return (
         <Layout className={styles.mainLayout}>
-            {fetchPending !== undefined && fetchPending === true && (
-                <LottieLoader data-test-id='loader' />
-            )}
+            {fetchPending !== undefined && fetchPending === true && <LottieLoader />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -279,9 +292,7 @@ export const CalendarPage = () => {
                             <Col>
                                 <Breadcrumb className={styles.breadcrumbs}>
                                     <Breadcrumb.Item>
-                                        <a
-                                            onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}
-                                        >
+                                        <a onClick={() => history.push(AppRouteEnum.BASIC_MAIN)}>
                                             Главная
                                         </a>
                                     </Breadcrumb.Item>
@@ -296,6 +307,7 @@ export const CalendarPage = () => {
                                     type='text'
                                     icon={<SettingOutlined className={styles.settingIconStyles} />}
                                     size='large'
+                                    onClick={handleClickSettingsButton}
                                 >
                                     <Text className={styles.settingTextStyles}>Настройки</Text>
                                 </Button>
@@ -314,8 +326,8 @@ export const CalendarPage = () => {
                     />
                 </Content>
             </Layout>
-            <CalendarAlert
-                dataTestId='modal-no-review'
+            <ModalAlert
+                dataTestId={DataTestEnum.MODAL_NO_REVIEW}
                 isModalOpen={isServerErrorModalOpen}
                 type='info'
                 message='При открытии данных произошла ошибка'
@@ -324,7 +336,7 @@ export const CalendarPage = () => {
                 onCloseHandler={serverErrorModalCloseHandler}
                 button={
                     <Button
-                        data-test-id='modal-error-user-training-button'
+                        data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_BUTTON}
                         type='primary'
                         size='large'
                         htmlType='button'
@@ -335,7 +347,7 @@ export const CalendarPage = () => {
                     </Button>
                 }
             />
-            <CalendarAlert
+            <ModalAlert
                 isModalOpen={isSaveDataErrorModalOpen}
                 type='error'
                 message='При сохранении данных произошла ошибка'
@@ -345,7 +357,7 @@ export const CalendarPage = () => {
                 onCloseHandler={saveDataErrorModalHandler}
                 button={
                     <Button
-                        data-test-id='modal-error-user-training-button'
+                        data-test-id={DataTestEnum.MODAL_ERROR_USER_TRAINING_BUTTON}
                         type='primary'
                         size='large'
                         htmlType='button'
@@ -362,7 +374,9 @@ export const CalendarPage = () => {
                 isModalOpen={isTrainingListModalOpened}
                 getContainer={
                     isTrainingListModalOpened && windowWidth > 480
-                        ? (calendarCell ? calendarCell : document.body)
+                        ? calendarCell
+                            ? calendarCell
+                            : document.body
                         : document.body
                 }
                 modalClassname={styles.modalWrapper}

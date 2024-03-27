@@ -3,15 +3,16 @@ import { Layout, Typography, Col, Row, Button, Card } from 'antd';
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Footer } = Layout;
 const { Text } = Typography;
 
-export const FooterComponent = ({
-    handleResponseFeedbacks,
-}: {
+type FooterProps = {
     handleResponseFeedbacks: () => void;
-}) => (
+};
+
+export const FooterComponent = ({ handleResponseFeedbacks }: FooterProps) => (
     <Footer className={styles.footerStyles}>
         <Row className={styles.wrapperStyles}>
             <Col className={styles.buttonCol}>
@@ -19,7 +20,7 @@ export const FooterComponent = ({
                     type='link'
                     className={styles.commentButtonStyles}
                     onClick={handleResponseFeedbacks}
-                    data-test-id='see-reviews'
+                    data-test-id={DataTestEnum.SEE_REVIEWS}
                     block
                 >
                     Смотреть отзывы

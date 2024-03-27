@@ -4,11 +4,11 @@ import { StarFilled, StarOutlined } from '@ant-design/icons';
 
 import styles from './index.module.scss';
 
-import { TGetFeedback } from '@shared/types/get-feedback.type';
+import { GetFeedback } from '@shared/types/get-feedback.type';
 
 const { Text } = Typography;
 
-export const FeedbackCard = ({ fullName, imageSrc, message, rating, createdAt }: TGetFeedback) => {
+export const FeedbackCard = ({ fullName, imageSrc, message, rating, createdAt }: GetFeedback) => {
     const date = new Date(createdAt);
     const day = date.getDate();
     const month = date.getMonth() + 1;
@@ -33,6 +33,9 @@ export const FeedbackCard = ({ fullName, imageSrc, message, rating, createdAt }:
                         src={imageSrc ? imageSrc : '../../../Avatar.svg'}
                         alt='avatar'
                         preview={false}
+                        width={42}
+                        height={42}
+                        className={styles.avatar}
                     />
                     <Text className={styles.fullname}>{fullName || 'Пользователь'}</Text>
                 </Col>

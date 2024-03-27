@@ -12,36 +12,39 @@ import {
 } from 'antd';
 import styles from './index.module.scss';
 import { BadgeComponent } from '@components/Badge';
-import { TTrainingName } from '@shared/types/training-name.type';
+import { TrainingName } from '@shared/types/training-name.type';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { TExercise } from '@shared/types/exersice.type';
+import { Exercise } from '@shared/types/exersice.type';
 import cn from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
-import { TTrainingRequest } from '@shared/types/training-request.type';
-import { DrawerNameEnum } from '@constants/drawer-name.type';
+import { TrainingRequest } from '@shared/types/training-request.type';
+import { DrawerName } from '@constants/drawer-names.enum';
 import { ExerciseEnum } from './exercise.enum';
 import moment from 'moment';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
-type TDrawerComponentProps = {
-    type: DrawerNameEnum;
+type DrawerType = DrawerName.CREATE | DrawerName.UPDATE | DrawerName.VIEW;
+
+type CalendarDrawerProps = {
+    type: DrawerType;
     isOpened: boolean;
     setIsOpened: (value: boolean) => void;
     title: React.ReactNode;
-    selectedOption: TTrainingName;
+    selectedOption: TrainingName;
     date: string;
-    setRequestTrainingObject: (value: TTrainingRequest) => void;
-    requestTrainingObject: TTrainingRequest | null;
-    setUpdateTraining: (value: TTrainingRequest) => void;
-    updateTraining: TTrainingRequest | null;
+    setRequestTrainingObject: (value: TrainingRequest) => void;
+    requestTrainingObject: TrainingRequest | null;
+    setUpdateTraining: (value: TrainingRequest) => void;
+    updateTraining: TrainingRequest | null;
     isPastDate: (dateString: string) => boolean;
 };
 
-type TFormValues = Record<string, string | number>;
+type FormValues = Record<string, string | number>;
 
 const { Text } = Typography;
 
-export const DrawerComponent = ({
+export const CalendarDrawerComponent = ({
     type,
     isOpened,
     setIsOpened,
@@ -53,13 +56,13 @@ export const DrawerComponent = ({
     setUpdateTraining,
     updateTraining,
     isPastDate,
-}: TDrawerComponentProps) => {
+}: CalendarDrawerProps) => {
     const [form] = Form.useForm();
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [formHeight, setFormHeight] = useState(0);
     const [selectedExercises, setSelectedExercises] = useState<number[]>([]);
-    const [exercises, setExercises] = useState<TExercise[]>([]);
+    const [exercises, setExercises] = useState<Exercise[]>([]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -85,8 +88,8 @@ export const DrawerComponent = ({
         }
     }, [isOpened]);
 
-    const createExerciseObjects = (formValues: TFormValues): TExercise[] => {
-        const updatedExercises: TExercise[] = [...exercises];
+    const createExerciseObjects = (formValues: FormValues): Exercise[] => {
+        const updatedExercises: Exercise[] = [...exercises];
 
         Object.entries(formValues).forEach(([key, value]) => {
             const [type, indexStr] = key.split('-');
@@ -149,7 +152,7 @@ export const DrawerComponent = ({
         const exerciseObjects = createExerciseObjects(formValues);
         const isPast = isPastDate(date);
 
-        if (exerciseObjects && type !== DrawerNameEnum.VIEW) {
+        if (exerciseObjects && type !== DrawerName.VIEW) {
             if (requestTrainingObject) {
                 const updatedExercises = requestTrainingObject.exercises.filter((_, index) => {
                     return (
@@ -209,7 +212,7 @@ export const DrawerComponent = ({
     };
 
     useEffect(() => {
-        const updatedExercises: TExercise[] = [];
+        const updatedExercises: Exercise[] = [];
 
         const trainingObject =
             updateTraining?.name === selectedOption ? updateTraining : requestTrainingObject;
@@ -249,7 +252,7 @@ export const DrawerComponent = ({
 
     const handleAddExercise = useCallback(() => {
         setExercises((prevExercises) => {
-            const newExercise: TExercise = {
+            const newExercise: Exercise = {
                 name: '',
                 approaches: 1,
                 weight: 0,
@@ -274,22 +277,16 @@ export const DrawerComponent = ({
     };
 
     const changeCheckboxHandler = (event: CheckboxChangeEvent, index: number) => {
-        const checkedIndex =
-            typeof index === 'number'
-                ? index
-                : parseInt(index, 10);
-        const updatedSelectedExercises = event.target
-            .checked
+        const checkedIndex = typeof index === 'number' ? index : parseInt(index, 10);
+        const updatedSelectedExercises = event.target.checked
             ? [...selectedExercises, checkedIndex]
-            : selectedExercises.filter(
-                (i) => i !== checkedIndex,
-            );
+            : selectedExercises.filter((i) => i !== checkedIndex);
         setSelectedExercises(updatedSelectedExercises);
-    }
+    };
 
     return (
         <Drawer
-            data-test-id='modal-drawer-right'
+            data-test-id={DataTestEnum.MODAL_DRAWER_RIGHT}
             open={isOpened}
             title={
                 <>
@@ -320,11 +317,13 @@ export const DrawerComponent = ({
             )}
             width={408}
             placement={windowWidth > 480 ? 'right' : 'bottom'}
-            closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
+            closeIcon={
+                <CloseOutlined data-test-id={DataTestEnum.MODAL_DRAWER_RIGHT_BUTTON_CLOSE} />
+            }
             footer={
-                type !== DrawerNameEnum.VIEW ? (
+                type !== DrawerName.VIEW ? (
                     <Row>
-                        <Col span={type === DrawerNameEnum.UPDATE ? 12 : 24}>
+                        <Col span={type === DrawerName.UPDATE ? 12 : 24}>
                             <Button
                                 type='link'
                                 size='large'
@@ -337,7 +336,7 @@ export const DrawerComponent = ({
                                 Добавить ещё
                             </Button>
                         </Col>
-                        {type === DrawerNameEnum.UPDATE ? (
+                        {type === DrawerName.UPDATE ? (
                             <Col span={12}>
                                 <Button
                                     type='text'
@@ -371,15 +370,17 @@ export const DrawerComponent = ({
                                 className={styles.inputFormItem}
                             >
                                 <Input
-                                    data-test-id={`modal-drawer-right-input-exercise${index}`}
+                                    data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_EXERCISE}${index}`}
                                     placeholder='Упражнение'
                                     size='small'
                                     addonAfter={
-                                        type === DrawerNameEnum.UPDATE ? (
+                                        type === DrawerName.UPDATE ? (
                                             <Checkbox
                                                 checked={selectedExercises.includes(index)}
-                                                onChange={(event) => changeCheckboxHandler(event, index)}
-                                                data-test-id={`modal-drawer-right-checkbox-exercise${index}`}
+                                                onChange={(event) =>
+                                                    changeCheckboxHandler(event, index)
+                                                }
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_CHECKBOX_EXERCISE}${index}`}
                                             />
                                         ) : null
                                     }
@@ -415,7 +416,7 @@ export const DrawerComponent = ({
                                                 addonBefore='+'
                                                 placeholder='1'
                                                 name={`approaches-${index}`}
-                                                data-test-id={`modal-drawer-right-input-approach${index}`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_APPROACH}${index}`}
                                             />
                                         </Form.Item>
                                     </Col>
@@ -433,7 +434,7 @@ export const DrawerComponent = ({
                                                     size='small'
                                                     placeholder='0'
                                                     name={`weight-${index}`}
-                                                    data-test-id={`modal-drawer-right-input-weight${index}`}
+                                                    data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_WEIGHT}${index}`}
                                                 />
                                             </Form.Item>
                                         </Col>
@@ -451,7 +452,7 @@ export const DrawerComponent = ({
                                                     size='small'
                                                     placeholder='1'
                                                     name={`replays-${index}`}
-                                                    data-test-id={`modal-drawer-right-input-quantity${index}`}
+                                                    data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_QUANTITY}${index}`}
                                                 />
                                             </Form.Item>
                                         </Col>
@@ -464,11 +465,11 @@ export const DrawerComponent = ({
                     <Space direction='vertical' className={styles.functionalWrapper}>
                         <Form.Item initialValue='' name={`name-0`} className={styles.inputFormItem}>
                             <Input
-                                data-test-id={`modal-drawer-right-input-exercise0`}
+                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_EXERCISE}0`}
                                 placeholder='Упражнение'
                                 size='small'
                                 addonAfter={
-                                    type === DrawerNameEnum.UPDATE ? (
+                                    type === DrawerName.UPDATE ? (
                                         <Checkbox
                                             checked={!!selectedExercises.length}
                                             onChange={(e) => {
@@ -476,11 +477,11 @@ export const DrawerComponent = ({
                                                 const updatedSelectedExercises = e.target.checked
                                                     ? [...selectedExercises, checkedIndex]
                                                     : selectedExercises.filter(
-                                                        (i) => i !== checkedIndex,
-                                                    );
+                                                          (i) => i !== checkedIndex,
+                                                      );
                                                 setSelectedExercises(updatedSelectedExercises);
                                             }}
-                                            data-test-id={`modal-drawer-right-checkbox-exercise0`}
+                                            data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_CHECKBOX_EXERCISE}0`}
                                         />
                                     ) : null
                                 }
@@ -515,7 +516,7 @@ export const DrawerComponent = ({
                                             size='small'
                                             addonBefore='+'
                                             placeholder='1'
-                                            data-test-id={`modal-drawer-right-input-approach0`}
+                                            data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_APPROACH}0`}
                                         />
                                     </Form.Item>
                                 </Col>
@@ -532,7 +533,7 @@ export const DrawerComponent = ({
                                                 min={0}
                                                 size='small'
                                                 placeholder='0'
-                                                data-test-id={`modal-drawer-right-input-weight0`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_WEIGHT}0`}
                                             />
                                         </Form.Item>
                                     </Col>
@@ -549,7 +550,7 @@ export const DrawerComponent = ({
                                                 min={1}
                                                 size='small'
                                                 placeholder='1'
-                                                data-test-id={`modal-drawer-right-input-quantity0`}
+                                                data-test-id={`${DataTestEnum.MODAL_DRAWER_RIGHT_INPUT_QUANTITY}0`}
                                             />
                                         </Form.Item>
                                     </Col>

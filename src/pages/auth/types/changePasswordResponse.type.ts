@@ -1,4 +1,4 @@
-export type TChangePasswordResponse = {
+export type ChangePasswordResponse = {
     meta: {
         requestStatus: string;
     };

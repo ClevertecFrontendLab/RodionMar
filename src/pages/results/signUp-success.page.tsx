@@ -5,6 +5,7 @@ import { Result, Button } from 'antd';
 
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const SignUpSuccess = () => {
     const location = useLocation();
@@ -30,7 +31,7 @@ export const SignUpSuccess = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={() => history.push(AppRouteEnum.AUTH)}
-                    data-test-id='registration-enter-button'
+                    data-test-id={DataTestEnum.REGISTRATION_ENTER_BUTTON}
                     block
                 >
                     Войти

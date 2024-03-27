@@ -5,34 +5,35 @@ import { BadgeComponent } from '@components/Badge';
 import cn from 'classnames';
 
 import styles from './index.module.scss';
-import { TTrainingResponse } from '@shared/types/training-response.type';
+import { TrainingResponse } from '@shared/types/training-response.type';
 import { EditOutlined, PlusOutlined, ArrowLeftOutlined, CloseOutlined } from '@ant-design/icons';
 import { useCallback, useEffect, useState } from 'react';
-import { TTrainingCatalogItem } from '@shared/types/training-catalog-item.type';
-import { TTrainingName } from '@shared/types/training-name.type';
-import { DrawerComponent } from '@components/Drawer';
-import { TTrainingRequest } from '@shared/types/training-request.type';
-import { DrawerNameEnum } from '@constants/drawer-name.type';
+import { TrainingCatalogItem } from '@shared/types/training-catalog-item.type';
+import { TrainingName } from '@shared/types/training-name.type';
+import { CalendarDrawerComponent } from '@components/CalendarDrawer';
+import { TrainingRequest } from '@shared/types/training-request.type';
+import { DrawerName } from '@constants/drawer-names.enum';
 import moment from 'moment';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Text } = Typography;
 
-type TTrainingListModalProps = {
+type TrainingListModalProps = {
     isModalOpen: boolean;
     setIsModalOpened: (value: boolean) => void;
     date: string;
-    listOfTrainings?: TTrainingResponse[];
     getContainer: HTMLElement;
-    modalClassname?: string;
-    trainingsCatalog: TTrainingCatalogItem[];
-    handleCreateTraining: (data: TTrainingRequest) => void;
-    handleUpdateTraining: (data: TTrainingRequest) => void;
+    trainingsCatalog: TrainingCatalogItem[];
+    handleCreateTraining: (data: TrainingRequest) => void;
+    handleUpdateTraining: (data: TrainingRequest) => void;
     mobileTrainingListCoordinate: number | undefined;
     transitionStep: 0 | null;
     isSaveDataErrorModalOpen: boolean;
+    listOfTrainings?: TrainingResponse[];
+    modalClassname?: string;
 };
 
-type TSelectOption = {
+type SelectOption = {
     value: string;
     label: string;
 };
@@ -50,17 +51,17 @@ export const TrainingListModal = ({
     mobileTrainingListCoordinate,
     transitionStep,
     isSaveDataErrorModalOpen,
-}: TTrainingListModalProps) => {
+}: TrainingListModalProps) => {
     const [step, setStep] = useState<1 | 2>(1);
     const [closable, setClosable] = useState(true);
-    const [selectedOption, setSelectedOption] = useState<TTrainingName | null>(null);
-    const [selectOptions, setSelectOptions] = useState<TSelectOption[]>([]);
+    const [selectedOption, setSelectedOption] = useState<TrainingName | null>(null);
+    const [selectOptions, setSelectOptions] = useState<SelectOption[]>([]);
     const [isDrawerOpened, setIsDrawerOpened] = useState(false);
-    const [drawerType, setDrawerType] = useState<DrawerNameEnum>(DrawerNameEnum.CREATE);
-    const [requestTrainingObject, setRequestTrainingObject] = useState<TTrainingRequest | null>(
+    const [drawerType, setDrawerType] = useState<DrawerName>(DrawerName.CREATE);
+    const [requestTrainingObject, setRequestTrainingObject] = useState<TrainingRequest | null>(
         null,
     );
-    const [updateTraining, setUpdateTraining] = useState<TTrainingRequest | null>(null);
+    const [updateTraining, setUpdateTraining] = useState<TrainingRequest | null>(null);
 
     const isPastDate = (dateString: string): boolean => {
         const selectedDate = moment.utc(dateString, 'YYYY-MM-DD');
@@ -79,7 +80,7 @@ export const TrainingListModal = ({
     const handleSetClosable = (value: boolean) => {
         setClosable(value);
     };
-    const handleSetSelectedOption = (value: TTrainingName) => {
+    const handleSetSelectedOption = (value: TrainingName) => {
         setSelectedOption(value);
     };
 
@@ -96,8 +97,8 @@ export const TrainingListModal = ({
     }, [isModalOpen, transitionStep, isSaveDataErrorModalOpen]);
 
     const handleSelectOptions = useCallback(
-        (addOption: TSelectOption | null = null, isFuture = true) => {
-            let filteredOptions: TTrainingCatalogItem[] | TTrainingResponse[] = [];
+        (addOption: SelectOption | null = null, isFuture = true) => {
+            let filteredOptions: TrainingCatalogItem[] | TrainingResponse[] = [];
 
             if (isFuture) {
                 filteredOptions = trainingsCatalog.filter(
@@ -135,12 +136,11 @@ export const TrainingListModal = ({
 
     const addExerciseHandler = () => {
         setIsDrawerOpened(true);
-        setDrawerType(DrawerNameEnum.CREATE);
+        setDrawerType(DrawerName.CREATE);
     };
 
     const saveHandler = () => {
-        requestTrainingObject &&
-            requestTrainingObject.name === selectedOption
+        requestTrainingObject && requestTrainingObject.name === selectedOption
             ? handleCreateTraining(requestTrainingObject)
             : null;
         updateTraining && updateTraining.name === selectedOption
@@ -148,11 +148,11 @@ export const TrainingListModal = ({
             : null;
     };
 
-    const updateTrainingHandler = (training: TTrainingResponse) => {
+    const updateTrainingHandler = (training: TrainingResponse) => {
         if (training.isImplementation) {
             setSelectedOption(training.name);
             setUpdateTraining(training);
-            setDrawerType(DrawerNameEnum.VIEW);
+            setDrawerType(DrawerName.VIEW);
             setIsDrawerOpened(true);
             handleSelectOptions(null, false);
             return;
@@ -160,25 +160,24 @@ export const TrainingListModal = ({
             const newSelectedOption = training.name;
             setUpdateTraining(training);
             setSelectedOption(newSelectedOption);
-            const shouldHandleSelectOptions =
-                !!isPastDate(date);
+            const shouldHandleSelectOptions = !!isPastDate(date);
             handleSetStep(2);
             handleSelectOptions(
                 shouldHandleSelectOptions
                     ? {
-                        value: newSelectedOption,
-                        label: newSelectedOption,
-                    }
+                          value: newSelectedOption,
+                          label: newSelectedOption,
+                      }
                     : null,
                 !shouldHandleSelectOptions,
             );
         }
-    }
+    };
 
     const updateExerciseHandler = () => {
         setIsDrawerOpened(true);
-        setDrawerType(DrawerNameEnum.UPDATE);
-    }
+        setDrawerType(DrawerName.UPDATE);
+    };
 
     return (
         <>
@@ -195,10 +194,16 @@ export const TrainingListModal = ({
                     setIsModalOpened(false);
                     handleSetStep(1);
                 }}
-                closeIcon={<CloseOutlined data-test-id='modal-create-training-button-close' />}
+                closeIcon={
+                    <CloseOutlined data-test-id={DataTestEnum.MODAL_CREATE_TRAINING_BUTTON_CLOSE} />
+                }
                 closable={closable}
                 mask={false}
-                data-test-id={step === 1 ? 'modal-create-training' : 'modal-create-exercise'}
+                data-test-id={
+                    step === 1
+                        ? DataTestEnum.MODAL_CREATE_TRAINING
+                        : DataTestEnum.MODAL_CREATE_EXERCISE
+                }
                 destroyOnClose
             >
                 <Card
@@ -267,7 +272,9 @@ export const TrainingListModal = ({
                                 setSelectOptions([]);
                             }}
                             backIcon={
-                                <ArrowLeftOutlined data-test-id='modal-exercise-training-button-close' />
+                                <ArrowLeftOutlined
+                                    data-test-id={DataTestEnum.MODAL_EXERCISE_TRAINING_BUTTON_CLOSE}
+                                />
                             }
                             extra={
                                 <Select
@@ -284,7 +291,7 @@ export const TrainingListModal = ({
                                         if (isDrawerOpened) setIsDrawerOpened(false);
                                     }}
                                     defaultValue={selectedOption}
-                                    data-test-id='modal-create-exercise-select'
+                                    data-test-id={DataTestEnum.MODAL_CREATE_EXERCISE_SELECT}
                                 />
                             }
                             className={styles.pageHeader}
@@ -302,7 +309,7 @@ export const TrainingListModal = ({
                                         type='text'
                                         className={styles.badgeButton}
                                         onClick={() => updateTrainingHandler(training)}
-                                        data-test-id={`modal-update-training-edit-button${index}`}
+                                        data-test-id={`${DataTestEnum.MODAL_UPDATE_TRAINING_EDIT_BUTTON}${index}`}
                                         disabled={training.isImplementation}
                                         block
                                     >
@@ -344,8 +351,8 @@ export const TrainingListModal = ({
                             className={cn(styles.itemsContainer, styles.exercisesContainer)}
                         >
                             {updateTraining &&
-                                selectedOption === updateTraining.name &&
-                                updateTraining.exercises.length > 0 ? (
+                            selectedOption === updateTraining.name &&
+                            updateTraining.exercises.length > 0 ? (
                                 updateTraining.exercises.map((exercise, id) => (
                                     <Row
                                         key={id}
@@ -355,7 +362,7 @@ export const TrainingListModal = ({
                                         )}
                                         justify='space-between'
                                         onClick={updateExerciseHandler}
-                                        data-test-id={`modal-update-training-edit-button${id}`}
+                                        data-test-id={`${DataTestEnum.MODAL_UPDATE_TRAINING_EDIT_BUTTON}${id}`}
                                     >
                                         <Col>
                                             <Text className={styles.exercise}>{exercise.name}</Text>
@@ -366,8 +373,8 @@ export const TrainingListModal = ({
                                     </Row>
                                 ))
                             ) : requestTrainingObject &&
-                                requestTrainingObject.name === selectedOption &&
-                                requestTrainingObject?.exercises.length > 0 ? (
+                              requestTrainingObject.name === selectedOption &&
+                              requestTrainingObject?.exercises.length > 0 ? (
                                 requestTrainingObject.exercises.map((exercise, id) => (
                                     <Row
                                         key={id}
@@ -377,7 +384,7 @@ export const TrainingListModal = ({
                                         )}
                                         justify='space-between'
                                         onClick={updateExerciseHandler}
-                                        data-test-id={`modal-update-training-edit-button${id}`}
+                                        data-test-id={`${DataTestEnum.MODAL_UPDATE_TRAINING_EDIT_BUTTON}${id}`}
                                     >
                                         <Col>
                                             <Text className={styles.exercise}>{exercise.name}</Text>
@@ -401,32 +408,32 @@ export const TrainingListModal = ({
             </Modal>
             {selectedOption ? (
                 <>
-                    {[DrawerNameEnum.CREATE, DrawerNameEnum.UPDATE, DrawerNameEnum.VIEW].map(
+                    {[DrawerName.CREATE, DrawerName.UPDATE, DrawerName.VIEW].map(
                         (mapedDrawerType, index) => (
-                            <DrawerComponent
+                            <CalendarDrawerComponent
                                 key={index}
                                 type={drawerType && mapedDrawerType}
                                 isOpened={drawerType === mapedDrawerType && isDrawerOpened}
                                 setIsOpened={setIsDrawerOpened}
                                 title={
                                     <Row
-                                        gutter={drawerType === DrawerNameEnum.VIEW ? 0 : 12}
+                                        gutter={drawerType === DrawerName.VIEW ? 0 : 12}
                                         align='middle'
                                     >
                                         <Col>
-                                            {drawerType === DrawerNameEnum.CREATE ? (
+                                            {drawerType === DrawerName.CREATE ? (
                                                 <PlusOutlined />
-                                            ) : drawerType === DrawerNameEnum.UPDATE ? (
+                                            ) : drawerType === DrawerName.UPDATE ? (
                                                 <EditOutlined />
                                             ) : null}
                                         </Col>
                                         <Col>
                                             <Text className={styles.drawerTitle}>
-                                                {drawerType === DrawerNameEnum.CREATE
+                                                {drawerType === DrawerName.CREATE
                                                     ? 'Добавление упражнений'
-                                                    : drawerType === DrawerNameEnum.UPDATE
-                                                        ? 'Редактирование'
-                                                        : 'Просмотр упражнений'}
+                                                    : drawerType === DrawerName.UPDATE
+                                                    ? 'Редактирование'
+                                                    : 'Просмотр упражнений'}
                                             </Text>
                                         </Col>
                                     </Row>

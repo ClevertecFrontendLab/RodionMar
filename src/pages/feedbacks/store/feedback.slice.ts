@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchFeedbacks, fetchCreateFeedback } from './feedback.actions';
 
-import { TGetFeedback } from '@shared/types/get-feedback.type';
+import { GetFeedback } from '@shared/types/get-feedback.type';
 
-type TInitialState = {
-    feedbacks: TGetFeedback[];
+type InitialState = {
+    feedbacks: GetFeedback[];
     errors: string | number | null;
     pending: boolean;
 };
@@ -14,7 +14,7 @@ const initialState = {
     feedbacks: [],
     errors: null,
     pending: false,
-} as TInitialState;
+} as InitialState;
 
 const feedbackSlice = createSlice({
     name: 'feedback',

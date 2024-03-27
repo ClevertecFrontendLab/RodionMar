@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { AppDispatch, history } from '@redux/configure-store';
+import { history, useAppDispatch } from '@redux/configure-store';
 
 import cn from 'classnames';
 
@@ -19,10 +18,11 @@ import { logout } from '@pages/auth/store/auth.slice';
 
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-type TSidebarProps = {
+type SiderProps = {
     isSiderOpened: boolean;
     setIsSidebarOpened: (isSiderOpened: boolean) => void;
     windowWidth: number;
@@ -33,15 +33,17 @@ type TSidebarProps = {
 const { Sider } = Layout;
 const { Text } = Typography;
 
+const SIDER_BREAKPOINT = 705; 
+
 export const SiderComponent = ({
     isSiderOpened,
     setIsSidebarOpened,
     windowWidth,
     activeMenuItemKey = '',
     handleTrainings,
-}: TSidebarProps) => {
+}: SiderProps) => {
     const [activeItemKey, setActiveItemKey] = useState<string>('' || activeMenuItemKey);
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const toggleSidebar = () => {
         setIsSidebarOpened(!isSiderOpened);
@@ -50,10 +52,15 @@ export const SiderComponent = ({
     const handleClickTraining = () => {
         setActiveItemKey('1');
         if (handleTrainings) handleTrainings();
-    }
+    };
+
+    const handleClickProfile = () => {
+        setActiveItemKey('4');
+        history.push(AppRouteEnum.PROFILE, { fromServer: true });
+    };
 
     const renderSwitcherButton = () => {
-        if (windowWidth < 705) {
+        if (windowWidth < SIDER_BREAKPOINT) {
             return (
                 <Button
                     icon={
@@ -64,10 +71,10 @@ export const SiderComponent = ({
                     }
                     className={cn(styles.commonSwitcherStyles, styles.switcherMobileStyles)}
                     onClick={() => toggleSidebar()}
-                    data-test-id='sider-switch-mobile'
+                    data-test-id={DataTestEnum.SIDER_SWITCH_MOBILE}
                 />
             );
-        } else if (windowWidth > 705) {
+        } else if (windowWidth > SIDER_BREAKPOINT) {
             return (
                 <Button
                     icon={
@@ -78,7 +85,7 @@ export const SiderComponent = ({
                     }
                     className={cn(styles.commonSwitcherStyles, styles.switcherStyles)}
                     onClick={() => toggleSidebar()}
-                    data-test-id='sider-switch'
+                    data-test-id={DataTestEnum.SIDER_SWITCH}
                 />
             );
         }
@@ -89,7 +96,7 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Календарь</Text> : null,
             key: '1',
             icon: <CalendarTwoTone className={styles.menuIconStyles} />,
-            onClick: () => handleClickTraining(),
+            onClick: handleClickTraining,
         },
         {
             label: isSiderOpened ? (
@@ -109,6 +116,7 @@ export const SiderComponent = ({
             label: isSiderOpened ? <Text className={styles.menuLabelStyles}>Профиль</Text> : null,
             key: '4',
             icon: <IdcardOutlined className={styles.menuIconStyles} />,
+            onClick: handleClickProfile,
         },
     ];
 
@@ -118,11 +126,11 @@ export const SiderComponent = ({
 
     const logoutHandler = () => {
         dispatch(logout());
-        window.localStorage.removeItem('token');
+        localStorage.removeItem('token');
         history.push(AppRouteEnum.BASIC);
     };
 
-    const sidebarWidth = windowWidth < 705 ? 106 : isSiderOpened ? 208 : 64;
+    const sidebarWidth = windowWidth < SIDER_BREAKPOINT ? 106 : isSiderOpened ? 208 : 64;
 
     return (
         <Sider
@@ -133,7 +141,7 @@ export const SiderComponent = ({
             }
             width={sidebarWidth}
             theme='light'
-            collapsedWidth={windowWidth > 705 ? 64 : 0}
+            collapsedWidth={windowWidth > SIDER_BREAKPOINT ? 64 : 0}
             collapsed={!isSiderOpened}
         >
             <div className={styles.layoutWrapperStyles}>

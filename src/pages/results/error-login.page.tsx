@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { history } from '@redux/configure-store';
 import { Result, Button } from 'antd';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const ErrorLogin = () => {
     const location = useLocation();
@@ -31,7 +32,7 @@ export const ErrorLogin = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={() => history.push(AppRouteEnum.AUTH)}
-                    data-test-id='login-retry-button'
+                    data-test-id={DataTestEnum.LOGIN_RETRY_BUTTON}
                     block
                 >
                     Повторить

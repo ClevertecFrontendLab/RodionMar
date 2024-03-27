@@ -6,22 +6,24 @@ import cn from 'classnames';
 
 import VerificationInput from 'react-verification-input';
 
-import { TConfirmEmail } from '@shared/types/confirm-email.type';
+import { ConfirmEmail } from '@shared/types/confirm-email.type';
 
 import styles from './index.module.scss';
 
 const { Title, Text } = Typography;
 
+type ConfirmEmailProps = {
+    handleConfirmEmail: (data: ConfirmEmail) => void;
+    status?: 'execute' | 'error';
+};
+
 export const ConfirmEmailComponent = ({
     handleConfirmEmail,
     status = 'execute',
-}: {
-    handleConfirmEmail: (data: TConfirmEmail) => void;
-    status?: 'execute' | 'error';
-}) => {
+}: ConfirmEmailProps) => {
     const [verificationValue, setVerificationValue] = useState('');
 
-    const confirmEmailData = window.localStorage.getItem('checkEmailData') || '';
+    const confirmEmailData = localStorage.getItem('checkEmailData') || '';
 
     const onCompleteHandler = (value: string) => {
         const data = {

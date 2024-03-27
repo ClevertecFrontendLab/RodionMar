@@ -1,11 +1,11 @@
-import { TExercise } from './exersice.type';
-import { TParameters } from '../../pages/calendar/types/parameters.type';
+import { Exercise } from './exersice.type';
+import { TrainingParameters } from './training-parameters.type';
 
-export type TTrainingRequest = {
-    _id?: string;
+export type TrainingRequest = {
     name: string;
     date: string;
+    exercises: Omit<Exercise[], '_id'>;
+    _id?: string;
     isImplementation?: boolean;
-    parameters?: TParameters;
-    exercises: Omit<TExercise[], '_id'>;
+    parameters?: TrainingParameters;
 };

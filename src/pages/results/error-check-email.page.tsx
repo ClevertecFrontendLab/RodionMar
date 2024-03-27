@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
 import { fetchCheckEmail } from '@pages/auth/store/auth.actions';
-import { AppDispatch, history } from '@redux/configure-store';
-import { useDispatch } from 'react-redux';
+import { history, useAppDispatch } from '@redux/configure-store';
 
 import { useLocation } from 'react-router-dom';
 import { Result, Button } from 'antd';
@@ -11,10 +10,11 @@ import cn from 'classnames';
 
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
-import { TCheckEmailResponse } from '@shared/types/check-email-response.type';
+import { CheckEmailResponse } from '@shared/types/check-email-response.type';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const ErrorCheckEmail = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const ErrorCheckEmail = () => {
         }
     }, [location.state]);
 
-    const handleResponseCheckEmail = (response: TCheckEmailResponse) => {
+    const handleResponseCheckEmail = (response: CheckEmailResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             window.localStorage.setItem('checkEmailData', response.payload.email);
             history.push(AppRouteEnum.CONFIRM_EMAIL, { fromServer: true });
@@ -48,7 +48,7 @@ export const ErrorCheckEmail = () => {
 
         const response = await dispatch(fetchCheckEmail(data));
 
-        const responseData: TCheckEmailResponse = {
+        const responseData: CheckEmailResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -69,7 +69,7 @@ export const ErrorCheckEmail = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={handleRepeatCheckEmail}
-                    data-test-id='check-back-button'
+                    data-test-id={DataTestEnum.CHECK_BACK_BUTTON}
                 >
                     Назад
                 </Button>

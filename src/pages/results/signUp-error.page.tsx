@@ -1,5 +1,4 @@
-import { useDispatch } from 'react-redux';
-import { AppDispatch, history } from '@redux/configure-store';
+import { history, useAppDispatch } from '@redux/configure-store';
 import { fetchSignUp } from '@pages/auth/store/auth.actions';
 
 import styles from './index.module.scss';
@@ -7,11 +6,12 @@ import styles from './index.module.scss';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Result, Button } from 'antd';
-import { TSignUpResponse } from '@shared/types/sign-up-response.type copy';
+import { SignUpResponse } from '@shared/types/sign-up-response.type copy';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const SignUpError = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export const SignUpError = () => {
         }
     }, [location.state]);
 
-    const handleResponse = async (response: TSignUpResponse) => {
+    const handleResponse = async (response: SignUpResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             history.push(AppRouteEnum.SUCCESS, { fromServer: true });
             return true;
@@ -51,7 +51,7 @@ export const SignUpError = () => {
 
         const response = await dispatch(fetchSignUp(data));
 
-        const responseData: TSignUpResponse = {
+        const responseData: SignUpResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -78,7 +78,7 @@ export const SignUpError = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={handleRepeatRegistration}
-                    data-test-id='registration-retry-button'
+                    data-test-id={DataTestEnum.REGISTRATION_RETRY_BUTTON}
                     block
                 >
                     Повторить

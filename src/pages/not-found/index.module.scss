@@ -1,0 +1,43 @@
+@import '../../styles/index.scss';
+
+.mainLayout {
+    display: flex;
+    position: relative;
+    height: 100%;
+
+    .contentWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background: url('../../../main-screen--light.png') center / cover no-repeat;
+
+        .contentStyles {
+            background: $neutral-gray-1;
+            margin: 24px;
+            box-sizing: content-box;
+            flex-grow: 1;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .result {
+                padding: 0;
+            }
+        }
+
+        .contentStyles {
+            padding: 24px;
+        }
+    }
+}
+
+@media screen and (max-width: 361px) {
+    .mainLayout {
+        .contentWrapper {
+            .contentStyles {
+                margin: 24px 0;
+            }
+        }
+    }
+}

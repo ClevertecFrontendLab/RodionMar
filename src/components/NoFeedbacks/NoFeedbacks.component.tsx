@@ -1,14 +1,15 @@
 import { Button, Row, Typography, Col } from 'antd';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 const { Title, Paragraph } = Typography;
 
-type TNoFeedbacksProps = {
+type NoFeedbacksProps = {
     setIsFeedbackModalOpen: (value: boolean) => void;
 };
 
-export const NoFeedbacks = ({ setIsFeedbackModalOpen }: TNoFeedbacksProps) => (
+export const NoFeedbacks = ({ setIsFeedbackModalOpen }: NoFeedbacksProps) => (
     <Row className={styles.noFeedback} justify='center'>
         <Col className={styles.textSection} span={24}>
             <Title level={3} className={styles.title}>
@@ -26,7 +27,7 @@ export const NoFeedbacks = ({ setIsFeedbackModalOpen }: TNoFeedbacksProps) => (
                 size='large'
                 className={styles.button}
                 onClick={() => setIsFeedbackModalOpen(true)}
-                data-test-id='write-review'
+                data-test-id={DataTestEnum.WRITE_REVIEW}
                 block
             >
                 Написать отзыв

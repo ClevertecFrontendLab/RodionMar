@@ -14,7 +14,7 @@ export const AuthPage = () => {
             <div className={styles.blur}>
                 <div className={styles.contentWrapper}>
                     {((fetchPending !== undefined && fetchPending === true) || isLoading) && (
-                        <LottieLoader data-test-id='loader' />
+                        <LottieLoader />
                     )}
                     <AuthRoutes />
                 </div>

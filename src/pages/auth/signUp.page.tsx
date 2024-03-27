@@ -1,7 +1,7 @@
 import { SignUpComponent } from '@components/SignUp';
 import { clearErrors } from './store/auth.slice';
-import { TAuth } from '@shared/types/auth.type';
-import { TSignUpResponse } from '@shared/types/sign-up-response.type copy';
+import { Auth } from '@shared/types/auth.type';
+import { SignUpResponse } from '@shared/types/sign-up-response.type copy';
 import { fetchSignUp } from './store/auth.actions';
 import { useAppDispatch } from '@hooks/index';
 import { history } from '@redux/configure-store';
@@ -15,7 +15,7 @@ export const SignUpPage = () => {
         history.push(AppRouteEnum.BASIC_AUTH);
     };
 
-    const handleResponse = (response: TSignUpResponse) => {
+    const handleResponse = (response: SignUpResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             history.push(AppRouteEnum.SUCCESS, { fromServer: true });
             return true;
@@ -30,10 +30,10 @@ export const SignUpPage = () => {
         }
     };
 
-    const handleSignUp = async (data: TAuth) => {
+    const handleSignUp = async (data: Auth) => {
         const response = await dispatch(fetchSignUp(data));
 
-        const responseData: TSignUpResponse = {
+        const responseData: SignUpResponse = {
             meta: response.meta,
             payload: response.payload,
         };

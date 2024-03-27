@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react';
 import { Button, Input, Menu, MenuProps, Typography, Form, Image } from 'antd';
 import { GooglePlusOutlined } from '@ant-design/icons';
 
-import { TAuth } from '@shared/types/auth.type';
+import { Auth } from '@shared/types/auth.type';
 
 import styles from './index.module.scss';
+import { DataTestEnum } from '@constants/data-tests.enum';
+import { emailRules } from './input-rules/email-rules';
+import { passwordRules } from './input-rules/password-rules';
 
 type MenuItem = Required<MenuProps>['items'][number];
-type TFinishValues = {
+type FinishValues = {
     email: string;
     confirmPassword: string;
     password: string;
@@ -16,13 +19,12 @@ type TFinishValues = {
 
 const { Link, Text } = Typography;
 
-export const SignUpComponent = ({
-    handleSignUp,
-    handleRedirectToSignIn,
-}: {
+type SignUpProps = {
     handleRedirectToSignIn: () => void;
-    handleSignUp: (data: TAuth) => void;
-}) => {
+    handleSignUp: (data: Auth) => void;
+};
+
+export const SignUpComponent = ({ handleSignUp, handleRedirectToSignIn }: SignUpProps) => {
     const [form] = Form.useForm();
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
@@ -41,20 +43,7 @@ export const SignUpComponent = ({
         },
     ];
 
-    const emailRules = [
-        { required: true, pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/, message: '' },
-    ];
-
-    const passwordRules = [
-        {
-            required: true,
-            min: 8,
-            pattern: /^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*\d).{8,}$/,
-            message: '',
-        },
-    ];
-
-    const onFinish = (values: TFinishValues) => {
+    const onFinish = (values: FinishValues) => {
         sessionStorage.setItem('signUpData', JSON.stringify(values));
 
         const formValues = {
@@ -109,7 +98,7 @@ export const SignUpComponent = ({
                         <Input
                             addonBefore={<Text className={styles.fieldAddon}>e-mail:</Text>}
                             className={styles.field}
-                            data-test-id='registration-email'
+                            data-test-id={DataTestEnum.REGISTRATION_EMAIL}
                         />
                     </Form.Item>
 
@@ -122,7 +111,7 @@ export const SignUpComponent = ({
                         <Input.Password
                             placeholder='Пароль'
                             className={styles.field}
-                            data-test-id='registration-password'
+                            data-test-id={DataTestEnum.REGISTRATION_PASSWORD}
                         />
                     </Form.Item>
                     <Form.Item
@@ -141,7 +130,7 @@ export const SignUpComponent = ({
                         <Input.Password
                             placeholder='Повторите пароль'
                             className={styles.field}
-                            data-test-id='registration-confirm-password'
+                            data-test-id={DataTestEnum.REGISTRATION_CONFIRM_PASSWORD}
                         />
                     </Form.Item>
                 </div>
@@ -154,7 +143,7 @@ export const SignUpComponent = ({
                             htmlType='submit'
                             className={styles.authButton}
                             disabled={isButtonDisabled}
-                            data-test-id='registration-submit-button'
+                            data-test-id={DataTestEnum.REGISTRATION_SUBMIT_BUTTON}
                         >
                             Войти
                         </Button>

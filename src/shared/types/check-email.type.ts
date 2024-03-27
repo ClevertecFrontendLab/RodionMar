@@ -1,3 +1,3 @@
-export type TCheckEmail = {
+export type CheckEmail = {
     email: string;
 };

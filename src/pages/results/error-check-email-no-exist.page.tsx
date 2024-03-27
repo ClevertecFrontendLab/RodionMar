@@ -9,6 +9,7 @@ import cn from 'classnames';
 
 import styles from './index.module.scss';
 import { AppRouteEnum } from '@constants/app-routes.enum';
+import { DataTestEnum } from '@constants/data-tests.enum';
 
 export const ErrorCheckEmailNoExist = () => {
     const location = useLocation();
@@ -34,7 +35,7 @@ export const ErrorCheckEmailNoExist = () => {
                     htmlType='button'
                     className={styles.button}
                     onClick={() => history.push(AppRouteEnum.AUTH)}
-                    data-test-id='check-retry-button'
+                    data-test-id={DataTestEnum.CHECK_RETRY_BUTTON}
                 >
                     Попробовать снова
                 </Button>

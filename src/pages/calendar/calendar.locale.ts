@@ -23,8 +23,8 @@ export const calendarLocale = {
             WeekDayEnum.THURSDAY,
             WeekDayEnum.FRIDAY,
             WeekDayEnum.SATURDAY,
-          ],
-          shortMonths: [
+        ],
+        shortMonths: [
             MonthEnum.JANUARY,
             MonthEnum.FEBRUARY,
             MonthEnum.MARCH,
@@ -37,7 +37,7 @@ export const calendarLocale = {
             MonthEnum.OCTOBER,
             MonthEnum.NOVEMBER,
             MonthEnum.DECEMBER,
-          ],
+        ],
     },
     timePickerLocale: {
         ...locale.timePickerLocale,

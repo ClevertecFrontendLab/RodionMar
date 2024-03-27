@@ -1,4 +1,4 @@
-export type TCheckEmailResponse = {
+export type CheckEmailResponse = {
     meta: {
         requestStatus: string;
     };

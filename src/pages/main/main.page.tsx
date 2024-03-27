@@ -7,20 +7,26 @@ import { FeedbackPendingSelector } from '@pages/feedbacks/store/feedback.selecto
 import { Layout, Row, Col, Typography, Space, Button } from 'antd';
 
 import { HeaderComponent } from '@components/Header';
-import { ActionCard } from '@components/ActionCard';
+import { ActionCardComponent } from '@components/ActionCard';
 import { FooterComponent } from '@components/Footer';
 import { SiderComponent } from '@components/Sider';
 import { LottieLoader } from '@components/LottieLoader';
 
 import styles from './index.module.scss';
 
-import { TGetResponse } from '../../shared/types/getResponse.type';
+import { GetResponse } from '../../shared/types/getResponse.type';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 import { TrainingPendingSelector } from '@pages/calendar/store/training.selector';
 import { fetchTrainings } from '@pages/calendar/store/training.actions';
-import { TActionCard } from '@shared/types/action-card.type';
+import { ActionCard } from '@shared/types/action-card.type';
 import { ResultModal } from '@components/ResultModal';
 import { clearErrors } from '@pages/calendar/store/training.slice';
+import { fetchProfile } from '@pages/profile/store/profile.actions';
+import { ProfilePendingSelector } from '@pages/profile/store/profile.selector';
+import { fetchTariffList } from '@pages/settings/store/settings.actions';
+import { SettingsPendingSelector } from '@pages/settings/store/settings.selector';
+import { DataTestEnum } from '@constants/data-tests.enum';
+import { ActionIcon } from '@constants/action-card.enum';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -32,6 +38,8 @@ const MainPage = () => {
     const dispatch = useAppDispatch();
     const fetchFeedbacksPending = useSelector(FeedbackPendingSelector);
     const fetchTrainingPending = useSelector(TrainingPendingSelector);
+    const fetchProfilePending = useSelector(ProfilePendingSelector);
+    const fetchTariffListPending = useSelector(SettingsPendingSelector);
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -39,10 +47,13 @@ const MainPage = () => {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-
     }, []);
 
-    const handleResponseFeedbacks = (response: TGetResponse) => {
+    useEffect(() => {
+        dispatch(fetchProfile());
+    }, [dispatch]);
+
+    const handleResponseFeedbacks = (response: GetResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             history.push(AppRouteEnum.FEEDBACKS, { fromServer: true });
             return true;
@@ -59,7 +70,7 @@ const MainPage = () => {
         }
     };
 
-    const handleResponseTrainings = (response: TGetResponse) => {
+    const handleResponseTrainings = (response: GetResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             history.push(AppRouteEnum.CALENDAR, { fromServer: true });
             return true;
@@ -71,7 +82,7 @@ const MainPage = () => {
     const handleFeedbacks = async () => {
         const response = await dispatch(fetchFeedbacks());
 
-        const responseData: TGetResponse = {
+        const responseData: GetResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -82,7 +93,7 @@ const MainPage = () => {
     const handleTrainings = async () => {
         const response = await dispatch(fetchTrainings());
 
-        const responseData: TGetResponse = {
+        const responseData: GetResponse = {
             meta: response.meta,
             payload: response.payload,
         };
@@ -90,28 +101,46 @@ const MainPage = () => {
         handleResponseTrainings(responseData);
     };
 
-    const cards: TActionCard[] = [
-        { title: 'Расписать тренировки', buttonText: 'Тренировки', buttonIcon: 'heart' },
+    const handleProfile = () => history.push(AppRouteEnum.PROFILE, { fromServer: true });
+
+    const cards: ActionCard[] = [
+        {
+            title: 'Расписать тренировки',
+            buttonText: 'Тренировки',
+            buttonIcon: ActionIcon.HEART,
+        },
         {
             title: 'Назначить календарь',
             buttonText: 'Календарь',
-            buttonIcon: 'calendar',
+            buttonIcon: ActionIcon.CALENDAR,
             handleRedirect: handleTrainings,
             dataTestId: 'menu-button-calendar',
         },
-        { title: 'Заполнить профиль', buttonText: 'Профиль', buttonIcon: 'profile' },
+        {
+            title: 'Заполнить профиль',
+            buttonText: 'Профиль',
+            buttonIcon: ActionIcon.PROFILE,
+            handleRedirect: handleProfile,
+            dataTestId: 'menu-button-profile',
+        },
     ];
 
     const serverErrorModalButtonHandler = () => {
         dispatch(clearErrors());
         setIsServerErrorModalOpen(false);
-    }
+    };
+
+    const handleClickSettingsButton = async () => {
+        const response = await dispatch(fetchTariffList());
+        if (response) history.push(AppRouteEnum.SETTINGS, { fromServer: true });
+    };
 
     return (
         <Layout className={styles.mainLayout}>
-            {(fetchFeedbacksPending || fetchTrainingPending) && (
-                <LottieLoader data-test-id='loader' />
-            )}
+            {(fetchFeedbacksPending ||
+                fetchTrainingPending ||
+                fetchProfilePending ||
+                fetchTariffListPending) && <LottieLoader />}
             <SiderComponent
                 isSiderOpened={isSiderOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
@@ -119,7 +148,11 @@ const MainPage = () => {
                 handleTrainings={handleTrainings}
             />
             <Layout className={styles.contentWrapper}>
-                <HeaderComponent isSiderOpened={isSiderOpened} windowWidth={windowWidth} />
+                <HeaderComponent
+                    isSiderOpened={isSiderOpened}
+                    windowWidth={windowWidth}
+                    handleClickSettingsButton={handleClickSettingsButton}
+                />
                 <Content className={styles.contentStyles}>
                     <Space.Compact className={styles.containerStyles} direction='vertical'>
                         <Row>
@@ -145,7 +178,7 @@ const MainPage = () => {
                             <Row className={styles.cardWrapperStyles}>
                                 {cards.map((card, index) => (
                                     <Col className={styles.card} key={index}>
-                                        <ActionCard
+                                        <ActionCardComponent
                                             key={index}
                                             title={card.title}
                                             buttonText={card.buttonText}
@@ -162,13 +195,13 @@ const MainPage = () => {
                 <FooterComponent handleResponseFeedbacks={handleFeedbacks} />
             </Layout>
             <ResultModal
-                dataTestId='modal-no-review'
+                dataTestId={DataTestEnum.MODAL_NO_REVIEW}
                 isModalOpen={isServerErrorModalOpen}
                 status='500'
                 title='Что-то пошло не так'
                 subTitle='Произошла ошибка, попробуйте ещё раз.'
                 resultClassName={styles.result}
-                button={
+                extra={
                     <Button
                         type='primary'
                         size='large'

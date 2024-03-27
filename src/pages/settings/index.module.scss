@@ -1,0 +1,245 @@
+@import '../../styles/index.scss';
+
+.mainLayout {
+    display: flex;
+    position: relative;
+    height: 100%;
+
+    .contentWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+
+        .contentStyles {
+            background: $neutral-gray-1;
+            margin: 24px;
+            box-sizing: content-box;
+            flex-grow: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .componentsWrapper {
+                position: relative;
+                margin: 24px;
+                box-sizing: content-box;
+                height: 100%;
+                max-width: 505px;
+
+                .tarifText {
+                    @include H4-medium($character-light-title-85);
+                }
+
+                .cardRow {
+                    display: grid;
+                    grid-template-columns: auto auto;
+                    gap: 25px;
+                    margin-top: 16px;
+                    box-sizing: border-box;
+                }
+
+                .card {
+                    box-shadow: 0 2px 8px 0 #00000026;
+                }
+
+                .cardExpiredText {
+                    @include H5-medium($primary-light-10);
+                    max-width: 80px;
+                    text-align: center;
+                }
+
+                .cardButton {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    height: auto;
+                }
+
+                div[class*='ant-card-body'] {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 95px;
+                }
+
+                .cardContentText {
+                    display: flex;
+                    column-gap: 8px;
+                    @include H5-medium($primary-light-10);
+                }
+
+                .switchesWrapper {
+                    flex-direction: column;
+                    margin-top: 24px;
+                    width: 100%;
+                    row-gap: 16px;
+                    padding: 16px 0;
+                }
+            }
+
+            .feedbackButtons {
+                margin-top: 96px;
+                gap: 8px;
+            }
+        }
+
+        .pageHeader {
+            background: $primary-light-1;
+
+            .pageTitle {
+                @include H4-medium($character-light-title-85);
+                margin-bottom: 0;
+            }
+
+            div[class*='ant-page-header-heading-left'] {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.settingsTooltip {
+    div[class*='ant-tooltip-inner'] {
+        background-color: $neutral-gray-13;
+    }
+}
+
+div[class*='ant-modal-body'] {
+    .result {
+        padding: 64px 32px 58px;
+
+        div[class*='ant-result-icon'] {
+            margin-bottom: 29px;
+        }
+
+        svg {
+            fill: $primary-light-6;
+        }
+
+        .resultTitle {
+            @include H3-medium($character-light-title-85);
+        }
+
+        .resultSubtitle {
+            @include Body-regular($character-light-secondary-45);
+
+            span {
+                @include Body-strong($character-light-secondary-45);
+            }
+        }
+
+        .resultExtraText {
+            @include Body-regular($character-light-secondary-45);
+        }
+    }
+}
+
+.openToCommonTrainings {
+    div[class*='ant-tooltip-inner'] {
+        max-width: 205px;
+    }
+}
+
+.getNotifications {
+    div[class*='ant-tooltip-inner'] {
+        max-width: 219px;
+    }
+}
+
+.darkMode {
+    div[class*='ant-tooltip-inner'] {
+        max-width: 113px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .mainLayout {
+        .contentWrapper {
+            .contentStyles {
+                margin: 24px 0 42px;
+
+                .componentsWrapper {
+                    margin: 16px 24px;
+
+                    .cardRow {
+                        grid-template-columns: auto;
+                        gap: 12px;
+                        margin-top: 16px;
+                    }
+
+                    .card {
+                        div[class*='ant-card-head-title'] {
+                            text-align: left;
+                        }
+                    }
+
+                    div[class*='ant-card-body'] {
+                        height: 64px;
+                    }
+
+                    .switchesWrapper {
+                        margin-top: 20px;
+                        row-gap: 20px;
+                    }
+                }
+
+                .feedbackButtons {
+                    margin-top: 20px;
+                    gap: 16px;
+
+                    div {
+                        padding: 0;
+                    }
+
+                    div,
+                    button {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    div[class*='ant-modal-body'] {
+        .result {
+            padding: 32px 16px;
+
+            div[class*='ant-result-icon'] {
+                margin-bottom: 24px;
+            }
+
+            .resultSubtitle {
+                @include Body-regular($character-light-secondary-45);
+
+                span {
+                    @include Body-strong($character-light-secondary-45);
+                }
+            }
+
+            div[class*='ant-result-extra'] {
+                max-width: 234px;
+                margin: 24px auto 0;
+            }
+        }
+    }
+
+    .openToCommonTrainings {
+        div[class*='ant-tooltip-arrow'] {
+            left: auto;
+            right: 9px;
+        }
+    }
+
+    .getNotifications {
+        div[class*='ant-tooltip-inner'] {
+            max-width: 219px;
+        }
+    }
+
+    .darkMode {
+        div[class*='ant-tooltip-inner'] {
+            max-width: 113px;
+        }
+    }
+}

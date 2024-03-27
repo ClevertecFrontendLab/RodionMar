@@ -1,17 +1,16 @@
 import { fetchChangePassword } from '@pages/auth/store/auth.actions';
-import { AppDispatch, history } from '@redux/configure-store';
-import { useDispatch } from 'react-redux';
+import { history, useAppDispatch } from '@redux/configure-store';
 import { useLocation } from 'react-router-dom';
 
 import { ChangePasswordComponent } from '@components/ChangePassword';
 
-import { TChangePassword } from '@shared/types/change-password.type';
+import { ChangePassword } from '@shared/types/change-password.type';
 import { useEffect } from 'react';
-import { TChangePasswordResponse } from './types/changePasswordResponse.type';
+import { ChangePasswordResponse } from './types/changePasswordResponse.type';
 import { AppRouteEnum } from '@constants/app-routes.enum';
 
 export const ChangePasswordPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     useEffect(() => {
@@ -22,7 +21,7 @@ export const ChangePasswordPage = () => {
         }
     }, [location.state]);
 
-    const handleResponse = (response: TChangePasswordResponse) => {
+    const handleResponse = (response: ChangePasswordResponse) => {
         if (response.meta.requestStatus === 'fulfilled') {
             localStorage.removeItem('changePasswordData');
             history.push(AppRouteEnum.SUCCESS_CHANGE_PASSWORD, { fromServer: true });
@@ -32,10 +31,10 @@ export const ChangePasswordPage = () => {
         }
     };
 
-    const handleChangePassword = async (data: TChangePassword) => {
+    const handleChangePassword = async (data: ChangePassword) => {
         const response = await dispatch(fetchChangePassword(data));
 
-        const responseData: TChangePasswordResponse = {
+        const responseData: ChangePasswordResponse = {
             meta: response.meta,
         };
 

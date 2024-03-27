@@ -39,18 +39,7 @@
     }
 
     div[class*='ant-drawer-content'] {
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: $neutral-gray-6;
-            border-radius: 10px;
-        }
+        @include Custom-scrollbar($neutral-gray-6);
     }
 
     div[class*='ant-drawer-body'] {
@@ -68,6 +57,7 @@
 
             .checkboxFormItem {
                 margin-bottom: 0;
+
                 div[class*='ant-form-item-control-input'] {
                     min-height: 0;
                 }

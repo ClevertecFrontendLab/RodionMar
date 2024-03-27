@@ -1,4 +1,4 @@
-export type TGetResponse = {
+export type GetResponse = {
     meta: {
         requestStatus: string;
     };

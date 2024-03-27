@@ -1,6 +1,6 @@
 import { TrainingNameEnum } from '@constants/training-name.enum';
 
-export type TTrainingName =
+export type TrainingName =
     | TrainingNameEnum.LEGS
     | TrainingNameEnum.STRENGTH
     | TrainingNameEnum.ARMS

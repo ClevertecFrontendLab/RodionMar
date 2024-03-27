@@ -1,4 +1,4 @@
-export type TGetFeedback = {
+export type GetFeedback = {
     fullName: null | string;
     imageSrc: null | string;
     message: null | string;
