@@ -3,6 +3,7 @@ import { Exercise } from './exersice.type';
 export type CreateTraining = {
     name: string;
     date: string;
+    exercises: Exercise[];
     isImplementation?: boolean;
     parameters?: {
         repeat: boolean;
@@ -10,5 +11,4 @@ export type CreateTraining = {
         jointTraining: boolean;
         participants: string[];
     };
-    exercises: Exercise[];
 };

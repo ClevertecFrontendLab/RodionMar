@@ -22,15 +22,15 @@ type TrainingListModalProps = {
     isModalOpen: boolean;
     setIsModalOpened: (value: boolean) => void;
     date: string;
-    listOfTrainings?: TrainingResponse[];
     getContainer: HTMLElement;
-    modalClassname?: string;
     trainingsCatalog: TrainingCatalogItem[];
     handleCreateTraining: (data: TrainingRequest) => void;
     handleUpdateTraining: (data: TrainingRequest) => void;
     mobileTrainingListCoordinate: number | undefined;
     transitionStep: 0 | null;
     isSaveDataErrorModalOpen: boolean;
+    listOfTrainings?: TrainingResponse[];
+    modalClassname?: string;
 };
 
 type SelectOption = {

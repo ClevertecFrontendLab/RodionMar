@@ -25,7 +25,7 @@ type SignInProps = {
     handleRedirectToForgetPassword: (data: CheckEmail) => void;
     handleSignIn: (data: Auth) => void;
     handleGoogleAuth: () => void;
-}
+};
 
 export const SignInComponent = ({
     handleRedirectToSignUp,

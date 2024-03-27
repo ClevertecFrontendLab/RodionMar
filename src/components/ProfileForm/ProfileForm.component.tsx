@@ -18,12 +18,12 @@ import React from 'react';
 import { DataTestEnum } from '@constants/data-tests.enum';
 
 type FinishValues = {
+    email: string;
+    password: string;
     confirmPassword?: string;
     birthday?: string;
-    email: string;
     firstName?: string;
     lastName?: string;
-    password: string;
     imgSrc?: { file: UploadFile };
 };
 
@@ -43,7 +43,7 @@ type ProfileFormProps = {
     setIsErrorModalOpened: (value: boolean) => void;
     handleSaveChanges: (value: ProfileRequest) => void;
     windowWidth: number;
-}
+};
 
 export const ProfileFormComponent = ({
     profile,

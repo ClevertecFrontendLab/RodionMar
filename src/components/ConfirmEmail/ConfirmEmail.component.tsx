@@ -15,7 +15,7 @@ const { Title, Text } = Typography;
 type ConfirmEmailProps = {
     handleConfirmEmail: (data: ConfirmEmail) => void;
     status?: 'execute' | 'error';
-}
+};
 
 export const ConfirmEmailComponent = ({
     handleConfirmEmail,

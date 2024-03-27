@@ -8,15 +8,15 @@ const { Text } = Typography;
 
 type SettingsSwitchProps = {
     label: string;
+    switchDataTestId: string;
+    iconDataTestId: string;
     tooltip?: string;
     defaultChecked?: boolean;
     onChange?: (value: boolean) => void;
     disabled?: boolean;
     overlayClassName?: string;
     placement?: TooltipPlacement;
-    switchDataTestId: string;
-    iconDataTestId: string;
-}
+};
 
 export const SettingsSwitchComponent = ({
     label,

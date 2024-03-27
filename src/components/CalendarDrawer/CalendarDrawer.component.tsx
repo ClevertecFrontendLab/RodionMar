@@ -26,7 +26,7 @@ import { DataTestEnum } from '@constants/data-tests.enum';
 
 type DrawerType = DrawerName.CREATE | DrawerName.UPDATE | DrawerName.VIEW;
 
-type CalendarDrawerComponentProps = {
+type CalendarDrawerProps = {
     type: DrawerType;
     isOpened: boolean;
     setIsOpened: (value: boolean) => void;
@@ -56,7 +56,7 @@ export const CalendarDrawerComponent = ({
     setUpdateTraining,
     updateTraining,
     isPastDate,
-}: CalendarDrawerComponentProps) => {
+}: CalendarDrawerProps) => {
     const [form] = Form.useForm();
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);

@@ -9,11 +9,9 @@ const { Title } = Typography;
 
 type ChangePasswordProps = {
     handleChangePassword: (data: ChangePassword) => void;
-}
+};
 
-export const ChangePasswordComponent = ({
-    handleChangePassword,
-}: ChangePasswordProps) => {
+export const ChangePasswordComponent = ({ handleChangePassword }: ChangePasswordProps) => {
     const [form] = Form.useForm();
 
     const passwordRules = [

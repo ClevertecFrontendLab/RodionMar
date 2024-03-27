@@ -10,9 +10,9 @@ type ModalAlertProps = {
     message: React.ReactNode;
     description: React.ReactNode | null;
     button: React.ReactNode;
+    icon: React.ReactNode;
     resultClassName?: string;
     onCloseHandler?: () => void;
-    icon: React.ReactNode;
     closable?: boolean;
     dataTestId?: string;
     className?: string;

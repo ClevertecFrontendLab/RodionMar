@@ -10,11 +10,9 @@ const { Text } = Typography;
 
 type FooterProps = {
     handleResponseFeedbacks: () => void;
-}
+};
 
-export const FooterComponent = ({
-    handleResponseFeedbacks,
-}: FooterProps) => (
+export const FooterComponent = ({ handleResponseFeedbacks }: FooterProps) => (
     <Footer className={styles.footerStyles}>
         <Row className={styles.wrapperStyles}>
             <Col className={styles.buttonCol}>
